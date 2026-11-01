@@ -904,6 +904,10 @@ madeBy:["Une création Thousand Labs Games","A Thousand Labs Games creation"], w
 rulesTod:["• Entrez les joueurs, choisissez un mode et des niveaux.\n• La roue désigne un joueur : il choisit Action ou Vérité.\n• « Fait » s'il relève le défi, « Joker » pour passer (3 par partie). Sans joker, le groupe choisit le gage.\n• Les cartes [[i:hand]] ne visent que les joueurs qui acceptent le contact, et la personne visée peut toujours refuser sans pénalité.\n• Cartes spéciales : Duel, Tout le monde, Vote, Règle (3 tours), Inversion.","• Enter players, choose a mode and levels.\n• The wheel picks a player: they choose Truth or Dare.\n• \"Done\" if they do it, \"Joker\" to skip (3 per game). With no jokers left, the group picks the forfeit.\n• [[i:hand]] cards only target players who accept contact, and the targeted person can always refuse with no penalty.\n• Special cards: Duel, Everyone, Vote, Rule (3 turns), Reverse."],
 rulesIntrus:["• Les Civils ont tous le même mot. Les Undercovers ont un mot proche… sans savoir qu'ils sont Undercover. Mr. White n'a aucun mot.\n• Chacun donne UN indice sur son mot, puis on débat et on vote pour éliminer quelqu'un.\n• Mr. White éliminé peut gagner en devinant le mot des Civils.\n• Les Civils gagnent s'ils éliminent tous les Undercovers et Mr. White. Les infiltrés gagnent s'ils tiennent jusqu'à ce qu'il ne reste que 2 joueurs.\n• Les rôles spéciaux ajoutent des pouvoirs secrets : utilise-les avec le bouton [[i:sparkles]].","• Civilians all share the same word. Undercovers have a close word… without knowing they're Undercovers. Mr. White has no word.\n• Everyone gives ONE clue about their word, then you debate and vote someone out.\n• An eliminated Mr. White can win by guessing the Civilians' word.\n• Civilians win by eliminating all Undercovers and Mr. White. Infiltrators win if they last until only 2 players remain.\n• Special roles add secret powers: use them with the [[i:sparkles]] button."],
 gotIt:["C'est compris !","Got it!"],
+installT:["Installer l'application","Install the app"], installBtn:["Télécharger New World","Download New World"], installP:["Installe New World sur ton écran d'accueil : elle s'ouvre comme une vraie appli, en plein écran, même sans Internet.","Install New World on your home screen: it opens like a real app, full screen, even offline."],
+howInstall:["Comment installer, pas à pas","How to install, step by step"], installedOk:["New World est installée sur ce téléphone.","New World is installed on this phone."],
+stepsAndroid:["1. Ouvre le lien de New World dans Chrome, avec Internet.\n2. Touche le menu ⋮ en haut à droite.\n3. Choisis « Installer l'application » (évite « Ajouter à l'écran d'accueil », qui crée un simple raccourci).\n4. Si l'option n'apparaît pas, recharge la page et réessaie après quelques secondes.","1. Open the New World link in Chrome, with Internet.\n2. Tap the ⋮ menu at the top right.\n3. Choose \"Install app\" (avoid \"Add to Home screen\", which only creates a shortcut).\n4. If the option doesn't appear, reload the page and try again after a few seconds."],
+stepsIOS:["1. Ouvre le lien de New World dans Safari.\n2. Touche Partager (le carré avec une flèche).\n3. Choisis « Sur l'écran d'accueil », puis Ajouter.\n4. Ouvre ensuite toujours New World depuis son icône, et active-la depuis là.","1. Open the New World link in Safari.\n2. Tap Share (the square with an arrow).\n3. Choose \"Add to Home Screen\", then Add.\n4. Always open New World from its icon afterwards, and activate it there."],
 mySeries:["Mes séries perso","My custom series"], myPacks:["Mes packs de mots","My word packs"], packsT:["Packs de mots perso","Custom word packs"],
 importT:["Importer une série","Import a series"], seriesName:["Nom de la série","Series name"], packName:["Nom du pack","Pack name"],
 importHelpTod:["Une carte par ligne. Commence la ligne par V: pour une Vérité ou A: pour une Action (sinon, le type choisi ci-dessus). Ajoute [contact] pour une carte avec contact, et [soft], [hard], [épicé] ou [extrême] pour changer le niveau.","One card per line. Start the line with T: for a Truth or D: for a Dare (otherwise the type chosen above). Add [contact] for a contact card, and [soft], [hard], [spicy] or [extreme] to change the level."],
@@ -1063,6 +1067,22 @@ const LIC = {
 const canPlay = () => ST.lic && (ST.lic.active || !ST.lic.expired);
 setInterval(async()=>{ if(ST.lic && !ST.lic.active){ const n=Date.now(); const seen=parseInt(await LIC.read("seen"),10)||n; if(n < seen-10*60*1000){ await LIC.write("tz","1"); ST.lic.tamper=true; ST.lic.expired=true; } else await LIC.write("seen", String(Math.max(seen,n))); if(n>=ST.lic.end) ST.lic.expired=true; } }, 60000);
 
+
+/* ---------- Installation (comme les autres applis Thousand Labs) ---------- */
+let INSTALL_EVT=null;
+try{ addEventListener("beforeinstallprompt", e=>{ e.preventDefault(); INSTALL_EVT=e; if(["home","settings"].includes(ST.screen)) render(); });
+     addEventListener("appinstalled", ()=>{ INSTALL_EVT=null; render(); toast(t("installedOk")); }); }catch(e){}
+const isStandalone = () => { try{ return matchMedia("(display-mode: standalone)").matches || navigator.standalone===true; }catch(e){ return false; } };
+const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent||"") || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+function installCard(compact){
+  if(isStandalone()) return compact ? "" : `<div class="card"><h3>[[i:download]] ${t("installT")}</h3><p>[[i:check]] ${t("installedOk")}</p></div>`;
+  const steps = isIOS() ? t("stepsIOS") : t("stepsAndroid");
+  if(compact) return `<button class="btn ghost" data-a="install">[[i:download]] ${t("installBtn")}</button>`;
+  return `<div class="card"><h3>[[i:download]] ${t("installT")}</h3><p class="mut small">${t("installP")}</p>
+    ${INSTALL_EVT?`<button class="btn pri" data-a="install">[[i:download]] ${t("installBtn")}</button>`:""}
+    <details ${INSTALL_EVT?"":"open"}><summary style="cursor:pointer;font-weight:700;margin:8px 0">${t("howInstall")}</summary><p class="small" style="white-space:pre-line">${esc(steps)}</p></details></div>`;
+}
+
 /* ---------- Rendu ---------- */
 let timerInt = null;
 function go(screen){ clearInterval(timerInt); timerInt=null; ST.screen=screen; render(); window.scrollTo(0,0); }
@@ -1088,6 +1108,7 @@ SCREENS.home = () => {
   <div class="game tod" data-a="startGame" data-v="tod"><span class="emo">[[i:flame]]</span><h2>${t("tod")}</h2><p>${t("todSub")}</p></div>
   <div class="game intrus" data-a="startGame" data-v="intrus"><span class="emo">[[i:incognito]]</span><h2>${t("intrus")}</h2><p>${t("intrusSub")}</p></div>
   <div class="game party" data-a="startGame" data-v="party"><span class="emo">[[i:sparkles]]</span><h2>${t("party")}</h2><p>${t("partySub")}</p></div>
+  ${installCard(true)}
   <div class="grid2"><button class="btn ghost" data-a="go" data-v="groups">[[i:users]] ${t("groups")}</button><button class="btn ghost" data-a="go" data-v="settings">[[i:sliders]] ${t("settings")}</button></div>
   <div class="foot">${t("madeBy")} · <a href="${APP.site}" target="_blank" rel="noopener">${t("website")}</a> · v${APP.version}</div>`;
 };
@@ -1139,6 +1160,7 @@ SCREENS.settings = () => `${hdr("[[i:sliders]] "+t("settings"))}
   <div class="card"><h3>[[i:book]] ${t("rules")}</h3><button class="btn ghost" data-a="showRules" data-v="tod">[[i:flame]] ${t("tod")}</button><button class="btn ghost" data-a="showRules" data-v="intrus">[[i:incognito]] ${t("intrus")}</button></div>
   <div class="card"><h3>[[i:folder]] ${t("mySeries")}</h3><button class="btn ghost" data-a="openCustom" data-v="settings">[[i:flame]] ${t("tod")} · ${ST.custom.length} ${t("cards")}</button><button class="btn ghost" data-a="openPacks" data-v="settings">[[i:incognito]] ${t("intrus")} · ${ST.myPacks.length} ${t("myPacks").toLowerCase()}</button></div>
   <div class="card"><h3>[[i:unlock]] ${t("activation")}</h3><p class="mut small">${t("yourId")} : <b>${esc(ST.lic.id)}</b></p><p>${ST.lic.active?t("activated"):(ST.lic.expired?t("lockedT"):t("trialLeft",{n:Math.max(0,Math.floor(ST.lic.left/864e5))}))}</p>${ST.lic.active?"":`<button class="btn pri" data-a="go" data-v="lock">${t("activate")}</button>`}</div>
+  ${installCard(false)}
   <div class="card"><h3>${t("about")}</h3><p><b>New World</b> v${APP.version}<br><span class="mut">${t("madeBy")}</span></p><a class="btn ghost" style="text-decoration:none;text-align:center" href="${APP.site}" target="_blank" rel="noopener">[[i:globe]] ${t("website")}</a></div>`;
 
 /* ---- Cartes perso ---- */
@@ -1557,6 +1579,7 @@ SCREENS.partySetup = () => `${hdr(" "+t("party"),"home")}<p class="mut small">[[
 /* =================== ACTIONS =================== */
 const ACT = {
   go: v => go(v),
+  install: () => { if(INSTALL_EVT){ const e=INSTALL_EVT; e.prompt(); (e.userChoice||Promise.resolve()).then(()=>{ INSTALL_EVT=null; render(); }); } else go("settings"); },
   closeModal: () => closeModal(),
   closeRules: v => { ST.set.seenRules[v]=1; saveSet(); closeModal(); },
   showRules: v => rulesModal(v),
