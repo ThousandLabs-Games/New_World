@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d0b1a">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="description" content="New World — jeux de soirée : Action ou Vérité et Incognito. Par Thousand Labs Games.">
+<title>New World — Thousand Labs Games</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>:root{
+  --bg:#0d0b1a;--bg2:#161330;--card:#1e1a3d;--card2:#272250;--line:#352f66;
+  --txt:#f3f1ff;--mut:#a7a2cc;--pri:#8b5cf6;--pri2:#ec4899;--ok:#22c55e;--warn:#f59e0b;--bad:#ef4444;
+  --soft:#38bdf8;--hard:#f59e0b;--spicy:#f97316;--extreme:#ef4444;
+  --r:18px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100%}
+body{background:radial-gradient(1200px 600px at 50% -200px,#2a1d5c 0%,var(--bg) 60%) fixed}
+#app{max-width:560px;margin:0 auto;padding:16px 16px 90px;min-height:100vh}
+h1,h2,h3{margin:.2em 0 .5em;line-height:1.15}
+h1{font-size:2rem}h2{font-size:1.45rem}h3{font-size:1.1rem}
+p{line-height:1.5}
+.mut{color:var(--mut)}.small{font-size:.85rem}.center{text-align:center}
+.row{display:flex;gap:10px;align-items:center}.row.wrap{flex-wrap:wrap}.grow{flex:1}
+.spread{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:12px 0}
+.btn{appearance:none;border:0;border-radius:14px;padding:15px 18px;font-size:1.05rem;font-weight:700;color:#fff;background:var(--card2);cursor:pointer;width:100%;display:block;margin:8px 0;transition:transform .08s}
+.btn:active{transform:scale(.97)}
+.btn.pri{background:linear-gradient(135deg,var(--pri),var(--pri2))}
+.btn.ok{background:var(--ok)}.btn.bad{background:var(--bad)}.btn.warn{background:var(--warn);color:#1b1300}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--txt)}
+.btn.sm{padding:9px 12px;font-size:.92rem;width:auto;display:inline-block;margin:4px}
+.btn[disabled]{opacity:.4}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.back{background:var(--card);border:1px solid var(--line);color:var(--txt);border-radius:12px;width:44px;height:44px;font-size:1.3rem;cursor:pointer}
+.logo{font-weight:900;font-size:2.6rem;letter-spacing:-1px;background:linear-gradient(135deg,#a78bfa,#f472b6,#fb923c);-webkit-background-clip:text;background-clip:text;color:transparent;margin:18px 0 0}
+.game{border-radius:22px;padding:20px;margin:14px 0;cursor:pointer;position:relative;overflow:hidden;border:1px solid var(--line)}
+.game h2{margin:0 0 4px}.game p{margin:0;color:#e9e5ff}
+.game.tod{background:linear-gradient(135deg,#7c3aed,#db2777)}
+.game.intrus{background:linear-gradient(135deg,#0ea5e9,#6366f1)}
+.game.party{background:linear-gradient(135deg,#f97316,#e11d48)}
+.game .emo{position:absolute;right:14px;top:10px;font-size:3rem;opacity:.9}
+.pill{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--card2);border:1px solid var(--line);margin:4px 4px 4px 0;cursor:pointer;font-size:.95rem;user-select:none}
+.pill.on{background:linear-gradient(135deg,var(--pri),var(--pri2));border-color:transparent;font-weight:700}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.lv-soft{background:var(--soft);color:#00222f}.lv-hard{background:var(--hard);color:#2a1800}.lv-spicy{background:var(--spicy);color:#2a0d00}.lv-extreme{background:var(--extreme);color:#fff}
+input[type=text],input[type=number],textarea,select{width:100%;background:var(--bg2);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:1rem;font-family:inherit}
+textarea{min-height:80px}
+label.lb{display:block;margin:12px 0 6px;color:var(--mut);font-size:.9rem;font-weight:600}
+.player{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0}
+.seg{display:flex;background:var(--bg2);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:4px 0}
+.seg button{flex:1;background:none;border:0;color:var(--mut);padding:9px 4px;font-size:.88rem;font-weight:700;cursor:pointer}
+.seg button.on{background:var(--pri);color:#fff}
+.switch{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);gap:12px}
+.switch:last-child{border-bottom:0}
+.tg{width:52px;height:30px;border-radius:999px;background:var(--line);position:relative;flex:none;cursor:pointer;border:0}
+.tg::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .15s}
+.tg.on{background:var(--ok)}.tg.on::after{left:25px}
+.bigcard{border-radius:24px;padding:26px 20px;min-height:220px;display:flex;flex-direction:column;justify-content:center;text-align:center;margin:14px 0;border:1px solid var(--line);background:var(--card);animation:pop .35s ease}
+.bigcard .q{font-size:1.45rem;font-weight:800;line-height:1.3;margin:14px 0}
+.bigcard.v{background:linear-gradient(160deg,#1e3a8a,#312e81)}
+.bigcard.a{background:linear-gradient(160deg,#9d174d,#7c2d12)}
+.bigcard.sp{background:linear-gradient(160deg,#065f46,#1e3a8a)}
+@keyframes pop{from{transform:scale(.85) rotate(-2deg);opacity:0}to{transform:none;opacity:1}}
+.choice{display:flex;gap:12px}.choice .btn{font-size:1.3rem;padding:26px 10px}
+.choice .v{background:linear-gradient(160deg,#2563eb,#4f46e5)}.choice .a{background:linear-gradient(160deg,#db2777,#ea580c)}
+.banner{background:#3b2a0b;border:1px solid #f59e0b;color:#fde68a;border-radius:12px;padding:10px 12px;margin:8px 0;font-weight:600}
+.banner.info{background:#0c2a3b;border-color:#38bdf8;color:#bae6fd}
+.timer{font-size:2.6rem;font-weight:900;text-align:center;font-variant-numeric:tabular-nums}
+.wheelbox{position:relative;width:min(320px,80vw);margin:10px auto}
+.wheelbox canvas{width:100%;height:auto;display:block}
+.pointer{position:absolute;left:50%;top:-6px;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:26px solid #fff;filter:drop-shadow(0 2px 3px #000)}
+.who{font-size:1.9rem;font-weight:900;text-align:center;margin:8px 0}
+.list .it{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;margin:8px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pbtn{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px 8px;color:var(--txt);font-weight:800;font-size:1.05rem;cursor:pointer}
+.pbtn.dead{opacity:.35;text-decoration:line-through}
+.pbtn.sel{outline:3px solid var(--pri2)}
+.secret{background:linear-gradient(160deg,#1e1b4b,#3b0764);border-radius:24px;padding:26px;text-align:center;border:1px solid var(--line);margin:14px 0}
+.word{font-size:2.3rem;font-weight:900;margin:10px 0}
+.role{background:rgba(255,255,255,.08);border-radius:14px;padding:12px;margin-top:14px;text-align:left}
+.modal{position:fixed;inset:0;background:rgba(5,3,15,.82);display:flex;align-items:center;justify-content:center;padding:18px;z-index:50}
+.modal .box{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;max-width:520px;width:100%;max-height:88vh;overflow:auto}
+.trial{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:.9rem;text-align:center;margin:10px 0}
+.code{font-family:ui-monospace,Menlo,monospace;background:var(--bg2);border:1px dashed var(--line);border-radius:10px;padding:10px;word-break:break-all;font-size:1.05rem;text-align:center}
+.score td{padding:6px 8px}.score{width:100%;border-collapse:collapse}.score tr+tr td{border-top:1px solid var(--line)}
+.title-award{display:flex;gap:12px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0}
+.title-award .e{font-size:2rem}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#000c;color:#fff;padding:10px 16px;border-radius:12px;z-index:60;font-weight:600;max-width:90vw;text-align:center}
+.foot{text-align:center;color:var(--mut);font-size:.8rem;margin-top:26px}
+.foot a{color:var(--mut)}
+.counter{display:flex;align-items:center;gap:10px}.counter button{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--card2);color:#fff;font-size:1.3rem;cursor:pointer}
+.counter b{min-width:28px;text-align:center;font-size:1.2rem}
+.rolechip{display:flex;gap:10px;align-items:flex-start;padding:10px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;margin:8px 0;cursor:pointer}
+.rolechip.on{border-color:var(--pri2);background:#2a1640}
+.rolechip .e{font-size:1.6rem}
+
+.ic{width:1.15em;height:1.15em;vertical-align:-.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.back .ic{width:22px;height:22px;vertical-align:middle}
+.game .emo .ic{width:52px;height:52px;stroke-width:1.6;opacity:.85}
+.rolechip .e .ic{width:26px;height:26px;stroke-width:1.7;color:#c4b5fd}
+.cc{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.5px;padding:1px 5px;border-radius:5px;background:#ffffff22;margin-right:3px;vertical-align:1px}
+.choice .ic{width:28px;height:28px}
+.title-award .e .ic{width:30px;height:30px;color:#fbbf24}
+.secret .word .ic{width:56px;height:56px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>// New World — cartes Action ou Vérité
+// Format : [fr, en, contact?]  — {p} = joueur ciblé
+const CARDS = {
+soft: {
+v: [
+["Quel prof imites-tu le mieux ?","Which teacher can you imitate best?"],
+["Ta pire honte devant toute la classe ?","Your most embarrassing moment in front of the whole class?"],
+["L'appli que tu ouvres le plus, en toute honnêteté ?","The app you open the most, honestly?"],
+["Le plat de ton pays que tu défendrais face à tout le monde ici ?","The dish from your country you'd defend against everyone here?"],
+["Le dernier mensonge que tu as dit à tes parents ?","The last lie you told your parents?"],
+["La chanson gênante que tu écoutes en cachette ?","The embarrassing song you secretly listen to?"],
+["Le pire cadeau que tu aies jamais reçu ?","The worst gift you've ever received?"],
+["As-tu déjà dormi en cours ? Raconte.","Have you ever fallen asleep in class? Tell us."],
+["Qui ici te fait le plus rire ?","Who here makes you laugh the most?"],
+["Ton surnom d'enfance ?","Your childhood nickname?"],
+["Le truc le plus bizarre que tu aimes manger ?","The weirdest thing you love to eat?"],
+["Si tu pouvais échanger ta vie avec quelqu'un ici pendant une journée, qui ?","If you could swap lives with someone here for a day, who?"],
+["Ta peur la plus ridicule ?","Your silliest fear?"],
+["As-tu déjà fait semblant de comprendre un cours ?","Have you ever pretended to understand a lesson?"],
+["La dernière chose que tu as cherchée sur Google ?","The last thing you searched on Google?"],
+["La série que tu as dévorée en un week-end ?","A series you binge-watched in one weekend?"],
+["Ton pire look de tous les temps ?","Your worst outfit of all time?"],
+["Qui ici serait le pire colocataire ?","Who here would be the worst roommate?"],
+["As-tu déjà pleuré devant un film ? Lequel ?","Have you ever cried watching a movie? Which one?"],
+["Ta pire note, et dans quelle matière ?","Your worst grade, and in which subject?"],
+["Ton talent caché que personne ne connaît ?","A hidden talent nobody knows about?"],
+["Si tu étais un plat, lequel serais-tu ?","If you were a dish, which one would you be?"],
+["La chose la plus enfantine que tu fais encore ?","The most childish thing you still do?"],
+["As-tu déjà parlé tout seul dans la rue ?","Have you ever talked to yourself in the street?"],
+["Quelle célébrité aimerais-tu rencontrer ?","Which celebrity would you love to meet?"],
+["Ton excuse la plus créative pour un retard ?","Your most creative excuse for being late?"],
+["Qui ici a le meilleur style ?","Who here has the best style?"],
+["Qu'est-ce qui t'énerve le plus chez tes amis ?","What annoys you most about your friends?"],
+["Ta première impression de {p} ?","Your first impression of {p}?"],
+["Le métier que tu voulais faire quand tu étais petit(e) ?","The job you wanted as a kid?"],
+["Le dernier moment où tu as eu un fou rire ?","The last time you couldn't stop laughing?"],
+["Quel objet ne quittes-tu jamais ?","Which object do you never go anywhere without?"]
+],
+a: [
+["Imite un prof jusqu'à ce que quelqu'un devine qui c'est.","Imitate a teacher until someone guesses who it is."],
+["Parle avec l'accent d'un autre pays pendant deux tours.","Speak with another country's accent for two turns."],
+["Fais une déclaration d'amour passionnée… à ton plat préféré.","Make a passionate love declaration… to your favourite dish."],
+["Montre la dernière photo de ta galerie.","Show the last photo in your gallery."],
+["Chante le refrain d'une chanson choisie par le groupe.","Sing the chorus of a song chosen by the group."],
+["Fais 10 pompes ou 20 squats.","Do 10 push-ups or 20 squats."],
+["Raconte une blague. Si personne ne rit, tu en racontes une autre.","Tell a joke. If nobody laughs, tell another one."],
+["Présente la météo de la soirée comme à la télé.","Present tonight's weather forecast like on TV."],
+["Mime un animal, les autres doivent deviner.","Mime an animal, the others must guess."],
+["Fais ton meilleur pas de danse pendant 20 secondes.","Show your best dance move for 20 seconds."],
+["Lis à voix haute ta dernière note dans ton téléphone.","Read your last phone note out loud."],
+["Fais un discours de 30 secondes comme si tu étais président(e).","Give a 30-second speech as if you were president."],
+["Parle comme un robot jusqu'à ton prochain tour.","Talk like a robot until your next turn."],
+["Récite l'alphabet à l'envers le plus vite possible.","Say the alphabet backwards as fast as you can."],
+["Fais un compliment à chaque joueur.","Give a compliment to every player."],
+["Imite {p} jusqu'à ce que quelqu'un devine.","Imitate {p} until someone guesses."],
+["Tiens en équilibre sur un pied pendant 30 secondes.","Balance on one foot for 30 seconds."],
+["Fais une pub de 20 secondes pour un objet de la pièce.","Make a 20-second ad for an object in the room."],
+["Envoie un émoji au hasard à ton 3e contact WhatsApp.","Send a random emoji to your 3rd WhatsApp contact."],
+["Raconte ta journée comme un commentateur de foot.","Narrate your day like a football commentator."],
+["Fais une grimace et garde-la 15 secondes.","Pull a face and hold it for 15 seconds."],
+["Échange ta place avec {p}.","Swap seats with {p}."],
+["Fais un rap de 4 phrases sur {p}.","Rap 4 lines about {p}."],
+["Parle uniquement avec des questions jusqu'à ton prochain tour.","Speak only in questions until your next turn."],
+["Essaie de lécher ton coude.","Try to lick your elbow."],
+["Montre ton fond d'écran et explique ce choix.","Show your wallpaper and explain your choice."],
+["Joue le guide touristique et fais visiter la pièce.","Play tour guide and show everyone around the room."],
+["Ferme les yeux : trois joueurs parlent, devine qui.","Close your eyes: three players speak, guess who."],
+["Fais un défilé de mode d'un bout à l'autre de la pièce.","Do a catwalk from one end of the room to the other."],
+["Parle en chuchotant jusqu'à ton prochain tour.","Whisper until your next turn."],
+["Fais ton meilleur cri de guerre.","Do your best battle cry."],
+["Dis cinq qualités de {p} en dix secondes.","Name five good qualities of {p} in ten seconds."]
+]},
+hard: {
+v: [
+["Le message le plus gênant que tu as envoyé à la mauvaise personne ?","The most embarrassing message you sent to the wrong person?"],
+["Qui ici appellerais-tu à 3 h du matin ?","Who here would you call at 3 a.m.?"],
+["As-tu déjà fait semblant d'être malade pour sécher un cours ?","Have you ever faked being sick to skip class?"],
+["La chose la plus bizarre que tu as cherchée sur Google ?","The weirdest thing you've ever googled?"],
+["Les initiales de ton crush actuel ?","Your current crush's initials?"],
+["Qui ici a le plus de charme selon toi ?","Who here has the most charm in your opinion?"],
+["Ton pire date, ou ta pire tentative de drague ?","Your worst date, or worst attempt at flirting?"],
+["As-tu déjà eu un faible pour quelqu'un de ta classe ?","Have you ever had a thing for someone in your class?"],
+["Le défaut que tu ne supporterais jamais chez un partenaire ?","The flaw you'd never accept in a partner?"],
+["As-tu déjà stalké un ex sur les réseaux ? Récemment ?","Have you ever stalked an ex on social media? Recently?"],
+["Le plus gros mensonge que tu as dit à quelqu'un ici ?","The biggest lie you've told someone here?"],
+["As-tu déjà lu les messages de quelqu'un en cachette ?","Have you ever secretly read someone's messages?"],
+["Combien de personnes as-tu déjà ghostées ?","How many people have you ghosted?"],
+["Ta plus grosse jalousie envers quelqu'un ici ?","What makes you most jealous about someone here?"],
+["La pire chose que tu as dite dans le dos de quelqu'un ?","The worst thing you've said behind someone's back?"],
+["T'es-tu déjà fait recaler en draguant ? Raconte.","Have you ever been turned down while flirting? Tell us."],
+["Si tu devais sortir avec quelqu'un ici, qui serait ton dernier choix ?","If you had to date someone here, who would be your last choice?"],
+["Qui ici est le plus susceptible d'avoir un compte secret ?","Who here is most likely to have a secret account?"],
+["As-tu déjà fait une capture d'une conversation pour la montrer à d'autres ?","Have you ever screenshotted a chat to show others?"],
+["Ta plus grosse honte amoureuse ?","Your most embarrassing love moment?"],
+["As-tu déjà dit « je t'aime » sans le penser ?","Have you ever said \"I love you\" without meaning it?"],
+["Qu'est-ce que tes parents ne doivent surtout pas trouver dans ton téléphone ?","What must your parents never find on your phone?"],
+["À quel âge as-tu eu ton premier crush ? C'était qui ?","How old were you at your first crush? Who was it?"],
+["As-tu déjà regretté un message vocal ?","Have you ever regretted a voice message?"],
+["Qui ici t'a déjà énervé(e) sans le savoir ?","Who here has annoyed you without knowing it?"],
+["Ton type idéal, en trois mots ?","Your ideal type, in three words?"],
+["As-tu déjà inventé une excuse pour annuler un rendez-vous ?","Have you ever made up an excuse to cancel a date?"],
+["Que penses-tu vraiment du style de {p} ?","What do you really think of {p}'s style?"],
+["Le dernier message que tu as envoyé à ton crush ?","The last message you sent to your crush?"],
+["As-tu déjà été jaloux/jalouse sans aucune raison ?","Have you ever been jealous for no reason at all?"],
+["Le surnom le plus ridicule qu'on t'ait donné ?","The most ridiculous nickname you've been given?"],
+["Avec qui ici refuserais-tu de rester bloqué(e) dans un ascenseur ?","Who here would you refuse to be stuck in a lift with?"]
+],
+a: [
+["Envoie « tu me manques » au 5e contact de ta liste.","Send \"I miss you\" to the 5th contact in your list."],
+["Laisse le groupe écrire ton prochain statut WhatsApp.","Let the group write your next WhatsApp status."],
+["Fais écouter à tout le monde ton dernier vocal envoyé.","Play your last sent voice message for everyone."],
+["Masse les épaules de {p} pendant une minute.","Massage {p}'s shoulders for one minute.",1],
+["Fais une danse ridicule pendant 30 secondes, sans musique.","Do a ridiculous dance for 30 seconds, no music."],
+["Fais un compliment sincère à {p} en le/la regardant dans les yeux dix secondes.","Give {p} a sincere compliment while looking them in the eyes for ten seconds."],
+["Assieds-toi sur les genoux de {p} jusqu'à ton prochain tour.","Sit on {p}'s lap until your next turn.",1],
+["Fais une bise sur la joue de {p}.","Give {p} a kiss on the cheek.",1],
+["Montre ta dernière conversation avec ton crush, ou avoue qu'il n'y en a pas.","Show your last chat with your crush, or admit there isn't one."],
+["Drague {p} avec ta meilleure phrase d'accroche.","Flirt with {p} using your best pick-up line."],
+["Laisse {p} choisir ta photo de profil pour une heure.","Let {p} choose your profile picture for one hour."],
+["Appelle un(e) ami(e) et chante-lui joyeux anniversaire, même si ce n'est pas le jour.","Call a friend and sing them happy birthday, even if it's not the day."],
+["Montre les 5 dernières photos de ta galerie.","Show the last 5 photos in your gallery."],
+["Laisse le groupe regarder ton historique YouTube pendant 10 secondes.","Let the group look at your YouTube history for 10 seconds."],
+["Envoie « J'ai un truc important à te dire… » à un contact choisi par le groupe, et attends 5 minutes avant d'expliquer.","Send \"I have something important to tell you…\" to a contact chosen by the group, and wait 5 minutes before explaining."],
+["Fais un câlin de 10 secondes à {p}.","Give {p} a 10-second hug.",1],
+["Imite la façon de draguer de {p}.","Imitate how {p} flirts."],
+["Écris un petit poème romantique pour {p} et lis-le.","Write a short romantic poem for {p} and read it."],
+["Laisse {p} envoyer l'émoji de son choix à ton dernier contact.","Let {p} send an emoji of their choice to your last contact."],
+["Tiens la main de {p} jusqu'à ton prochain tour.","Hold {p}'s hand until your next turn.",1],
+["Fais une déclaration d'amour dramatique à {p}, façon telenovela.","Make a dramatic telenovela-style love declaration to {p}."],
+["Montre la dernière photo de toi que tu as supprimée.","Show the last photo of yourself you deleted."],
+["Raconte ton pire date en le mimant.","Tell the story of your worst date by miming it."],
+["Le groupe te pose 3 questions : réponds seulement par oui ou non.","The group asks you 3 questions: answer only yes or no."],
+["Envoie un vocal de 10 secondes à ton/ta meilleur(e) ami(e) en chantant.","Send a 10-second voice note to your best friend, singing."],
+["Invente un check secret avec {p} et refaites-le à chacun de vos tours.","Invent a secret handshake with {p} and do it on each of your turns.",1],
+["Publie en story « Je m'ennuie, quelqu'un pour parler ? » pendant 15 minutes.","Post a story \"I'm bored, anyone to talk to?\" for 15 minutes."],
+["Laisse {p} lire ta dernière conversation WhatsApp (avec le contact de ton choix).","Let {p} read your last WhatsApp chat (with a contact of your choice)."],
+["Parle avec une voix séductrice jusqu'à ton prochain tour.","Speak in a seductive voice until your next turn."],
+["Laisse {p} te dessiner quelque chose sur la main.","Let {p} draw something on your hand.",1],
+["Fais une demande de rendez-vous très sérieuse à {p}.","Ask {p} out on a date, very seriously."],
+["Laisse le groupe choisir ta sonnerie pour le reste de la soirée.","Let the group choose your ringtone for the rest of the night."]
+]},
+spicy: {
+v: [
+["Avoue un truc que personne ici ne sait.","Confess something nobody here knows."],
+["Ce que tu penses vraiment de {p} ?","What do you really think of {p}?"],
+["La personne ici avec qui tu sortirais si tu devais choisir ?","Who here would you date if you had to choose?"],
+["Ton plus gros regret amoureux ?","Your biggest romantic regret?"],
+["Le secret que tu as le mieux gardé jusqu'ici ?","The best-kept secret you have so far?"],
+["As-tu déjà eu un crush sur le/la partenaire d'un(e) ami(e) ?","Have you ever had a crush on a friend's partner?"],
+["Qu'est-ce qui te fait craquer immédiatement chez quelqu'un ?","What instantly makes you fall for someone?"],
+["As-tu déjà été en couple en cachette ?","Have you ever been in a secret relationship?"],
+["Raconte ton premier bisou.","Tell us about your first kiss."],
+["Qui ici ferait le meilleur partenaire ? Pourquoi ?","Who here would make the best partner? Why?"],
+["As-tu déjà menti pour t'échapper d'un rendez-vous ?","Have you ever lied to escape a date?"],
+["Le message le plus romantique que tu aies envoyé ?","The most romantic message you've ever sent?"],
+["Ta plus grosse erreur avec un ex ?","Your biggest mistake with an ex?"],
+["As-tu déjà dragué deux personnes en même temps ?","Have you ever flirted with two people at once?"],
+["Si {p} te proposait un rendez-vous, tu répondrais quoi ?","If {p} asked you out, what would you say?"],
+["La rumeur sur toi que tu as toujours voulu démentir ?","The rumour about you that you've always wanted to deny?"],
+["Combien de fois as-tu été vraiment amoureux/amoureuse ?","How many times have you truly been in love?"],
+["Qui ici a le plus beau sourire ?","Who here has the most beautiful smile?"],
+["As-tu déjà écrit puis effacé une déclaration ?","Have you ever written then deleted a love confession?"],
+["Qu'est-ce que tu n'avouerais jamais à ton ou ta partenaire ?","What would you never confess to your partner?"],
+["La personne de ton passé à qui tu penses encore ?","The person from your past you still think about?"],
+["As-tu déjà été ami(e) avec quelqu'un juste pour approcher quelqu'un d'autre ?","Have you ever befriended someone just to get closer to someone else?"],
+["Ton plus gros « red flag » à toi ?","Your own biggest red flag?"],
+["La chose la plus folle que tu ferais par amour ?","The craziest thing you'd do for love?"],
+["As-tu déjà eu un crush sur un(e) prof ?","Have you ever had a crush on a teacher?"],
+["Ta technique de drague secrète ?","Your secret flirting technique?"],
+["Qui ici as-tu déjà trouvé attirant(e), même une seconde ?","Who here have you found attractive, even for a second?"],
+["Ton plus long « vu » volontaire, c'était à qui ?","Who did you leave on \"seen\" the longest, on purpose?"],
+["As-tu déjà été jaloux/jalouse d'un(e) ami(e) en couple ?","Have you ever been jealous of a friend in a relationship?"],
+["Quel détail physique remarques-tu en premier ?","Which physical detail do you notice first?"],
+["Quelle personne ici te paraît la plus mystérieuse ?","Who here seems the most mysterious to you?"],
+["Le plus beau compliment que tu aimerais recevoir de {p} ?","The nicest compliment you'd like to get from {p}?"]
+],
+a: [
+["Appelle ton crush et tiens une minute au téléphone.","Call your crush and stay on the phone for one minute."],
+["Donne ton téléphone déverrouillé au groupe pendant 30 secondes.","Hand your unlocked phone to the group for 30 seconds."],
+["Danse un slow de 30 secondes avec {p}.","Slow dance with {p} for 30 seconds.",1],
+["Envoie un vocal à ton ex ou à un ancien crush, juste pour dire « salut ».","Send a voice note to your ex or an old crush, just to say \"hi\"."],
+["Prends une pose « photo de couple » avec {p} et laisse le groupe la prendre.","Strike a \"couple photo\" pose with {p} and let the group take it.",1],
+["Masse les mains de {p} pendant une minute.","Massage {p}'s hands for one minute.",1],
+["Envoie « Tu penses à moi parfois ? » à un contact choisi par le groupe.","Send \"Do you ever think about me?\" to a contact chosen by the group."],
+["Reste blotti(e) contre {p} pendant deux tours.","Cuddle up against {p} for two turns.",1],
+["Fais un clin d'œil séducteur à chaque joueur.","Give every player a seductive wink."],
+["Laisse le groupe lire tes 3 dernières recherches Google.","Let the group read your last 3 Google searches."],
+["Fais une bise sur le front de {p}.","Kiss {p} on the forehead.",1],
+["Like la plus ancienne photo de ton crush.","Like your crush's oldest photo."],
+["Dis à {p} trois choses que tu trouves attirantes chez lui/elle.","Tell {p} three things you find attractive about them."],
+["Laisse {p} te coiffer comme il/elle veut.","Let {p} style your hair however they want.",1],
+["Écris un message de drague à {p} et envoie-le-lui vraiment.","Write a flirty message to {p} and actually send it."],
+["Fais un baisemain très élégant à {p}.","Give {p} a very elegant kiss on the hand.",1],
+["Laisse le groupe choisir à qui envoyer un cœur parmi tes contacts.","Let the group choose which contact you send a heart to."],
+["Regarde {p} dans les yeux, à 20 cm, pendant 20 secondes sans rire.","Look into {p}'s eyes from 20 cm away for 20 seconds without laughing.",1],
+["Raconte ton premier bisou en le mimant.","Tell the story of your first kiss by miming it."],
+["Échange un vêtement (veste, casquette, montre) avec {p} jusqu'à la fin de la partie.","Swap a piece of clothing (jacket, cap, watch) with {p} until the end of the game.",1],
+["Fais écouter le dernier vocal que tu as reçu.","Play the last voice note you received."],
+["Donne une bouchée de quelque chose à manger à {p}.","Feed {p} a bite of something.",1],
+["Choisis quelqu'un ici pour un rendez-vous imaginaire et décris-le en détail.","Pick someone here for an imaginary date and describe it in detail."],
+["Fais un câlin à {p} par derrière pendant 10 secondes.","Hug {p} from behind for 10 seconds.",1],
+["Montre avec qui tu discutes le plus en ce moment.","Show who you've been chatting with the most lately."],
+["Murmure quelque chose de gênant à l'oreille de {p}.","Whisper something embarrassing in {p}'s ear.",1],
+["Laisse {p} écrire ta bio Instagram ou TikTok pour 24 h.","Let {p} write your Instagram or TikTok bio for 24 hours."],
+["Assieds-toi dos à dos avec {p} et levez-vous sans les mains.","Sit back to back with {p} and stand up without using your hands.",1],
+["Avoue à {p} quelque chose que tu n'as jamais osé lui dire.","Tell {p} something you've never dared to say to them."],
+["Fais une séance photo de 30 secondes avec {p}, poses de stars.","Do a 30-second celebrity-style photoshoot with {p}.",1],
+["Laisse {p} lire tes derniers messages avec la personne de ton choix.","Let {p} read your latest messages with the person of your choice."],
+["Choisis la personne ici qui sera ton « chéri(e) » jusqu'à la fin de la partie.","Pick someone here to be your \"darling\" until the end of the game."]
+]},
+extreme: {
+v: [
+["Note de 1 à 10 le charme de chaque personne ici, à voix haute.","Rate everyone's charm here from 1 to 10, out loud."],
+["Si tu devais embrasser quelqu'un ici, qui serait-ce ?","If you had to kiss someone here, who would it be?"],
+["As-tu déjà eu deux crushs en même temps, ou trompé quelqu'un ?","Have you ever had two crushes at once, or cheated on someone?"],
+["La plus grosse folie que tu as faite pour quelqu'un ?","The craziest thing you've ever done for someone?"],
+["Le message le plus osé que tu as envoyé, raconté sans le lire ?","The boldest message you've ever sent, described without reading it?"],
+["Classe les joueurs du plus au moins attirant.","Rank the players from most to least attractive."],
+["As-tu déjà embrassé quelqu'un que tu n'aurais pas dû ?","Have you ever kissed someone you shouldn't have?"],
+["Avec qui ici partirais-tu en voyage en amoureux ?","Who here would you go on a romantic trip with?"],
+["Qu'est-ce qui t'attire chez {p}, honnêtement ?","What attracts you to {p}, honestly?"],
+["As-tu déjà eu des sentiments pour quelqu'un ici ? Qui ?","Have you ever had feelings for someone here? Who?"],
+["Le pire truc que tu aies fait à un ex ?","The worst thing you've done to an ex?"],
+["As-tu déjà dragué quelqu'un qui était en couple ?","Have you ever flirted with someone who was in a relationship?"],
+["Décris ton rendez-vous idéal, en détail.","Describe your ideal date, in detail."],
+["Qui ici embrasse le mieux, à ton avis ?","Who here do you think is the best kisser?"],
+["Le truc le plus fou que tu as fait en soirée ?","The craziest thing you've done at a party?"],
+["Avec qui ici aimerais-tu passer une soirée en tête-à-tête ?","Who here would you like to spend an evening alone with?"],
+["As-tu déjà été le « secret » de quelqu'un ?","Have you ever been someone's \"secret\"?"],
+["Le compliment le plus osé qu'on t'ait fait ?","The boldest compliment you've ever received?"],
+["Raconte une fois où tu as failli te faire prendre en train de mentir à ton/ta partenaire.","Tell us about a time you almost got caught lying to your partner."],
+["Quels joueurs ici aimerais-tu voir en couple ?","Which players here would you like to see as a couple?"],
+["Si {p} t'écrivait ce soir, tu répondrais en combien de temps ?","If {p} texted you tonight, how fast would you reply?"],
+["Ta plus grosse tentation de l'année ?","Your biggest temptation this year?"],
+["Ce que tu as fait de plus fou pour attirer l'attention de quelqu'un ?","The craziest thing you've done to get someone's attention?"],
+["Avoue ton crush le plus improbable.","Confess your most unlikely crush."],
+["As-tu déjà regardé quelqu'un ici d'une façon pas très amicale ?","Have you ever looked at someone here in a not-so-friendly way?"],
+["Qui appellerais-tu si tu étais seul(e) et que tu t'ennuyais ce soir ?","Who would you call if you were alone and bored tonight?"],
+["Le dernier mensonge que tu as dit à quelqu'un ici ?","The last lie you told someone here?"],
+["La dernière personne qui t'a fait rougir ?","The last person who made you blush?"],
+["Qu'est-ce que tu changerais chez ton ex si tu pouvais ?","What would you change about your ex if you could?"],
+["Quel joueur ici serait ton plan B ?","Which player here would be your plan B?"],
+["Le moment le plus gênant de ta vie amoureuse ?","The most awkward moment of your love life?"],
+["Si tu devais te marier avec quelqu'un ici demain, qui ?","If you had to marry someone here tomorrow, who?"]
+],
+a: [
+["Laisse le groupe envoyer le message de son choix à un contact de ton choix.","Let the group send a message of their choice to a contact of your choice."],
+["Poste en story une photo choisie par le groupe et laisse-la une heure.","Post a photo chosen by the group as a story and leave it for an hour."],
+["Murmure un compliment à l'oreille de {p}, assez fort pour qu'il/elle rougisse.","Whisper a compliment in {p}'s ear, enough to make them blush.",1],
+["Reste main dans la main avec {p} pendant trois tours.","Hold hands with {p} for three turns.",1],
+["Laisse {p} te donner à manger, les yeux bandés, assis(e) sur ses genoux.","Let {p} feed you, blindfolded, sitting on their lap.",1],
+["Appelle ton crush et dis-lui une chose que tu aimes chez lui/elle.","Call your crush and tell them one thing you like about them."],
+["Fais un bisou sur la main de {p}.","Kiss {p}'s hand.",1],
+["Danse collé-serré avec {p} pendant 30 secondes.","Dance close together with {p} for 30 seconds.",1],
+["Laisse {p} fouiller ta galerie pendant 20 secondes.","Let {p} scroll through your gallery for 20 seconds."],
+["Assieds-toi sur les genoux de {p} pendant trois tours.","Sit on {p}'s lap for three turns.",1],
+["Envoie « Je pense à toi » à ton ex ou à un ancien crush.","Send \"I'm thinking of you\" to your ex or an old crush."],
+["Reste dans les bras de {p} pendant 30 secondes.","Stay in {p}'s arms for 30 seconds.",1],
+["Donne ton téléphone déverrouillé à {p} pendant une minute.","Give your unlocked phone to {p} for one minute."],
+["Fais une demande en mariage à genoux à {p}, avec une bague imaginaire.","Propose to {p} on one knee with an imaginary ring."],
+["Laisse le groupe choisir ta photo de profil pour 24 h.","Let the group choose your profile picture for 24 hours."],
+["Masse le dos de {p} pendant une minute.","Massage {p}'s back for one minute.",1],
+["Lis à voix haute ta dernière conversation avec quelqu'un qui te plaît.","Read out loud your last chat with someone you like."],
+["Pose ta tête sur l'épaule de {p} jusqu'à ton prochain tour.","Rest your head on {p}'s shoulder until your next turn.",1],
+["Appelle quelqu'un choisi par le groupe et déclare-lui ton amitié éternelle en 30 secondes.","Call someone chosen by the group and declare your eternal friendship in 30 seconds."],
+["Laisse {p} écrire un mot au stylo sur ton bras.","Let {p} write a word on your arm with a pen.",1],
+["Le groupe te pose 5 questions : réponses obligatoires, sans joker.","The group asks you 5 questions: you must answer, no joker."],
+["Danse un slow avec {p} en le/la regardant dans les yeux tout du long.","Slow dance with {p} while looking into their eyes the whole time.",1],
+["Publie une story où tu chantes une chanson d'amour.","Post a story of yourself singing a love song."],
+["Fais un câlin à {p} en lui disant ce que tu apprécies chez lui/elle.","Hug {p} while telling them what you appreciate about them.",1],
+["Envoie ton selfie le plus séducteur à ton dernier contact WhatsApp.","Send your most seductive selfie to your last WhatsApp contact."],
+["Échange ton téléphone avec celui de {p} pendant deux tours.","Swap phones with {p} for two turns."],
+["Porte {p} sur ton dos ou dans tes bras pendant 10 secondes.","Carry {p} on your back or in your arms for 10 seconds.",1],
+["Chaque joueur te pose une question : interdit de mentir.","Every player asks you one question: no lying allowed."],
+["Tiens {p} par la taille pour une photo de groupe.","Hold {p} by the waist for a group photo.",1],
+["Avoue tes sentiments (vrais ou inventés) à {p}, de la façon la plus dramatique possible.","Confess your feelings (real or made up) to {p}, as dramatically as possible."],
+["Laisse {p} choisir quelqu'un de tes contacts à qui tu dois dire « tu es magnifique ».","Let {p} pick one of your contacts you must tell \"you're gorgeous\"."],
+["Garde la main de {p} sur ton épaule jusqu'à la fin du tour suivant.","Keep {p}'s hand on your shoulder until the end of the next turn.",1]
+]}
+};
+
+// Cartes spéciales
+const SPECIAL = {
+duel: [
+["imiter un prof","imitate a teacher"],["danser 15 secondes","dance for 15 seconds"],["chanter un refrain","sing a chorus"],
+["faire un défilé de mode","do a catwalk"],["faire une pub pour un objet","make an ad for an object"],["pousser un cri de guerre","do a battle cry"],
+["faire la meilleure grimace","pull the best face"],["déclarer sa flamme à un objet","declare their love to an object"],
+["imiter un animal","imitate an animal"],["poser comme une star","pose like a celebrity"],["raconter une blague","tell a joke"],
+["faire un discours de mariage","give a wedding speech"]
+],
+all: [
+["Levez la main si vous avez déjà stalké un ex.","Raise your hand if you've ever stalked an ex."],
+["Levez la main si vous avez déjà menti pour sécher un cours.","Raise your hand if you've ever lied to skip class."],
+["Levez la main si vous avez un crush en ce moment.","Raise your hand if you have a crush right now."],
+["Levez la main si vous avez déjà envoyé un message à la mauvaise personne.","Raise your hand if you've ever texted the wrong person."],
+["Levez la main si vous avez déjà ghosté quelqu'un.","Raise your hand if you've ever ghosted someone."],
+["Levez la main si vous avez déjà pleuré pour quelqu'un.","Raise your hand if you've ever cried over someone."],
+["Levez la main si vous avez déjà fait semblant d'être occupé(e) pour éviter quelqu'un.","Raise your hand if you've ever pretended to be busy to avoid someone."],
+["Levez la main si vous avez déjà oublié le prénom de quelqu'un en pleine conversation.","Raise your hand if you've forgotten someone's name mid-conversation."],
+["Levez la main si vous avez déjà dormi en cours.","Raise your hand if you've ever slept in class."],
+["Levez la main si vous trouvez quelqu'un ici attirant.","Raise your hand if you find someone here attractive."],
+["Levez la main si vous avez déjà eu un crush sur un(e) ami(e).","Raise your hand if you've had a crush on a friend."],
+["Levez la main si vous avez déjà regretté un message.","Raise your hand if you've ever regretted a message."]
+],
+vote: [
+["Qui ici est le plus susceptible de se marier en premier ?","Who here is most likely to get married first?"],
+["Qui ici est le plus susceptible de devenir célèbre ?","Who here is most likely to become famous?"],
+["Qui ici est le plus susceptible d'arriver en retard à son propre mariage ?","Who here is most likely to be late to their own wedding?"],
+["Qui ici est le plus susceptible de tomber amoureux/amoureuse ce soir ?","Who here is most likely to fall in love tonight?"],
+["Qui ici est le plus susceptible de ghoster quelqu'un ?","Who here is most likely to ghost someone?"],
+["Qui ici est le plus susceptible de devenir millionnaire ?","Who here is most likely to become a millionaire?"],
+["Qui ici est le plus susceptible de dormir en cours demain ?","Who here is most likely to sleep in class tomorrow?"],
+["Qui ici est le plus susceptible d'avoir un compte secret ?","Who here is most likely to have a secret account?"],
+["Qui ici est le plus susceptible d'envoyer un message à son ex ce soir ?","Who here is most likely to text their ex tonight?"],
+["Qui ici est le meilleur dragueur ou la meilleure dragueuse ?","Who here is the best flirt?"],
+["Qui ici est le plus susceptible de pleurer devant un film ?","Who here is most likely to cry at a movie?"],
+["Qui ici garderait le mieux un secret ?","Who here would keep a secret best?"]
+],
+rule: [
+["Interdit de dire « non ».","Saying \"no\" is forbidden."],
+["Tout le monde parle à la troisième personne.","Everyone speaks in the third person."],
+["Interdit de prononcer les prénoms.","Saying names is forbidden."],
+["Chaque phrase doit finir par « chéri(e) ».","Every sentence must end with \"darling\"."],
+["Interdit de rire.","Laughing is forbidden."],
+["Interdit de toucher son téléphone (sauf pour jouer).","No touching your phone (except to play)."],
+["Il faut lever la main avant de parler.","You must raise your hand before speaking."],
+["Tout le monde parle avec un accent.","Everyone speaks with an accent."],
+["Interdit de dire « je ».","Saying \"I\" is forbidden."],
+["Chaque fois qu'on dit « oui », on applaudit.","Every time someone says \"yes\", everyone claps."]
+]
+};
+
+// New World — cartes supplémentaires (pour atteindre ~500, dont 100 avec contact)
+CARDS.soft.v.push(
+["Le dernier film qui t'a vraiment déçu(e) ?","The last movie that really disappointed you?"],
+["Qui ici est le plus en retard en général ?","Who here is usually the latest?"],
+["Ta pire coupe de cheveux ?","Your worst haircut ever?"],
+["Le truc que tu fais quand personne ne te regarde ?","Something you do when nobody's watching?"],
+["Si tu gagnais 10 millions demain, tu achèterais quoi en premier ?","If you won 10 million tomorrow, what would you buy first?"],
+["Quelle appli supprimerais-tu si tu devais en garder une seule ?","Which apps would you delete if you could keep only one?"],
+["Le plat que tu cuisines le mieux ?","The dish you cook best?"],
+["As-tu déjà fait semblant de dormir pour éviter quelqu'un ?","Have you ever pretended to sleep to avoid someone?"],
+["Ta plus grosse bêtise d'enfant ?","Your worst mischief as a kid?"],
+["Quel super-pouvoir choisirais-tu ?","Which superpower would you pick?"],
+["Le dernier cadeau que tu as offert ?","The last gift you gave?"],
+["Ton émission ou ta chaîne YouTube préférée en ce moment ?","Your favourite show or YouTube channel right now?"],
+["Qui ici a le rire le plus contagieux ?","Who here has the most contagious laugh?"],
+["La chose la plus chère que tu aies cassée ?","The most expensive thing you've broken?"],
+["Ton pire souvenir de transport en commun ?","Your worst public transport memory?"],
+["Si tu pouvais vivre dans n'importe quel pays, lequel ?","If you could live in any country, which one?"],
+["Le compliment que tu entends le plus souvent ?","The compliment you hear most often?"],
+["Quelle est ta routine du matin, honnêtement ?","What's your morning routine, honestly?"],
+["Le dernier truc qui t'a fait pleurer de rire ?","The last thing that made you cry laughing?"],
+["Tu préfères perdre ton téléphone ou ton portefeuille ?","Would you rather lose your phone or your wallet?"],
+["Quel personnage de série te ressemble le plus ?","Which TV character is most like you?"],
+["La matière que tu détestes le plus ?","The subject you hate the most?"],
+["As-tu déjà oublié l'anniversaire d'un(e) proche ?","Have you ever forgotten a close one's birthday?"],
+["Ton pire réflexe quand tu es stressé(e) ?","Your worst habit when you're stressed?"],
+["Quelle chanson te met toujours de bonne humeur ?","Which song always puts you in a good mood?"],
+["Qui ici serait le meilleur président ?","Who here would make the best president?"],
+["Le mot que tu dis beaucoup trop souvent ?","The word you say way too often?"],
+["Ton record d'heures de sommeil d'affilée ?","Your record for hours of sleep in a row?"],
+["Si tu changeais de prénom, tu prendrais lequel ?","If you changed your name, which would you pick?"],
+["Le mensonge que tu racontes le plus souvent ?","The lie you tell most often?"]
+);
+CARDS.soft.a.push(
+["Fais le tour de la pièce en marchant comme un mannequin.","Walk around the room like a model."],
+["Imite ton propre réveil le matin.","Act out how you wake up in the morning."],
+["Raconte un souvenir d'enfance en 30 secondes, sans dire « euh ».","Tell a childhood memory in 30 seconds without saying \"um\"."],
+["Fais un selfie de groupe avec ta tête la plus bizarre.","Take a group selfie with your weirdest face."],
+["Chante ta phrase suivante comme dans un opéra.","Sing your next sentence like an opera."],
+["Danse sur une chanson choisie par {p} pendant 20 secondes.","Dance to a song chosen by {p} for 20 seconds."],
+["Fais deviner un film uniquement par des mimes.","Get the others to guess a movie by miming only."],
+["Raconte l'histoire du Petit Chaperon rouge en 30 secondes, version moderne.","Tell Little Red Riding Hood in 30 seconds, modern version."],
+["Dis trois vérités et un mensonge : les autres devinent le mensonge.","Say three truths and one lie: the others guess the lie."],
+["Fais 15 secondes de stand-up sur ta journée.","Do 15 seconds of stand-up about your day."],
+["Parle comme un journaliste télé jusqu'à ton prochain tour.","Talk like a TV news anchor until your next turn."],
+["Fais semblant de vendre ton téléphone à {p}.","Pretend to sell your phone to {p}."],
+["Imite trois animaux en 15 secondes.","Imitate three animals in 15 seconds."],
+["Montre la photo la plus ancienne de ta galerie.","Show the oldest photo in your gallery."],
+["Fais un compliment à {p} en rimes.","Compliment {p} in rhymes."],
+["Invente une danse et apprends-la au groupe.","Invent a dance and teach it to the group."],
+["Raconte ta journée en seulement 10 mots.","Describe your day in only 10 words."],
+["Joue une scène de dispute avec un objet de la pièce.","Act out an argument with an object in the room."],
+["Fais ton meilleur accent de grand-père ou de grand-mère.","Do your best grandpa or grandma voice."],
+["Dis le prénom de chaque joueur à l'envers.","Say every player's name backwards."],
+["Fais une interview de {p} comme un journaliste sportif.","Interview {p} like a sports reporter."],
+["Garde le sourire sans rien dire pendant 30 secondes.","Keep smiling silently for 30 seconds."],
+["Écris ton prénom en l'air avec ton coude.","Write your name in the air with your elbow."],
+["Fais la voix off d'un documentaire animalier sur le groupe.","Do a wildlife documentary voice-over about the group."],
+["Envoie « Bonne nuit » au 10e contact de ta liste.","Send \"Good night\" to the 10th contact in your list."],
+["Fais un défilé en présentant ta tenue comme un créateur.","Do a catwalk presenting your outfit like a designer."],
+["Imite une sonnerie de téléphone jusqu'à ce que quelqu'un « décroche ».","Imitate a ringtone until someone \"picks up\"."],
+["Fais un discours de remerciement comme si tu gagnais un prix.","Give an award acceptance speech."],
+["Parle sans utiliser la lettre « a » pendant 20 secondes.","Talk without using the letter \"a\" for 20 seconds."],
+["Fais une pose de statue et garde-la jusqu'à ce que quelqu'un rie.","Strike a statue pose and hold it until someone laughs."]
+);
+CARDS.hard.v.push(
+["Ton plus gros moment de jalousie sur les réseaux ?","Your biggest moment of jealousy on social media?"],
+["As-tu déjà dit du mal de quelqu'un ici ? Qui ?","Have you ever badmouthed someone here? Who?"],
+["Le dernier mensonge que tu as dit pour annuler une sortie ?","The last lie you told to cancel plans?"],
+["Qui ici est le plus faux ou la plus fausse, selon toi ?","Who here is the most fake, in your opinion?"],
+["As-tu déjà été amoureux/amoureuse de quelqu'un qui ne le savait pas ?","Have you ever loved someone who never knew?"],
+["Ta pire rupture ?","Your worst break-up?"],
+["As-tu déjà menti sur ton âge, ton travail ou tes études pour impressionner ?","Have you ever lied about your age, job or studies to impress someone?"],
+["Ton message le plus long envoyé à quelqu'un qui te plaisait ?","The longest message you sent to someone you liked?"],
+["Qui ici aurait le plus de chances de te piquer ton crush ?","Who here would be most likely to steal your crush?"],
+["As-tu déjà espionné le téléphone de quelqu'un de ta famille ?","Have you ever snooped on a family member's phone?"],
+["Ta pire honte sur les réseaux sociaux ?","Your most embarrassing social media moment?"],
+["As-tu déjà pleuré à cause d'une note ?","Have you ever cried over a grade?"],
+["La chose la plus folle que tu as faite pour un like ?","The craziest thing you've done for a like?"],
+["As-tu déjà ignoré un appel de tes parents pour rester avec tes amis ?","Have you ever ignored your parents' call to stay with friends?"],
+["Avec qui ici as-tu le moins de points communs ?","Who here do you have the least in common with?"],
+["Qu'est-ce que tu n'aimes pas chez toi physiquement ?","What don't you like about yourself physically?"],
+["As-tu déjà triché à un examen ? Raconte.","Have you ever cheated on an exam? Tell us."],
+["Le mensonge le plus énorme que tu as réussi à faire croire ?","The biggest lie you got away with?"],
+["As-tu déjà été le crush de quelqu'un sans répondre à ses sentiments ?","Have you been someone's crush without returning the feelings?"],
+["Ton pire message envoyé à 2 h du matin ?","Your worst 2 a.m. message?"],
+["Qui ici ferait le pire partenaire ?","Who here would make the worst partner?"],
+["As-tu déjà fait semblant d'aimer un cadeau ?","Have you ever pretended to like a gift?"],
+["Un secret que tes parents ne connaissent pas ?","A secret your parents don't know?"],
+["Ta plus grosse dépense inutile ?","Your most pointless purchase?"],
+["As-tu déjà été jaloux/jalouse d'un(e) de tes frères ou sœurs ?","Have you ever been jealous of a sibling?"],
+["Qui était ton premier « amour » à l'école ?","Who was your first school \"love\"?"],
+["Quelle personne de ton passé aimerais-tu ne jamais recroiser ?","Who from your past would you never want to meet again?"],
+["Ton plus gros fail en voulant impressionner quelqu'un ?","Your biggest fail while trying to impress someone?"],
+["As-tu déjà supprimé une photo parce qu'elle n'avait pas assez de likes ?","Have you ever deleted a photo for not getting enough likes?"],
+["Le message que tu regrettes le plus d'avoir envoyé ?","The message you most regret sending?"]
+);
+CARDS.hard.a.push(
+["Fais un massage des mains de {p} pendant 30 secondes.","Give {p} a 30-second hand massage.",1],
+["Fais un câlin de groupe avec {p} et un autre joueur de ton choix.","Have a group hug with {p} and another player of your choice.",1],
+["Tape dans la main de {p} à chaque fois qu'il/elle parle jusqu'à ton prochain tour.","High-five {p} every time they speak until your next turn.",1],
+["Fais un bisou sur la main de {p}.","Kiss {p}'s hand.",1],
+["Laisse {p} te faire une petite tresse ou une coiffure rapide.","Let {p} give you a quick braid or hairstyle.",1],
+["Porte la veste ou le pull de {p} jusqu'à ton prochain tour.","Wear {p}'s jacket or sweater until your next turn.",1],
+["Donne le bras à {p} et faites le tour de la pièce comme des mariés.","Link arms with {p} and walk around the room like newlyweds.",1],
+["Danse 20 secondes avec {p} sur une musique choisie par le groupe.","Dance with {p} for 20 seconds to music chosen by the group.",1],
+["Laisse {p} poser sa tête sur ton épaule jusqu'à ton prochain tour.","Let {p} rest their head on your shoulder until your next turn.",1],
+["Fais un « check » épaule contre épaule avec {p}, façon footballeurs.","Do a shoulder bump with {p}, footballer style.",1],
+["Laisse {p} te maquiller ou te dessiner une moustache (au crayon ou au rouge à lèvres).","Let {p} put make-up on you or draw a moustache.",1],
+["Fais la course à cloche-pied avec {p} en vous tenant la main.","Hop on one foot with {p} while holding hands.",1],
+["Fais un câlin à {p} comme si vous ne vous étiez pas vus depuis 10 ans.","Hug {p} as if you hadn't seen each other in 10 years.",1],
+["Masse le cuir chevelu de {p} pendant 30 secondes.","Massage {p}'s scalp for 30 seconds.",1],
+["Tiens {p} par l'épaule pour une photo « meilleurs amis ».","Put your arm around {p} for a \"best friends\" photo.",1],
+["Fais une bise sur la joue de chaque joueur qui accepte, en commençant par {p}.","Kiss the cheek of every player who agrees, starting with {p}.",1],
+["Bras de fer avec {p} : le perdant fait un compliment au gagnant.","Arm-wrestle {p}: the loser compliments the winner.",1],
+["Laisse {p} te mettre du parfum ou de la crème sur les mains.","Let {p} put perfume or lotion on your hands.",1],
+["Fais un pas de danse en duo avec {p}, main dans la main.","Do a duo dance move with {p}, hand in hand.",1],
+["Assieds-toi collé(e) à {p} jusqu'à ton prochain tour.","Sit pressed up against {p} until your next turn.",1],
+["Laisse {p} écrire ton prochain message à ton crush (tu choisis de l'envoyer ou non).","Let {p} write your next message to your crush (you choose whether to send it)."],
+["Imite la personne qui te plaît sans dire son nom.","Imitate the person you like without saying their name."],
+["Montre ta liste d'appels récents.","Show your recent calls list."],
+["Fais un vocal à un(e) ami(e) en disant que tu as une grande nouvelle… sans la donner.","Send a friend a voice note saying you have big news… without telling it."],
+["Laisse {p} choisir un émoji que tu dois mettre à la fin de chaque message ce soir.","Let {p} choose an emoji you must end every message with tonight."],
+["Change ton nom WhatsApp pour un nom choisi par le groupe pendant une heure.","Change your WhatsApp name to one chosen by the group for an hour."],
+["Fais ta meilleure imitation de quelqu'un qui drague mal.","Do your best impression of someone flirting badly."],
+["Lis le dernier message de ton groupe WhatsApp familial à voix haute.","Read the last message from your family WhatsApp group out loud."],
+["Laisse le groupe voir tes 3 derniers contacts ajoutés.","Let the group see your 3 most recently added contacts."],
+["Fais une déclaration d'amour à ton téléphone devant tout le monde.","Make a love declaration to your phone in front of everyone."]
+);
+CARDS.spicy.v.push(
+["Qui ici pourrait te faire craquer s'il/elle essayait ?","Who here could win you over if they tried?"],
+["As-tu déjà fantasmé sur un rendez-vous avec quelqu'un ici ?","Have you ever imagined a date with someone here?"],
+["Ce que tu n'oses jamais dire à ton crush ?","What you never dare say to your crush?"],
+["Le moment où tu t'es senti(e) le plus séduisant(e) ?","The moment you felt the most attractive?"],
+["As-tu déjà eu un crush sur quelqu'un beaucoup plus âgé ?","Have you ever had a crush on someone much older?"],
+["Le plus long que tu aies attendu une réponse de quelqu'un ?","The longest you've waited for someone's reply?"],
+["As-tu déjà embrassé quelqu'un juste pour rendre une autre personne jalouse ?","Have you ever kissed someone just to make someone else jealous?"],
+["Quelle personne ici a le plus beau regard ?","Who here has the most beautiful eyes?"],
+["Combien de temps ton plus court couple a-t-il duré ?","How long did your shortest relationship last?"],
+["Ce que tu trouves le plus attirant chez {p} ?","What do you find most attractive about {p}?"],
+["As-tu déjà dit « je t'aime » en premier ?","Have you ever said \"I love you\" first?"],
+["Ton pire bisou ?","Your worst kiss?"],
+["As-tu déjà été jaloux/jalouse de quelqu'un ici à cause d'une personne ?","Have you ever been jealous of someone here because of a person?"],
+["Ton crush le plus long, ça a duré combien de temps ?","How long did your longest crush last?"],
+["As-tu déjà regretté d'avoir quitté quelqu'un ?","Have you ever regretted breaking up with someone?"],
+["Quel est ton langage de l'amour : mots, cadeaux, temps, gestes ou attentions ?","What's your love language: words, gifts, time, touch or acts of service?"],
+["Qui ici ferait le meilleur premier rendez-vous ?","Who here would be the best first date?"],
+["As-tu déjà gardé une photo d'un ex ?","Have you ever kept a photo of an ex?"],
+["Le plus beau geste romantique qu'on ait fait pour toi ?","The most romantic thing anyone has done for you?"],
+["Ton type de personne idéal est-il présent dans cette pièce ?","Is your ideal type in this room?"],
+["As-tu déjà été en couple avec quelqu'un que tes amis détestaient ?","Have you dated someone your friends hated?"],
+["As-tu déjà menti sur ton nombre d'ex ?","Have you ever lied about how many exes you have?"],
+["La phrase de drague la plus nulle qu'on t'ait sortie ?","The worst pick-up line anyone used on you?"],
+["Qui ici est le plus séducteur ou la plus séductrice ?","Who here is the biggest charmer?"],
+["Combien de crushs as-tu eus cette année ?","How many crushes have you had this year?"],
+["As-tu déjà été jaloux/jalouse d'un(e) ex de ton/ta partenaire ?","Have you ever been jealous of your partner's ex?"],
+["Le plus gros secret que tu caches à ton/ta meilleur(e) ami(e) ?","The biggest secret you keep from your best friend?"],
+["Que ferais-tu si {p} t'avouait ses sentiments ce soir ?","What would you do if {p} confessed their feelings tonight?"],
+["As-tu déjà dragué quelqu'un sur les réseaux sans jamais le rencontrer ?","Have you ever flirted with someone online without ever meeting?"],
+["Ton plus gros coup de foudre ?","Your biggest love at first sight?"]
+);
+CARDS.spicy.a.push(
+["Fais un slow de 20 secondes avec {p} sans musique.","Slow dance with {p} for 20 seconds without music.",1],
+["Laisse {p} s'asseoir sur tes genoux pendant un tour.","Let {p} sit on your lap for one turn.",1],
+["Fais un câlin à {p} pendant 20 secondes sans rien dire.","Hug {p} for 20 seconds without saying anything.",1],
+["Tiens la main de {p} en le/la regardant dans les yeux pendant 15 secondes.","Hold {p}'s hand while looking into their eyes for 15 seconds.",1],
+["Fais une bise sur la joue de {p}, puis complimente-le/la.","Kiss {p} on the cheek, then compliment them.",1],
+["Masse les épaules de {p} pendant qu'il/elle répond à une Vérité choisie par le groupe.","Massage {p}'s shoulders while they answer a Truth chosen by the group.",1],
+["Danse un slow avec {p} en lui chuchotant des compliments.","Slow dance with {p} while whispering compliments.",1],
+["Recoiffe {p} avec tes doigts, tout en douceur.","Gently fix {p}'s hair with your fingers.",1],
+["Fais un baisemain à {p} et invite-le/la à danser.","Kiss {p}'s hand and ask them to dance.",1],
+["Laisse {p} te tenir par la taille pendant un tour.","Let {p} hold you by the waist for one turn.",1],
+["Assieds-toi dos contre dos avec {p} jusqu'à ton prochain tour.","Sit back to back with {p} until your next turn.",1],
+["Fais un câlin d'ours à {p} et soulève-le/la si tu peux.","Give {p} a bear hug and lift them if you can.",1],
+["Pose ta main sur l'épaule de {p} et fais-lui une déclaration de 10 secondes.","Put your hand on {p}'s shoulder and make a 10-second declaration.",1],
+["Laisse {p} dessiner un cœur sur ta main.","Let {p} draw a heart on your hand.",1],
+["Croise les bras avec {p} et buvez une gorgée en même temps (eau ou soda).","Link arms with {p} and take a sip at the same time (water or soda).",1],
+["Fais une photo joue contre joue avec {p}.","Take a cheek-to-cheek photo with {p}.",1],
+["Masse le dos de {p} pendant 30 secondes.","Massage {p}'s back for 30 seconds.",1],
+["Fais tourner {p} sur lui/elle-même comme dans une danse de salon.","Spin {p} around like in a ballroom dance.",1],
+["Murmure un secret (vrai) à l'oreille de {p}.","Whisper a (true) secret in {p}'s ear.",1],
+["Fais une bise sur le nez de {p}.","Give {p} a little kiss on the nose.",1],
+["Laisse {p} t'enlacer par derrière pendant 15 secondes.","Let {p} hug you from behind for 15 seconds.",1],
+["Fais un clin d'œil à {p} à chaque fois que vos regards se croisent jusqu'à la fin du tour.","Wink at {p} every time your eyes meet until the end of the round.",1],
+["Envoie un message flatteur à la 3e personne de ta liste de discussions.","Send a flattering message to the 3rd person in your chat list."],
+["Montre ta photo la plus séduisante dans ta galerie.","Show the most attractive photo of yourself in your gallery."],
+["Écris un message romantique à ton crush, montre-le au groupe, puis décide si tu l'envoies.","Write a romantic text to your crush, show the group, then decide whether to send it."],
+["Raconte ton dernier rendez-vous en détail.","Describe your last date in detail."],
+["Laisse {p} choisir une photo de ta galerie à mettre en statut pendant 30 minutes.","Let {p} pick a photo from your gallery to post as a status for 30 minutes."],
+["Fais une déclaration à la personne ici qui a le plus beau sourire, selon toi.","Make a declaration to the person here with the nicest smile, in your opinion."],
+["Appelle un(e) ex ou un ancien crush et demande-lui comment il/elle va.","Call an ex or old crush and ask how they're doing."],
+["Choisis deux joueurs qui doivent se tenir la main jusqu'à ton prochain tour (s'ils acceptent).","Pick two players who must hold hands until your next turn (if they agree)."],
+["Récite un poème d'amour improvisé à {p}, à genoux.","Recite an improvised love poem to {p}, on one knee."],
+["Laisse le groupe lire ta bio et tes 3 dernières stories.","Let the group read your bio and your last 3 stories."]
+);
+CARDS.extreme.v.push(
+["Qui ici aimerais-tu embrasser, si personne ne le savait ?","Who here would you kiss if nobody would ever know?"],
+["As-tu déjà eu une relation secrète avec quelqu'un de ton entourage ?","Have you ever had a secret relationship with someone close to you?"],
+["Le plus gros risque que tu aies pris pour voir quelqu'un ?","The biggest risk you've taken to see someone?"],
+["As-tu déjà eu des sentiments pour deux personnes de ce groupe ?","Have you ever had feelings for two people in this group?"],
+["Ton ex le plus marquant, et pourquoi ?","Your most memorable ex, and why?"],
+["Quel joueur ici serait le plus doué pour te séduire ?","Which player here would be the best at seducing you?"],
+["As-tu déjà été le/la « plan B » de quelqu'un ?","Have you ever been someone's \"plan B\"?"],
+["Que penses-tu vraiment du couple que formerait {p} avec toi ?","What do you really think about {p} and you as a couple?"],
+["La chose la plus folle que tu aies faite par jalousie ?","The craziest thing you've done out of jealousy?"],
+["As-tu déjà menti à quelqu'un ici à propos d'une personne ?","Have you ever lied to someone here about a person?"],
+["Ton message le plus romantique, lu à voix haute ?","Your most romantic message, read out loud?"],
+["As-tu déjà été amoureux/amoureuse de deux personnes à la fois ?","Have you ever been in love with two people at once?"],
+["Qui ici as-tu déjà observé(e) en cachette ?","Who here have you secretly watched?"],
+["Si tu devais quitter cette soirée main dans la main avec quelqu'un, qui ?","If you had to leave this party hand in hand with someone, who?"],
+["As-tu déjà eu un crush sur le frère ou la sœur d'un(e) ami(e) ?","Have you ever had a crush on a friend's sibling?"],
+["Le pire mensonge que tu aies dit en couple ?","The worst lie you've told in a relationship?"],
+["Quel détail de {p} remarques-tu tout de suite ?","What detail about {p} do you notice right away?"],
+["As-tu déjà eu envie de revenir avec un ex ? Lequel ?","Have you ever wanted to get back with an ex? Which one?"],
+["Révèle une conversation que tu n'aimerais pas qu'on lise.","Reveal a conversation you wouldn't want anyone to read."],
+["Qui ici penses-tu avoir un crush sur toi ?","Who here do you think has a crush on you?"],
+["Le moment où tu as été le plus près de craquer pour quelqu'un d'interdit ?","The closest you came to falling for someone off-limits?"],
+["Ta plus grosse déception amoureuse ?","Your biggest heartbreak?"],
+["As-tu déjà écrit à quelqu'un juste parce que tu étais seul(e) ?","Have you ever texted someone just because you were lonely?"],
+["Si tu devais passer une journée en amoureux avec {p}, vous feriez quoi ?","If you had to spend a romantic day with {p}, what would you do?"],
+["As-tu déjà été attiré(e) par la/le partenaire de quelqu'un ici ?","Have you ever been attracted to someone here's partner?"],
+["Quelle personne ici ne te laisse pas indifférent(e) ?","Who here doesn't leave you indifferent?"],
+["Ton plus grand regret de cette année ?","Your biggest regret this year?"],
+["La pire chose que tu aies faite pour oublier quelqu'un ?","The worst thing you've done to get over someone?"],
+["As-tu déjà eu un crush sur quelqu'un rencontré en soirée ?","Have you ever had a crush on someone you met at a party?"],
+["Qui ici, selon toi, cache le plus de secrets amoureux ?","Who here do you think hides the most love secrets?"]
+);
+CARDS.extreme.a.push(
+["Danse collé-serré avec {p} pendant une chanson entière choisie par le groupe.","Dance close with {p} for a whole song chosen by the group.",1],
+["Fais un long câlin à {p} en lui disant une chose que tu n'as jamais osé lui dire.","Give {p} a long hug while telling them something you never dared to say.",1],
+["Laisse {p} poser sa main sur ta joue pendant que tu lui fais un compliment.","Let {p} put their hand on your cheek while you compliment them.",1],
+["Assieds-toi sur les genoux de {p} et réponds à une Vérité choisie par le groupe.","Sit on {p}'s lap and answer a Truth chosen by the group.",1],
+["Fais une bise sur les deux joues de {p}, très lentement.","Kiss {p} on both cheeks, very slowly.",1],
+["Laisse {p} te nourrir de trois bouchées, les yeux bandés.","Let {p} feed you three bites, blindfolded.",1],
+["Masse les épaules de {p} pendant une minute en lui chuchotant des compliments.","Massage {p}'s shoulders for a minute while whispering compliments.",1],
+["Tiens {p} dans tes bras pendant tout le tour suivant.","Hold {p} in your arms for the whole next turn.",1],
+["Fais un slow avec {p} front contre front pendant 20 secondes.","Slow dance forehead to forehead with {p} for 20 seconds.",1],
+["Laisse {p} écrire son prénom sur ta main avec un cœur.","Let {p} write their name with a heart on your hand.",1],
+["Fais un baisemain à {p} puis reste main dans la main jusqu'à la fin du tour.","Kiss {p}'s hand, then hold hands until the end of the round.",1],
+["Allonge-toi la tête sur les genoux de {p} pendant un tour.","Lie with your head on {p}'s lap for one turn.",1],
+["Laisse {p} te faire un massage des mains les yeux fermés.","Let {p} massage your hands with your eyes closed.",1],
+["Fais une photo « couple » avec {p}, et laisse le groupe choisir la pose.","Take a \"couple\" photo with {p}, the group chooses the pose.",1],
+["Danse avec {p} comme dans un film romantique, jusqu'au porté si possible.","Dance with {p} like in a romantic movie, lift included if possible.",1],
+["Fais un câlin à {p} par derrière et reste ainsi pendant sa prochaine réponse.","Hug {p} from behind and stay like that during their next answer.",1],
+["Laisse {p} te coiffer et choisir un accessoire que tu portes jusqu'à la fin.","Let {p} style your hair and pick an accessory you wear until the end.",1],
+["Fais une bise dans les cheveux de {p}.","Give {p} a kiss on the hair.",1],
+["Murmure à l'oreille de {p} ce que tu ferais lors d'un rendez-vous avec lui/elle.","Whisper in {p}'s ear what you'd do on a date with them.",1],
+["Tiens le visage de {p} entre tes mains et dis-lui trois qualités.","Hold {p}'s face in your hands and tell them three good qualities.",1],
+["Reste blotti(e) contre {p} pendant les deux prochains tours.","Stay cuddled against {p} for the next two turns.",1],
+["Fais une demande de rendez-vous à {p} en lui tenant les deux mains.","Ask {p} out while holding both their hands.",1],
+["Laisse le groupe envoyer un message de ton téléphone à la personne de leur choix (rien de méchant).","Let the group text anyone they choose from your phone (nothing mean)."],
+["Appelle ton crush en haut-parleur et pose-lui une question choisie par le groupe.","Call your crush on speaker and ask a question chosen by the group."],
+["Montre ta conversation la plus récente avec quelqu'un qui te plaît.","Show your latest chat with someone you like."],
+["Publie une story avec une phrase mystérieuse écrite par le groupe.","Post a story with a mysterious sentence written by the group."],
+["Envoie « On se voit quand ? » à un ancien crush.","Send \"When are we meeting?\" to an old crush."],
+["Laisse {p} lire tes 10 derniers messages envoyés.","Let {p} read your last 10 sent messages."],
+["Mets une photo choisie par le groupe en photo de profil pour le reste de la nuit.","Set a photo chosen by the group as your profile picture for the rest of the night."],
+["Avoue ton crush actuel à voix haute, ou prends un gage choisi par le groupe.","Confess your current crush out loud, or take a forfeit chosen by the group."],
+["Laisse le groupe te poser 3 questions sur ta vie amoureuse : interdit de mentir.","Let the group ask you 3 questions about your love life: no lying."],
+["Fais ta meilleure déclaration d'amour à quelqu'un ici, choisi par le groupe.","Make your best love declaration to someone here chosen by the group."]
+);
+
+// New World — paires de mots pour L'Intrus. "fr|en" (sans | = identique)
+const THEMES = {
+food: {fr:"Nourriture", en:"Food", icon:"[[i:food]]", pairs:[
+["Café|Coffee","Thé|Tea"],["Pizza","Burger"],["Riz|Rice","Pâtes|Pasta"],["Mangue|Mango","Papaye|Papaya"],["Orange","Mandarine|Tangerine"],
+["Chocolat|Chocolate","Caramel"],["Lait|Milk","Yaourt|Yogurt"],["Pain|Bread","Croissant"],["Poulet|Chicken","Dinde|Turkey"],["Glace|Ice cream","Sorbet"],
+["Frites|Fries","Chips|Crisps"],["Banane|Banana","Plantain"],["Oignon|Onion","Ail|Garlic"],["Soupe|Soup","Bouillon|Broth"],["Miel|Honey","Confiture|Jam"],
+["Jus|Juice","Soda"],["Gâteau|Cake","Tarte|Pie"],["Poisson|Fish","Crevette|Shrimp"],["Citron|Lemon","Citron vert|Lime"],["Pastèque|Watermelon","Melon"],
+["Œuf|Egg","Omelette"],["Sel|Salt","Poivre|Pepper"],["Beurre|Butter","Margarine"],["Sandwich","Wrap"],["Ananas|Pineapple","Noix de coco|Coconut"],
+["Spaghetti","Macaroni"],["Fromage|Cheese","Beurre|Butter"],["Cacahuète|Peanut","Noix de cajou|Cashew"],["Crêpe|Pancake","Gaufre|Waffle"],["Sucre|Sugar","Miel|Honey"]
+]},
+jobs: {fr:"Métiers", en:"Jobs", icon:"[[i:briefcase]]", pairs:[
+["Médecin|Doctor","Infirmier|Nurse"],["Avocat|Lawyer","Juge|Judge"],["Professeur|Teacher","Directeur|Principal"],["Pilote|Pilot","Hôtesse de l'air|Flight attendant"],["Policier|Police officer","Gendarme"],
+["Comptable|Accountant","Banquier|Banker"],["Boulanger|Baker","Pâtissier|Pastry chef"],["Chauffeur|Driver","Taximan|Taxi driver"],["Coiffeur|Hairdresser","Barbier|Barber"],["Journaliste|Journalist","Animateur radio|Radio host"],
+["Footballeur|Footballer","Basketteur|Basketball player"],["Chanteur|Singer","Rappeur|Rapper"],["Acteur|Actor","Réalisateur|Director"],["Architecte|Architect","Ingénieur|Engineer"],["Dentiste|Dentist","Chirurgien|Surgeon"],
+["Pompier|Firefighter","Secouriste|Paramedic"],["Tailleur|Tailor","Couturier|Fashion designer"],["Cuisinier|Cook","Serveur|Waiter"],["Pharmacien|Pharmacist","Médecin|Doctor"],["Photographe|Photographer","Caméraman|Cameraman"],
+["Mécanicien|Mechanic","Électricien|Electrician"],["Développeur|Developer","Hacker"],["Vendeur|Salesperson","Caissier|Cashier"],["Agriculteur|Farmer","Pêcheur|Fisherman"],["Soldat|Soldier","Garde du corps|Bodyguard"]
+]},
+animals: {fr:"Animaux", en:"Animals", icon:"[[i:paw]]", pairs:[
+["Lion","Tigre|Tiger"],["Chat|Cat","Chien|Dog"],["Cheval|Horse","Âne|Donkey"],["Mouton|Sheep","Chèvre|Goat"],["Crocodile","Lézard|Lizard"],
+["Éléphant|Elephant","Hippopotame|Hippo"],["Aigle|Eagle","Faucon|Hawk"],["Requin|Shark","Dauphin|Dolphin"],["Singe|Monkey","Gorille|Gorilla"],["Poule|Hen","Canard|Duck"],
+["Abeille|Bee","Guêpe|Wasp"],["Serpent|Snake","Ver|Worm"],["Girafe|Giraffe","Zèbre|Zebra"],["Lapin|Rabbit","Lièvre|Hare"],["Souris|Mouse","Rat"],
+["Tortue|Turtle","Escargot|Snail"],["Moustique|Mosquito","Mouche|Fly"],["Hibou|Owl","Chauve-souris|Bat"],["Vache|Cow","Bœuf|Ox"],["Pingouin|Penguin","Mouette|Seagull"],
+["Loup|Wolf","Renard|Fox"],["Chameau|Camel","Dromadaire|Dromedary"],["Perroquet|Parrot","Pigeon"],["Grenouille|Frog","Crapaud|Toad"],["Fourmi|Ant","Cafard|Cockroach"]
+]},
+objects: {fr:"Objets", en:"Objects", icon:"[[i:phone]]", pairs:[
+["Téléphone|Phone","Tablette|Tablet"],["Stylo|Pen","Crayon|Pencil"],["Chaise|Chair","Tabouret|Stool"],["Lit|Bed","Canapé|Sofa"],["Montre|Watch","Bracelet"],
+["Lunettes|Glasses","Lunettes de soleil|Sunglasses"],["Sac à dos|Backpack","Valise|Suitcase"],["Parapluie|Umbrella","Imperméable|Raincoat"],["Ventilateur|Fan","Climatiseur|Air conditioner"],["Clé|Key","Cadenas|Padlock"],
+["Ordinateur|Computer","Tablette|Tablet"],["Miroir|Mirror","Fenêtre|Window"],["Brosse à dents|Toothbrush","Peigne|Comb"],["Casque|Headphones","Écouteurs|Earbuds"],["Bougie|Candle","Lampe|Lamp"],
+["Livre|Book","Cahier|Notebook"],["Chaussure|Shoe","Sandale|Sandal"],["Casquette|Cap","Chapeau|Hat"],["Télécommande|Remote","Manette|Controller"],["Savon|Soap","Shampoing|Shampoo"],
+["Fourchette|Fork","Cuillère|Spoon"],["Bouteille|Bottle","Verre|Glass"],["Oreiller|Pillow","Couverture|Blanket"],["Chargeur|Charger","Batterie externe|Power bank"],["Portefeuille|Wallet","Porte-monnaie|Purse"]
+]},
+sports: {fr:"Sports", en:"Sports", icon:"[[i:ball]]", pairs:[
+["Football","Basketball"],["Tennis","Badminton"],["Natation|Swimming","Plongée|Diving"],["Boxe|Boxing","Lutte|Wrestling"],["Course|Running","Marathon"],
+["Vélo|Cycling","Moto|Motorbike"],["Handball","Volleyball"],["Karaté|Karate","Judo"],["Rugby","Football américain|American football"],["Ski","Snowboard"],
+["Golf","Mini-golf"],["Surf","Skate"],["Yoga","Pilates"],["Échecs|Chess","Dames|Checkers"],["Musculation|Weightlifting","Crossfit"],
+["Ping-pong","Tennis"],["Baseball","Cricket"],["Danse|Dance","Gymnastique|Gymnastics"],["Escalade|Climbing","Randonnée|Hiking"],["Formule 1|Formula 1","Rallye|Rally"]
+]},
+places: {fr:"Lieux", en:"Places", icon:"[[i:pin]]", pairs:[
+["Plage|Beach","Piscine|Swimming pool"],["Hôpital|Hospital","Clinique|Clinic"],["École|School","Université|University"],["Marché|Market","Supermarché|Supermarket"],["Aéroport|Airport","Gare|Train station"],
+["Cinéma|Cinema","Théâtre|Theatre"],["Restaurant","Fast-food"],["Bibliothèque|Library","Librairie|Bookshop"],["Stade|Stadium","Gymnase|Gym"],["Hôtel|Hotel","Auberge|Hostel"],
+["Banque|Bank","Distributeur|ATM"],["Désert|Desert","Savane|Savanna"],["Montagne|Mountain","Colline|Hill"],["Forêt|Forest","Jungle"],["Prison","Commissariat|Police station"],
+["Boîte de nuit|Nightclub","Bar"],["Zoo","Parc|Park"],["Cuisine|Kitchen","Salle à manger|Dining room"],["Musée|Museum","Galerie d'art|Art gallery"],["Pharmacie|Pharmacy","Hôpital|Hospital"],
+["Île|Island","Presqu'île|Peninsula"],["Mer|Sea","Océan|Ocean"],["Ville|City","Village"],["Port","Plage|Beach"],["Salon de coiffure|Hair salon","Spa"]
+]},
+brands: {fr:"Marques & applis", en:"Brands & apps", icon:"[[i:tag]]", pairs:[
+["WhatsApp","Telegram"],["Instagram","TikTok"],["Facebook","Twitter"],["Nike","Adidas"],["Coca-Cola","Pepsi"],
+["Apple","Samsung"],["YouTube","Netflix"],["Google","Wikipédia|Wikipedia"],["Snapchat","Instagram"],["Mercedes","BMW"],
+["PlayStation","Xbox"],["McDonald's","KFC"],["Toyota","Honda"],["Spotify","Deezer"],["Amazon","AliExpress"],
+["iPhone","Android"],["Puma","Reebok"],["Zara","H&M"],["Gmail","Outlook"],["Uber","Yango"]
+]},
+media: {fr:"Films, séries & loisirs", en:"Movies, shows & fun", icon:"[[i:film]]", pairs:[
+["Film d'horreur|Horror movie","Thriller"],["Dessin animé|Cartoon","Manga"],["Série|TV series","Film|Movie"],["Comédie|Comedy","Sitcom"],["Super-héros|Superhero","Méchant|Villain"],
+["Vampire","Zombie"],["Pirate","Ninja"],["Sorcier|Wizard","Magicien|Magician"],["Concert","Festival"],["Karaoké|Karaoke","Concert"],
+["Jeu vidéo|Video game","Jeu de société|Board game"],["Roman|Novel","Bande dessinée|Comic"],["Podcast","Radio"],["Télé-réalité|Reality TV","Talk-show"],["Anniversaire|Birthday","Mariage|Wedding"],
+["Selfie","Photo de groupe|Group photo"],["Story","Statut|Status"],["Like","Commentaire|Comment"],["Influenceur|Influencer","Youtubeur|YouTuber"],["Robot","Extraterrestre|Alien"]
+]}
+};
+
+const PACKS = {
+sn: {fr:"Sénégal", en:"Senegal", icon:"[[cc:SN]]", pairs:[
+["Thiéboudienne","Yassa"],["Mafé","Domoda"],["Car rapide","Ndiaga Ndiaye"],["Attaya","Café Touba"],["Sandaga","HLM"],
+["Thiès","Rufisque"],["Saint-Louis","Ziguinchor"],["Lutte","Mbapatt"],["Bissap","Bouye"],["Fataya","Pastel"],
+["Dibi","Brochette|Skewer"],["Thiakry","Lakh"],["Sabar","Mbalax"],["Teranga","Hospitalité|Hospitality"],["Île de Gorée|Gorée Island","Lac Rose|Pink Lake"],
+["Yango","Taxi jaune|Yellow taxi"],["Wave","Orange Money"],["Boubou","Taille-basse"],["Dakar Dem Dikk","TER"],["Saly","Cap Skirring"],
+["Ndékki|Breakfast","Añ|Lunch"],["Thiouraye","Parfum|Perfume"],["Ataya","Kinkéliba"],["Sindiane","Pâte d'arachide|Peanut paste"],["Almadies","Ngor"]
+]},
+fr: {fr:"France", en:"France", icon:"[[cc:FR]]", pairs:[
+["Croissant","Pain au chocolat"],["Métro","RER"],["Paris","Marseille"],["Baguette","Pain de mie|Sandwich bread"],["Tour Eiffel|Eiffel Tower","Arc de Triomphe"],
+["Fromage|Cheese","Saucisson"],["Crêpe","Galette"],["Lyon","Bordeaux"],["Ratatouille","Couscous"],["Béret|Beret","Baguette"],
+["TGV","Avion|Plane"],["Vin|Wine","Champagne"],["Louvre","Versailles"],["Bise","Poignée de main|Handshake"],["Côte d'Azur","Bretagne|Brittany"],
+["Macaron","Éclair"],["PSG","OM"],["Quiche","Tarte|Pie"],["Escargot|Snail","Grenouille|Frog"],["Fête de la musique","14 juillet"]
+]},
+ci: {fr:"Côte d'Ivoire", en:"Ivory Coast", icon:"[[cc:CI]]", pairs:[
+["Attiéké","Garba"],["Gbaka","Woro-woro"],["Abidjan","Yamoussoukro"],["Alloco","Foutou"],["Coupé-décalé","Zouglou"],
+["Maquis","Allocodrome"],["Placali","Kédjénou"],["Bandji","Gnamakoudji"],["Plateau","Cocody"],["Treichville","Yopougon"],
+["Garba","Thon frit|Fried tuna"],["Nouchi","Français|French"],["Pagne","Wax"],["Grand-Bassam","Assinie"],["Sauce graine","Sauce arachide|Peanut sauce"],
+["Akpi","Djansang"],["Banane braisée|Grilled plantain","Alloco"],["Bissap","Gnamakoudji"],["Choukouya","Brochette|Skewer"],["Éléphants|Elephants","Lions"]
+]},
+ma: {fr:"Maroc", en:"Morocco", icon:"[[cc:MA]]", pairs:[
+["Tajine","Couscous"],["Marrakech","Fès"],["Thé à la menthe|Mint tea","Café noir|Black coffee"],["Casablanca","Rabat"],["Djellaba","Caftan"],
+["Hammam","Sauna"],["Souk","Médina"],["Harira","Chorba"],["Pastilla","Briouate"],["Babouches","Sandales|Sandals"],
+["Chebakia","Corne de gazelle"],["Tanger","Agadir"],["Raï","Gnawa"],["Atlas","Sahara"],["Msemen","Baghrir"],
+["Chefchaouen","Essaouira"],["Dirham","Euro"],["Henné|Henna","Tatouage|Tattoo"],["Lions de l'Atlas|Atlas Lions","Fennecs"],["Rfissa","Seffa"]
+]},
+cm: {fr:"Cameroun", en:"Cameroon", icon:"[[cc:CM]]", pairs:[
+["Ndolé","Eru"],["Douala","Yaoundé"],["Makossa","Bikutsi"],["Poulet DG","Poulet braisé|Grilled chicken"],["Bobolo","Miondo"],
+["Beignets haricots|Bean fritters","Puff-puff"],["Mbongo tchobi","Okok"],["Koki","Achu"],["Mont Cameroun|Mount Cameroon","Mont Manengouba"],["Lions indomptables|Indomitable Lions","Lionnes|Lionesses"],
+["Benskin","Taxi"],["Kribi","Limbé"],["Pidgin","Camfranglais"],["Sanga","Taro"],["Soya","Brochette|Skewer"],
+["Plantain mûr|Ripe plantain","Plantain vert|Green plantain"],["Bafoussam","Bamenda"],["Folong","Kpwem"],["Kondre","Mbanga soup"],["Djansang","Pèbè"]
+]},
+ml: {fr:"Mali", en:"Mali", icon:"[[cc:ML]]", pairs:[
+["Tô","Fonio"],["Bamako","Ségou"],["Tombouctou|Timbuktu","Djenné"],["Tiguadèguè","Mafé"],["Bogolan","Basin"],
+["Djembé","Kora"],["Niger","Sénégal|Senegal river"],["Gnamakoudji","Dabileni"],["Sotrama","Taxi"],["Mopti","Kayes"],
+["Griot","Conteur|Storyteller"],["Riz au gras|Fatty rice","Riz sauce|Rice with sauce"],["Aigles|Eagles","Lions"],["Wassoulou","Mandingue|Mandinka music"],["Bazin","Wax"]
+]},
+ga: {fr:"Gabon", en:"Gabon", icon:"[[cc:GA]]", pairs:[
+["Libreville","Port-Gentil"],["Nyembwe","Feuilles de manioc|Cassava leaves"],["Bâton de manioc|Cassava stick","Banane plantain|Plantain"],["Panthères|Panthers","Lions"],["Lopé","Loango"],
+["Okoumé","Ébène|Ebony"],["Clando","Taxi"],["Franceville","Lambaréné"],["Atanga","Avocat|Avocado"],["Ngondo","Poisson fumé|Smoked fish"],
+["Masques|Masks","Statuettes"],["Ogooué","Komo"],["Mont Iboundji","Monts de Cristal|Crystal Mountains"],["Pointe-Denis","Cap Esterias"],["Odika","Arachide|Peanut"]
+]},
+world: {fr:"Monde", en:"World", icon:"[[i:globe]]", pairs:[
+["New York","Los Angeles"],["Londres|London","Paris"],["Dubaï|Dubai","Doha"],["Égypte|Egypt","Maroc|Morocco"],["Japon|Japan","Chine|China"],
+["Brésil|Brazil","Argentine|Argentina"],["Euro","Dollar"],["Pyramides|Pyramids","Sphinx"],["Sushi","Ramen"],["Tacos","Burrito"],
+["Coupe du monde|World Cup","CAN|AFCON"],["Afrique|Africa","Asie|Asia"],["Nigeria","Ghana"],["Canada","États-Unis|USA"],["Inde|India","Pakistan"],
+["Kebab","Shawarma"],["Ligue des champions|Champions League","Premier League"],["Rome","Athènes|Athens"],["Statue de la Liberté|Statue of Liberty","Tour Eiffel|Eiffel Tower"],["Jeux olympiques|Olympics","Coupe du monde|World Cup"]
+]}
+};
+
+// New World — paires supplémentaires (objectif ~500)
+THEMES.food.pairs.push(["Avocat|Avocado","Concombre|Cucumber"],["Tomate|Tomato","Poivron|Bell pepper"],["Biscuit","Gâteau|Cake"],["Popcorn","Chips|Crisps"],["Mayonnaise","Ketchup"],["Couscous","Semoule|Semolina"],["Brochette|Skewer","Grillade|Barbecue"],["Fraise|Strawberry","Framboise|Raspberry"],["Pomme|Apple","Poire|Pear"],["Nouilles|Noodles","Spaghetti"]);
+THEMES.jobs.pairs.push(["Psychologue|Psychologist","Coach"],["Notaire|Notary","Avocat|Lawyer"],["Maçon|Builder","Menuisier|Carpenter"],["Policier|Police officer","Détective|Detective"],["Styliste|Stylist","Mannequin|Model"],["Astronaute|Astronaut","Pilote|Pilot"],["Vétérinaire|Vet","Médecin|Doctor"],["DJ","Chanteur|Singer"],["Secrétaire|Secretary","Assistant(e)|Assistant"],["Guide touristique|Tour guide","Hôtesse d'accueil|Receptionist"]);
+THEMES.animals.pairs.push(["Panthère|Panther","Léopard|Leopard"],["Baleine|Whale","Requin|Shark"],["Papillon|Butterfly","Libellule|Dragonfly"],["Ours|Bear","Panda"],["Coq|Rooster","Poule|Hen"],["Kangourou|Kangaroo","Lapin|Rabbit"],["Pieuvre|Octopus","Calamar|Squid"],["Hyène|Hyena","Chacal|Jackal"],["Paon|Peacock","Flamant rose|Flamingo"],["Araignée|Spider","Scorpion"]);
+THEMES.objects.pairs.push(["Télévision|TV","Projecteur|Projector"],["Ciseaux|Scissors","Couteau|Knife"],["Ceinture|Belt","Cravate|Tie"],["Réfrigérateur|Fridge","Congélateur|Freezer"],["Micro-ondes|Microwave","Four|Oven"],["Matelas|Mattress","Natte|Mat"],["Calculatrice|Calculator","Téléphone|Phone"],["Enceinte|Speaker","Radio"],["Bague|Ring","Collier|Necklace"],["Tapis|Rug","Rideau|Curtain"]);
+THEMES.sports.pairs.push(["Gardien de but|Goalkeeper","Défenseur|Defender"],["Arbitre|Referee","Entraîneur|Coach"],["Penalty","Coup franc|Free kick"],["Marche|Walking","Jogging"],["Taekwondo","Kung-fu"],["Water-polo","Natation|Swimming"],["Tir à l'arc|Archery","Fléchettes|Darts"],["Bowling","Billard|Pool"],["Patin à roulettes|Roller skating","Skate"],["Haltères|Dumbbells","Corde à sauter|Jump rope"]);
+THEMES.places.pairs.push(["Rooftop","Terrasse|Terrace"],["Ascenseur|Elevator","Escalier|Stairs"],["Amphithéâtre|Lecture hall","Salle de classe|Classroom"],["Cafétéria|Cafeteria","Restaurant"],["Station-service|Gas station","Garage"],["Centre commercial|Mall","Marché|Market"],["Salle de sport|Gym","Stade|Stadium"],["Laverie|Laundromat","Pressing|Dry cleaner"],["Plage|Beach","Lac|Lake"],["Parking","Garage"]);
+THEMES.brands.pairs.push(["Free","Expresso"],["Netflix","Disney+"],["Canal+","Netflix"],["Huawei","Xiaomi"],["Jumia","Amazon"],["Fanta","Sprite"],["Nescafé","Lipton"],["Chrome","Safari"],["Shein","Zara"],["Vans","Converse"]);
+THEMES.media.pairs.push(["Clip vidéo|Music video","Court-métrage|Short film"],["Animé|Anime","Dessin animé|Cartoon"],["Soirée|Party","Concert"],["Mème|Meme","GIF"],["Live","Story"],["Émission culinaire|Cooking show","Émission de jeux|Game show"],["Documentaire|Documentary","Reportage|Report"],["Playlist","Album"],["Escape game","Laser game"],["Cinéma|Cinema","Netflix"]);
+PACKS.sn.pairs.push(["Ceebu yapp","Ceebu jën"],["Soupe kandja","Mafé"],["Thiou","Yassa"],["Café Touba","Kinkéliba"],["Grand Théâtre","Monument de la Renaissance"],["Plateau","Médina"],["Mbour","Saly"],["Kaolack","Touba"],["Tangana","Dibiterie"],["Lions de la Teranga","Lionnes"],["Simb (faux lion)","Fanal"],["Mbalax","Afrobeats"],["Pastels","Nems"],["Taxi clando","Moto Jakarta"],["Lac Rose|Pink Lake","Désert de Lompoul|Lompoul Desert"]);
+PACKS.fr.pairs.push(["Nice","Cannes"],["Pétanque","Bowling"],["Camembert","Brie"],["Boulangerie|Bakery","Pâtisserie|Pastry shop"],["Disneyland Paris","Parc Astérix"],["Mont-Saint-Michel","Château de Versailles"],["Tartiflette","Raclette"],["Seine","Loire"],["Rap français|French rap","Variété française|French pop"],["Galette des rois","Bûche de Noël"]);
+PACKS.ci.pairs.push(["Bouaké","Daloa"],["San-Pédro","Grand-Bassam"],["Foutou banane","Foutou igname"],["Sauce claire","Sauce gombo"],["Rap ivoire","Coupé-décalé"],["Kedjenou","Poulet braisé|Grilled chicken"],["Korhogo","Man"],["Garba","Alloco"],["Maquis","Bar"],["Plateau","Marcory"]);
+PACKS.ma.pairs.push(["Meknès","Oujda"],["Couscous du vendredi","Tajine"],["Raib","Leben"],["Jemaa el-Fna","Médina de Fès"],["Thé à la menthe|Mint tea","Jus d'orange|Orange juice"],["Riad","Hôtel|Hotel"],["Darija","Arabe classique|Classical Arabic"],["Chaabi","Raï"],["Tangerine","Orange"],["Ifrane","Chefchaouen"]);
+PACKS.cm.pairs.push(["Garoua","Maroua"],["Ndolé","Okok"],["Bikutsi","Afro-pop"],["Douala","Kribi"],["Poulet DG","Poisson braisé|Grilled fish"],["Taxi","Moto-taxi"],["Yaoundé","Bafoussam"],["Puff-puff","Beignet|Doughnut"],["Mont Cameroun|Mount Cameroon","Chutes de la Lobé|Lobé Falls"],["Plantain frit|Fried plantain","Frites|Fries"]);
+PACKS.ml.pairs.push(["Sikasso","Koutiala"],["Riz au gras|Fatty rice","Tiguadèguè"],["Djembé","Balafon"],["Bamako","Kayes"],["Fleuve Niger|Niger River","Fleuve Sénégal|Senegal River"],["Boubou","Basin"],["Gombo","Feuilles de baobab|Baobab leaves"],["Tamani","Djembé"],["Ségou","Mopti"],["Sotrama","Bus"]);
+PACKS.ga.pairs.push(["Libreville","Oyem"],["Poisson salé|Salted fish","Poisson fumé|Smoked fish"],["Manioc|Cassava","Igname|Yam"],["Akanda","Owendo"],["Panthères|Panthers","Éléphants|Elephants"]);
+PACKS.world.pairs.push(["Tokyo","Séoul|Seoul"],["Istanbul","Le Caire|Cairo"],["Rio","Buenos Aires"],["Burger","Hot-dog"],["Pizza","Lasagne|Lasagna"]);
+
+"use strict";
+/* ============ New World — Thousand Labs Games ============ */
+const APP = { name:"New World", version:"1.0.0", site:"https://thousandlabs-games.github.io/New_World/", price:"500 F", wa:"221711216581", trialDays:7 };
+// Clé publique de vérification des codes (paire propre à New World — la clé privée n'est JAMAIS dans ce fichier)
+const PUBKEY = { kty:"EC", crv:"P-256", x:"mCv7DaD7gBs5sgmf3cNAQ6xObG8ybaAsrDIQn0rTiU4", y:"TzKRZ84CVS6FdxAXAACzfTNga2In_nlI_bKZL5tnckA", ext:true };
+const LEVELS = ["soft","hard","spicy","extreme"];
+const ADULT = ["spicy","extreme"];
+
+/* ---------- Textes FR / EN ---------- */
+const I = {
+tagline:["Jeux de soirée entre amis","Party games with friends"],
+tod:["Action ou Vérité","Truth or Dare"], todSub:["4 niveaux, cartes spéciales, roue","4 levels, special cards, wheel"],
+intrus:["Incognito","Incognito"], intrusSub:["Démasque les Undercovers et Mr. White","Unmask the Undercovers and Mr. White"],
+party:["Mode Soirée","Party Mode"], partySub:["Les deux jeux enchaînés, gages pour les perdants","Both games back to back, dares for losers"],
+groups:["Groupes","Groups"], settings:["Réglages","Settings"], rules:["Règles","Rules"], back:["Retour","Back"],
+trialLeft:["Essai gratuit : {n} jour(s) restant(s)","Free trial: {n} day(s) left"], trialHours:["Essai gratuit : moins de 24 h restantes","Free trial: less than 24 h left"],
+activated:["Version complète activée","Full version activated"],
+lockedT:["Ton essai est terminé","Your trial is over"], lockedP:["Débloque New World pour toujours : {price}, paiement unique. Tes groupes et tes cartes sont conservés.","Unlock New World forever: {price}, one-time payment. Your groups and cards are kept."],
+howPay:["1. Envoie {price} par Wave ou Orange Money.\n2. Envoie-nous ton identifiant ci-dessous sur WhatsApp.\n3. Colle le code d'activation reçu.","1. Send {price} via Wave or Orange Money.\n2. Send us your ID below on WhatsApp.\n3. Paste the activation code you receive."],
+yourId:["Ton identifiant","Your ID"], copy:["Copier","Copy"], copied:["Copié !","Copied!"], waBtn:["Écrire sur WhatsApp","Message on WhatsApp"],
+codeLbl:["Code d'activation","Activation code"], activate:["Activer","Activate"], badCode:["Code invalide pour cet appareil.","Invalid code for this device."], okCode:["Merci ! New World est débloqué ","Thank you! New World is unlocked "],
+clockT:["L'heure du téléphone a été reculée : l'essai est terminé.","The phone's clock was moved back: the trial has ended."],
+newGroup:["Nouveau groupe","New group"], groupName:["Nom du groupe","Group name"], players:["Joueurs","Players"], addPlayer:["Ajouter un joueur","Add a player"],
+name:["Prénom","Name"], gender:["Genre","Gender"], m:["Homme","Man"], f:["Femme","Woman"], o:["Autre","Other"],
+contact:["Contact physique","Physical contact"], yes:["Oui","Yes"], no:["Non","No"], withWho:["Avec","With"], men:["Hommes","Men"], women:["Femmes","Women"], all:["Tous","Everyone"],
+maxLv:["Niveau max (mode Chacun son niveau)","Max level (Own level mode)"], save:["Enregistrer","Save"], del:["Supprimer","Delete"], edit:["Modifier","Edit"],
+noGroup:["Aucun groupe pour l'instant. Crée ton premier groupe d'amis !","No group yet. Create your first group of friends!"],
+choose:["Choisis un groupe","Choose a group"], quick:["Joueurs rapides (sans enregistrer)","Quick players (not saved)"], minP:["Il faut au moins {n} joueurs.","You need at least {n} players."],
+soft:["Soft","Soft"], hard:["Hard","Hard"], spicy:["Épicé","Spicy"], extreme:["Extrême","Extreme"],
+mode:["Mode","Mode"], mClassic:["Classique","Classic"], mRise:["Montée en pression","Rising heat"], mOwn:["Chacun son niveau","Own level"], mDuo:["Duo","Duo"],
+mClassicD:["Tu choisis un ou plusieurs niveaux.","Pick one or more levels."], mRiseD:["Commence en Soft, monte d'un niveau toutes les 10 minutes.","Starts Soft, goes up a level every 10 minutes."], mOwnD:["Chaque joueur a son niveau max (réglé dans son profil).","Each player has their own max level (set in their profile)."], mDuoD:["Pour deux : les cartes visent toujours l'autre.","For two: cards always target the other one."],
+levels:["Niveaux","Levels"], options:["Options","Options"], specials:["Cartes spéciales (Duel, Vote, Règle…)","Special cards (Duel, Vote, Rule…)"], wheel:["Roue pour désigner le joueur","Wheel to pick the player"], contactCards:["Cartes avec contact physique [[i:hand]]","Physical contact cards [[i:hand]]"], customInc:["Inclure mes cartes perso","Include my custom cards"], jokers:["Jokers par joueur","Jokers per player"],
+start:["Lancer la partie","Start the game"], myCards:["Mes cartes perso","My custom cards"],
+spin:["Tourner la roue","Spin the wheel"], turnOf:["Au tour de","It's the turn of"], truth:["Vérité","Truth"], dare:["Action","Dare"],
+done:["Fait [[i:check]]","Done [[i:check]]"], joker:["Joker ({n})","Joker ({n})"], refuse:["{p} refuse (sans pénalité)","{p} refuses (no penalty)"], next:["Suivant","Next"], endGame:["Terminer","Finish"],
+noJoker:["Plus de joker ! Le groupe choisit ton gage ","No jokers left! The group picks your forfeit "],
+ruleOn:["Règle en cours ({n} tour(s)) : {r}","Active rule ({n} turn(s)): {r}"],
+spDuel:["[[i:zap]] DUEL","[[i:zap]] DUEL"], spDuelT:["{a} et {b} doivent {x}. Le groupe vote pour le meilleur !","{a} and {b} must {x}. The group votes for the best!"],
+spAll:["[[i:hand]] TOUT LE MONDE","[[i:hand]] EVERYONE"], spVote:["[[i:vote]] VOTE","[[i:vote]] VOTE"], spVoteT:["Tout le monde pointe du doigt en même temps à 3…","Everyone points at the same time on 3…"],
+spRule:["[[i:book]] NOUVELLE RÈGLE","[[i:book]] NEW RULE"], spRuleT:["Pendant 3 tours : {r} Celui qui craque prend un gage.","For 3 turns: {r} Whoever slips takes a forfeit."],
+spInv:["[[i:repeat]] INVERSION","[[i:repeat]] REVERSE"], spInvT:["{a} pose une Action ou une Vérité de son choix à la personne de son choix.","{a} gives a Truth or Dare of their choice to anyone they want."],
+timer:["Minuteur","Timer"], timeUp:["Temps écoulé !","Time's up!"],
+adultT:["Contenu 18+","18+ content"], adultP:["Les niveaux Épicé et Extrême contiennent des questions et défis osés (relations, contact léger). Tous les joueurs doivent avoir 18 ans ou plus.","Spicy and Extreme levels contain bold questions and dares (relationships, light contact). All players must be 18 or older."], adultOk:["Nous avons tous 18 ans ou plus","We are all 18 or older"], cancel:["Annuler","Cancel"],
+endT:["Fin de la partie","Game over"], awBrave:["Le plus courageux","The bravest"], awJoker:["Le roi du Joker","The Joker king"], awHonest:["Le plus honnête","The most honest"], awStar:["La star de la soirée","The star of the night"],
+statsLine:["{a} actions · {v} vérités · {j} jokers","{a} dares · {v} truths · {j} jokers"], replay:["Rejouer","Play again"], home:["Accueil","Home"],
+customT:["Mes cartes perso","My custom cards"], addCard:["Ajouter la carte","Add the card"], cardText:["Texte de la carte (utilise {p} pour viser un joueur)","Card text (use {p} to target a player)"], type:["Type","Type"], level:["Niveau","Level"], isContact:["Contact physique","Physical contact"], noCustom:["Aucune carte perso.","No custom cards."],
+// Undercover
+nbIntrus:["Nombre d'Undercovers","Number of Undercovers"], mrWhite:["Mr. White (sans mot)","Mr. White (no word)"], themes:["Thèmes","Themes"], packs:["Packs pays","Country packs"],
+roles:["Rôles spéciaux","Special roles"], rolesNb:["Rôles par partie","Roles per game"], debate:["Minuteur de débat","Debate timer"], off:["Non","Off"], gage:["Gage Action ou Vérité pour les perdants","Truth or Dare forfeit for losers"], gageLv:["Niveau des gages","Forfeit level"],
+selAll:["Tout","All"], selNone:["Aucun","None"],
+passTo:["Passe le téléphone à","Pass the phone to"], tapReveal:["Appuie pour voir ton mot","Tap to see your word"], hide:["J'ai vu — cacher","Got it — hide"],
+yourWord:["Ton mot","Your word"], youWhite:["Tu es Mr. White","You are Mr. White"], whiteHelp:["Tu n'as pas de mot. Écoute les indices, bluffe, et devine le mot des autres !","You have no word. Listen to the clues, bluff, and guess the others' word!"],
+yourRole:["Ton rôle secret","Your secret role"], twinIs:["Ton jumeau / ta jumelle : {p}","Your twin: {p}"], guardPick:["Choisis qui tu protèges :","Choose who you protect:"], vendorGot:["Ta capacité pour cette partie : {x}","Your ability for this game: {x}"],
+round:["Manche {n} — Tour {t}","Game {n} — Round {t}"], cluesHelp:["Chacun donne UN indice sur son mot, dans l'ordre :","Everyone gives ONE clue about their word, in order:"], firstIs:["Commence : {p}","Starts: {p}"],
+mime:["(mime uniquement)","(mime only)"], apprenti:["[[i:bus]] L'Apprenti choisit qui commence","[[i:bus]] The Apprentice picks who starts"], usePower:["[[i:sparkles]] Utiliser un pouvoir (en secret)","[[i:sparkles]] Use a power (secretly)"], toVote:["Passer au vote","Go to vote"],
+whoAreYou:["Qui es-tu ?","Who are you?"], noPower:["Tu n'as aucun pouvoir à utiliser maintenant.","You have no power to use right now."], pickTarget:["Choisis un joueur :","Choose a player:"],
+same:["{p} a LE MÊME mot que toi.","{p} has THE SAME word as you."], diff:["{p} a un mot DIFFÉRENT du tien.","{p} has a DIFFERENT word from yours."], wordOf:["Le mot de {p} : {w}","{p}'s word: {w}"], noWord:["aucun mot (Mr. White)","no word (Mr. White)"],
+gossip:["[[i:megaphone]] La Commère révèle : {p} est {r} !","[[i:megaphone]] The Gossip reveals: {p} is {r}!"], swapDone:["Échange fait ! Ton nouveau mot : {w}","Swap done! Your new word: {w}"], swapNotice:["{p}, ton mot a changé ! Regarde-le en secret.","{p}, your word has changed! Look at it secretly."],
+voteT:["Vote secret","Secret vote"], voteOf:["Vote de","Vote of"], voteGhost:["[[i:ghost]] Vote du Fantôme","[[i:ghost]] Ghost's vote"], voteHand:["Le groupe a voté à main levée","The group voted by show of hands"], pickElim:["Qui est éliminé ?","Who is eliminated?"],
+tie:["Égalité entre : {l}","Tie between: {l}"], judgeDecides:["[[i:scale]] {p}, en tant que Juge, tranche :","[[i:scale]] {p}, as the Judge, decides:"], revote:["Nouveau vote entre les ex æquo","New vote between tied players"], randomPick:["Égalité persistante : le hasard décide…","Still tied: chance decides…"],
+saved:["[[i:shield]] {p} est protégé(e) par le Garde du corps et reste en jeu !","[[i:shield]] {p} is protected by the Bodyguard and stays in!"], wrestler:["[[i:dumbbell]] {p} est le Lutteur : il/elle encaisse et reste en jeu !","[[i:dumbbell]] {p} is the Wrestler: takes the hit and stays in!"], immune:["[[i:bag]] {p} utilise son immunité du Vendeur de Faritas !","[[i:bag]] {p} uses the Faritas Seller's immunity!"],
+elim:["{p} est éliminé(e)","{p} is eliminated"], wasCiv:["C'était un Civil.","They were a Civilian."], wasIntrus:["C'était un Undercover !","They were an Undercover!"], wasWhite:["C'était Mr. White !","They were Mr. White!"],
+whiteGuess:["Mr. White, devine le mot des Civils :","Mr. White, guess the Civilians' word:"], guessBtn:["Valider","Submit"],
+twinFall:["[[i:link]] Son jumeau / sa jumelle {p} tombe aussi !","[[i:link]] Their twin {p} falls too!"], avengerPick:["[[i:flame]] {p}, le Vengeur, emmène quelqu'un avec lui/elle :","[[i:flame]] {p}, the Avenger, takes someone down with them:"],
+continue:["Continuer","Continue"], winCiv:["Les Civils gagnent ! ","Civilians win! "], winIntrus:["Les Undercovers gagnent ! ","Undercovers win! "], winWhite:["Mr. White gagne ! [[i:help]]","Mr. White wins! [[i:help]]"], winJester:["[[i:smile]] {p}, le Bouffon, gagne seul !","[[i:smile]] {p}, the Jester, wins alone!"],
+wordsWere:["Mot des Civils : {c} · Mot des Undercovers : {i}","Civilians' word: {c} · Undercovers' word: {i}"], scores:["Scores","Scores"], newRound:["Nouvelle manche","New game"], gages:["Gages des perdants","Losers' forfeits"],
+gageFor:["Gage pour {p}","Forfeit for {p}"], partyNext:["Tour d'Action ou Vérité","Truth or Dare round"], partyBack:["Retour à Incognito","Back to Incognito"],
+civ:["Civil","Civilian"], intr:["Undercover","Undercover"], white:["Mr. White","Mr. White"],
+// Réglages
+lang:["Langue","Language"], sound:["Sons","Sounds"], vibr:["Vibrations","Vibrations"], adultReset:["Redemander la confirmation 18+","Ask the 18+ confirmation again"], activation:["Activation","Activation"], about:["À propos","About"],
+madeBy:["Une création Thousand Labs Games","A Thousand Labs Games creation"], website:["Site officiel","Official website"],
+rulesTod:["• Entrez les joueurs, choisissez un mode et des niveaux.\n• La roue désigne un joueur : il choisit Action ou Vérité.\n• « Fait » s'il relève le défi, « Joker » pour passer (3 par partie). Sans joker, le groupe choisit le gage.\n• Les cartes [[i:hand]] ne visent que les joueurs qui acceptent le contact, et la personne visée peut toujours refuser sans pénalité.\n• Cartes spéciales : Duel, Tout le monde, Vote, Règle (3 tours), Inversion.","• Enter players, choose a mode and levels.\n• The wheel picks a player: they choose Truth or Dare.\n• \"Done\" if they do it, \"Joker\" to skip (3 per game). With no jokers left, the group picks the forfeit.\n• [[i:hand]] cards only target players who accept contact, and the targeted person can always refuse with no penalty.\n• Special cards: Duel, Everyone, Vote, Rule (3 turns), Reverse."],
+rulesIntrus:["• Les Civils ont tous le même mot. Les Undercovers ont un mot proche… sans savoir qu'ils sont Undercover. Mr. White n'a aucun mot.\n• Chacun donne UN indice sur son mot, puis on débat et on vote pour éliminer quelqu'un.\n• Mr. White éliminé peut gagner en devinant le mot des Civils.\n• Les Civils gagnent s'ils éliminent tous les Undercovers et Mr. White. Les infiltrés gagnent s'ils tiennent jusqu'à ce qu'il ne reste que 2 joueurs.\n• Les rôles spéciaux ajoutent des pouvoirs secrets : utilise-les avec le bouton [[i:sparkles]].","• Civilians all share the same word. Undercovers have a close word… without knowing they're Undercovers. Mr. White has no word.\n• Everyone gives ONE clue about their word, then you debate and vote someone out.\n• An eliminated Mr. White can win by guessing the Civilians' word.\n• Civilians win by eliminating all Undercovers and Mr. White. Infiltrators win if they last until only 2 players remain.\n• Special roles add secret powers: use them with the [[i:sparkles]] button."],
+gotIt:["C'est compris !","Got it!"],
+mySeries:["Mes séries perso","My custom series"], myPacks:["Mes packs de mots","My word packs"], packsT:["Packs de mots perso","Custom word packs"],
+importT:["Importer une série","Import a series"], seriesName:["Nom de la série","Series name"], packName:["Nom du pack","Pack name"],
+importHelpTod:["Une carte par ligne. Commence la ligne par V: pour une Vérité ou A: pour une Action (sinon, le type choisi ci-dessus). Ajoute [contact] pour une carte avec contact, et [soft], [hard], [épicé] ou [extrême] pour changer le niveau.","One card per line. Start the line with T: for a Truth or D: for a Dare (otherwise the type chosen above). Add [contact] for a contact card, and [soft], [hard], [spicy] or [extreme] to change the level."],
+importHelpPack:["Une paire par ligne, les deux mots séparés par / (exemple : Thiéboudienne / Yassa).","One pair per line, the two words separated by / (example: Pizza / Burger)."],
+pickFile:["Choisir un fichier (.txt)","Choose a file (.txt)"], doImport:["Importer","Import"], imported:["{n} élément(s) importé(s)","{n} item(s) imported"], nothing:["Rien à importer : vérifie le format.","Nothing to import: check the format."],
+export:["Exporter","Export"], shareF:["Partager","Share"], defaults:["Par défaut","Defaults"], cards:["cartes","cards"], pairs:["paires","pairs"], newPack:["Nouveau pack","New pack"], mineT:["Mes packs","My packs"], importPack:["Importer un pack","Import a pack"], importCards:["Importer mes cartes","Import my cards"]
+};
+const ROLES = {
+griot:{e:"[[i:drum]]",n:["Le Griot","The Griot"],d:["Une fois par partie, tu sais en secret si un joueur a le même mot que toi.","Once per game, you secretly learn if a player has the same word as you."]},
+juge:{e:"[[i:scale]]",n:["Le Juge","The Judge"],d:["En cas d'égalité au vote, c'est toi qui tranches.","If the vote is tied, you decide."]},
+garde:{e:"[[i:shield]]",n:["Le Garde du corps","The Bodyguard"],d:["Tu protèges un joueur en secret : il survit à sa première élimination.","You secretly protect a player: they survive their first elimination."]},
+jumeaux:{e:"[[i:link]]",n:["Les Jumeaux","The Twins"],d:["Vous êtes liés : si l'un est éliminé, l'autre tombe aussi.","You are linked: if one is eliminated, the other falls too."]},
+bouffon:{e:"[[i:smile]]",n:["Le Bouffon","The Jester"],d:["Tu gagnes seul si tu es éliminé au premier vote. Parais suspect… sans en faire trop.","You win alone if you're eliminated in the first vote. Look suspicious… but not too much."]},
+vendeur:{e:"[[i:bag]]",n:["Le Vendeur de Faritas","The Faritas Seller"],d:["À chaque partie, tu reçois une capacité au hasard dans ton stock.","Each game, you get a random ability from your stock."]},
+fantome:{e:"[[i:ghost]]",n:["Le Fantôme","The Ghost"],d:["Une fois éliminé, tu continues de voter en secret.","Once eliminated, you keep voting secretly."]},
+lutteur:{e:"[[i:dumbbell]]",n:["Le Lutteur","The Wrestler"],d:["Tu encaisses le premier vote contre toi sans tomber.","You survive the first vote against you."]},
+apprenti:{e:"[[i:bus]]",n:["L'Apprenti du car rapide","The Car Rapide Apprentice"],d:["À chaque tour, tu décides qui donne son indice en premier.","Each round, you decide who gives the first clue."]},
+commere:{e:"[[i:megaphone]]",n:["La Commère","The Gossip"],d:["Une fois par partie, tu révèles publiquement le camp d'un joueur au hasard.","Once per game, you publicly reveal the side of a random player."]},
+driankee:{e:"[[i:gem]]",n:["La Driankée","The Driankée"],d:["Ton vote compte double.","Your vote counts double."]},
+marchand:{e:"[[i:repeat]]",n:["Le Marchand de Sandaga","The Sandaga Merchant"],d:["Une fois par partie, tu échanges ton mot (et ton camp) avec celui d'un autre joueur.","Once per game, you swap your word (and side) with another player."]},
+vengeur:{e:"[[i:flame]]",n:["Le Vengeur","The Avenger"],d:["Quand tu es éliminé, tu emmènes quelqu'un avec toi.","When you're eliminated, you take someone down with you."]},
+muet:{e:"[[i:micoff]]",n:["Le Muet","The Mute"],d:["Tu donnes tes indices uniquement en mimes.","You give your clues by miming only."]},
+detective:{e:"[[i:search]]",n:["Le Détective","The Detective"],d:["Une fois par partie, tu vois en secret le mot d'un joueur.","Once per game, you secretly see a player's word."]}
+};
+const VENDOR = { double:["Vote double","Double vote"], immune:["Immunité (survit à une élimination)","Immunity (survives one elimination)"], peek:["Voir le mot d'un joueur (1 fois)","See a player's word (once)"], check:["Savoir si un joueur a ton mot (1 fois)","Learn if a player has your word (once)"] };
+
+
+/* ---------- Icônes (SVG au trait) ---------- */
+const ICONS = {
+back:'<path d="M15 18l-6-6 6-6"/>', check:'<path d="M5 12l5 5L20 7"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>', plus:'<path d="M12 5v14M5 12h14"/>',
+flame:'<path d="M12 3c.8 3.5 5 5.2 5 9.5a5 5 0 0 1-10 0c0-2.3 1.2-3.8 2.3-4.8.3 1.8 1.2 2.8 2.2 2.8-.2-2.6-.5-4.6.5-7.5z"/>',
+incognito:'<path d="M3 11h18"/><path d="M5.5 11l1.8-5.2a1 1 0 0 1 1-.8h7.4a1 1 0 0 1 1 .8L18.5 11"/><circle cx="7.5" cy="16.5" r="2.8"/><circle cx="16.5" cy="16.5" r="2.8"/><path d="M10.3 16.5c1.1-.8 2.3-.8 3.4 0"/>',
+sparkles:'<path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/><path d="M18.5 14.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
+party:'<path d="M4 20l4.5-12 7.5 7.5z"/><path d="M14 4v2M18 6l-1.5 1.5M20 10h-2M11 3l.5 1.5M19 13l1 .5"/>',
+users:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.2c2.7.4 4.5 2.7 4.5 5.8"/>',
+sliders:'<path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',
+timer:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M10 2h4"/>', skip:'<path d="M5 5l9 7-9 7z"/><path d="M18 5v14"/>',
+eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+eyeoff:'<path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.6 6.6C3.9 8.4 2 12 2 12s3.6 7 10 7c1.8 0 3.4-.5 4.8-1.3"/>',
+vote:'<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 12l3 3 5-6"/>', lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+unlock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.6-1.7"/>', msg:'<path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.2-4.6A8.5 8.5 0 1 1 21 12z"/>',
+copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/>', globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9M12 3c-2.5 2.6-3.8 5.6-3.8 9s1.3 6.4 3.8 9"/>',
+book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5v-15"/><path d="M8 7h8"/>', pen:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9.5 17h5"/>',
+hand:'<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11M11 10V4.5a1.5 1.5 0 0 1 3 0V10M14 10V5.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-.7a6 6 0 0 1-5-2.7l-2-3.1a1.5 1.5 0 0 1 2.5-1.7L8 15"/>',
+upload:'<path d="M12 15V4M7 9l5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/>', download:'<path d="M12 4v11M7 10l5 5 5-5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/>',
+share:'<circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/>',
+spin:'<path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M20.5 4v5h-5"/>', speaker:'<path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/>',
+vibrate:'<rect x="8" y="3.5" width="8" height="17" rx="2"/><path d="M4.5 8v8M19.5 8v8"/>', star:'<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
+heart:'<path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.3 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/>', zap:'<path d="M13 2.5L4.5 13.5H12l-1 8 8.5-11H12z"/>',
+xcircle:'<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>', alert:'<path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.2v.1"/>',
+gift:'<rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8.5h14V12M12 8v12.5M12 8c-1.5-3-5-3.5-5-1.2C7 8 9 8 12 8zM12 8c1.5-3 5-3.5 5-1.2C17 8 15 8 12 8z"/>',
+shield:'<path d="M12 3l8 3v6c0 4.8-3.4 8-8 9-4.6-1-8-4.2-8-9V6z"/>', scale:'<path d="M12 4v17M7 21h10M4.5 7h15"/><path d="M6.5 7L3.5 13.5a3 3 0 0 0 6 0zM17.5 7l-3 6.5a3 3 0 0 0 6 0z"/>',
+drum:'<ellipse cx="12" cy="8" rx="8" ry="3"/><path d="M4 8v7.5c0 1.7 3.6 3 8 3s8-1.3 8-3V8M7.5 3.5L11 7M16.5 3.5L13 7"/>',
+link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+smile:'<circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2.2 4 2.2 4-2.2 4-2.2M9 9.5v.1M15 9.5v.1"/>', bag:'<path d="M5 8h14l-1.2 12.5H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>',
+ghost:'<path d="M5 20.5V11a7 7 0 0 1 14 0v9.5l-2.4-1.8-2.3 1.8-2.3-1.8-2.3 1.8-2.3-1.8z"/><path d="M9.5 11v.1M14.5 11v.1"/>',
+dumbbell:'<path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/>', bus:'<rect x="4" y="3.5" width="16" height="14" rx="2.5"/><path d="M4 10.5h16M7.5 20.5v-3M16.5 20.5v-3M8 14v.1M16 14v.1"/>',
+megaphone:'<path d="M3.5 10v4h3l7 5V5l-7 5z"/><path d="M17 9a4 4 0 0 1 0 6M19.5 6.5a7.5 7.5 0 0 1 0 11"/>', gem:'<path d="M6.5 3.5h11l3.5 5.5-9 11.5L3 9z"/><path d="M3 9h18M9.5 3.5L12 9l2.5-5.5M12 9v11.5"/>',
+repeat:'<path d="M17 2.5l3.5 3.5L17 9.5"/><path d="M3.5 11v-1A4 4 0 0 1 7.5 6h13"/><path d="M7 21.5L3.5 18 7 14.5"/><path d="M20.5 13v1a4 4 0 0 1-4 4h-13"/>',
+crosshair:'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v4M12 16.5v4M3.5 12h4M16.5 12h4"/>',
+micoff:'<path d="M3 3l18 18M9 9v3a3 3 0 0 0 5.1 2.1M15 9.3V5.5a3 3 0 0 0-5.8-1"/><path d="M18.7 11a6.7 6.7 0 0 1-1 3.6M5.3 11a6.7 6.7 0 0 0 10.4 5.6M12 18v3"/>',
+search:'<circle cx="11" cy="11" r="7"/><path d="M20.5 20.5l-4.6-4.6"/>', help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.9.7c0 1.7-2.4 2.1-2.4 4M12 17.2v.1"/>',
+home:'<path d="M3.5 11L12 3.5l8.5 7.5"/><path d="M5.5 9.5v11h13v-11"/>', food:'<path d="M4 11h16a8 8 0 0 1-16 0zM7 21h10M9 7c0-1.5 1-1.5 1-3M13 7c0-1.5 1-1.5 1-3"/>',
+briefcase:'<rect x="3.5" y="7" width="17" height="13" rx="2"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17"/>',
+paw:'<circle cx="7" cy="10" r="1.8"/><circle cx="10.5" cy="6.5" r="1.8"/><circle cx="14.5" cy="6.5" r="1.8"/><circle cx="18" cy="10" r="1.8"/><path d="M12.5 11.5c-3 0-5.5 3.5-5.5 6 0 1.7 1.5 2.5 3 2.2 1-.2 1.7-.6 2.5-.6s1.5.4 2.5.6c1.5.3 3-.5 3-2.2 0-2.5-2.5-6-5.5-6z"/>',
+phone:'<rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M11 18.5h2"/>', ball:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5l4.3 3.1-1.6 5h-5.4l-1.6-5zM12 3v4.5M3.5 9.5l4.2 1.1M20.5 9.5l-4.2 1.1M6.5 19.5l2.8-3.9M17.5 19.5l-2.8-3.9"/>',
+pin:'<path d="M12 21s-6.5-6.2-6.5-11.5a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/>',
+tag:'<path d="M3.5 12V4.5a1 1 0 0 1 1-1H12l8.5 8.5-8.5 8.5z"/><circle cx="8" cy="8" r="1.5"/>', film:'<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M7.5 4.5v15M16.5 4.5v15M3.5 9h4M3.5 15h4M16.5 9h4M16.5 15h4"/>',
+crown:'<path d="M3.5 8l4.3 4 4.2-7 4.2 7 4.3-4-1.8 11H5.3z"/>', folder:'<path d="M3.5 6.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/>',
+trash:'<path d="M4 7h16M10 11v6M14 11v6M5.5 7l1 13h11l1-13M9 7V4h6v3"/>', file:'<path d="M14 3.5H6.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V9z"/><path d="M14 3.5V9h5.5"/>'
+};
+const ic = (n, cls) => `<svg class="ic ${cls||""}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]||""}</svg>`;
+const deco = html => html.replace(/\[\[i:(\w+)\]\]/g,(m,n)=>ic(n)).replace(/\[\[cc:([A-Z]{2})\]\]/g,'<span class="cc">$1</span>');
+const plain = s => String(s).replace(/\[\[(i|cc):\w+\]\]\s?/g,"");
+
+/* ---------- Utilitaires ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rnd = n => Math.floor(Math.random()*n);
+const pick = a => a[rnd(a.length)];
+const shuffle = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];} return a; };
+const uid = () => Math.random().toString(36).slice(2,10);
+const L = () => (ST.set.lang==="en"?1:0);
+function t(k, v){ let s = I[k] ? I[k][L()] : k; if(v) for(const x in v) s = s.split("{"+x+"}").join(v[x]); return s; }
+const tx = arr => arr[L()];
+const wfr = s => { const p=String(s).split("|"); return L() && p[1] ? p[1] : p[0]; };
+function lsGet(k, d){ try{ const v = localStorage.getItem("nw_"+k); return v==null?d:JSON.parse(v); }catch(e){ return d; } }
+function lsSet(k, v){ try{ localStorage.setItem("nw_"+k, JSON.stringify(v)); }catch(e){} }
+
+/* ---------- État ---------- */
+const ST = {
+  set: Object.assign({lang:(navigator.language||"fr").slice(0,2)==="en"?"en":"fr", sound:true, vibr:true, adult:false, seenRules:{}}, lsGet("set",{})),
+  groups: lsGet("groups", []),
+  custom: lsGet("custom", []),
+  myPacks: lsGet("packs", []),
+  todCfg: Object.assign({mode:"classic", levels:["soft","hard"], specials:true, wheel:true, contact:true, custom:true, jokers:3}, lsGet("todCfg",{})),
+  inCfg: Object.assign({intrus:1, white:false, themes:Object.keys(THEMES), packs:["sn","world"], roles:["griot","juge","garde","jumeaux","bouffon","vendeur","fantome","lutteur"], rolesNb:3, debate:90, gage:true, gageLv:"hard"}, lsGet("inCfg",{})),
+  screen:"home", players:[], tod:null, game:null, party:null, lic:null
+};
+const saveSet = () => lsSet("set", ST.set);
+const saveGroups = () => lsSet("groups", ST.groups);
+
+/* ---------- Sons & vibrations ---------- */
+let AC = null;
+function beep(type){
+  if(ST.set.vibr && navigator.vibrate){ const v={tap:15,tick:6,reveal:40,ok:[30,40,30],bad:[80,40,80],win:[60,50,60,50,120],spin:10}[type]; if(v) try{navigator.vibrate(v);}catch(e){} }
+  if(!ST.set.sound) return;
+  try{
+    AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    const seq = {tap:[[660,.05]],tick:[[1200,.02]],reveal:[[440,.08],[660,.1]],ok:[[523,.08],[659,.08],[784,.14]],bad:[[300,.12],[200,.2]],win:[[523,.1],[659,.1],[784,.1],[1047,.25]],time:[[880,.15],[880,.15],[880,.3]]}[type] || [[500,.05]];
+    let at = AC.currentTime;
+    seq.forEach(([f,d])=>{ const o=AC.createOscillator(), g=AC.createGain(); o.type="triangle"; o.frequency.value=f; g.gain.setValueAtTime(.18,at); g.gain.exponentialRampToValueAtTime(.001,at+d); o.connect(g); g.connect(AC.destination); o.start(at); o.stop(at+d+.02); at+=d*.9; });
+  }catch(e){}
+}
+function toast(msg){ const d=document.createElement("div"); d.className="toast"; d.textContent=plain(msg); document.body.appendChild(d); setTimeout(()=>d.remove(),2200); }
+
+/* ---------- Licence : essai 7 jours + code signé ---------- */
+const LIC = {
+  key:null,
+  idb(){ return new Promise(res=>{ try{ const r=indexedDB.open("nw_store",1); r.onupgradeneeded=()=>r.result.createObjectStore("kv"); r.onsuccess=()=>res(r.result); r.onerror=()=>res(null);}catch(e){res(null);} }); },
+  async idbGet(k){ const db=await this.idb(); if(!db) return null; return new Promise(res=>{ try{ const q=db.transaction("kv").objectStore("kv").get(k); q.onsuccess=()=>res(q.result==null?null:q.result); q.onerror=()=>res(null);}catch(e){res(null);} }); },
+  async idbSet(k,v){ const db=await this.idb(); if(!db) return; try{ db.transaction("kv","readwrite").objectStore("kv").put(v,k);}catch(e){} },
+  ck(k){ const m=document.cookie.match(new RegExp("(?:^|; )nw_"+k+"=([^;]*)")); return m?decodeURIComponent(m[1]):null; },
+  setCk(k,v){ try{ document.cookie="nw_"+k+"="+encodeURIComponent(v)+";max-age=315360000;path=/;SameSite=Lax"; }catch(e){} },
+  async read(k){ let v=null; try{ v=localStorage.getItem("nw_l_"+k); }catch(e){} if(v==null) v=this.ck(k); if(v==null) v=await this.idbGet(k); return v; },
+  async write(k,v){ try{ localStorage.setItem("nw_l_"+k,v);}catch(e){} this.setCk(k,v); await this.idbSet(k,v); },
+  newId(){ const a="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; const b=new Uint8Array(8); crypto.getRandomValues(b); let s=""; b.forEach(x=>s+=a[x%a.length]); return "NW-"+s.slice(0,4)+"-"+s.slice(4); },
+  b64u(s){ s=s.replace(/-/g,"+").replace(/_/g,"/"); while(s.length%4) s+="="; const bin=atob(s); const u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); return u; },
+  async verify(id, code){
+    try{
+      if(!crypto.subtle) return false;
+      code = String(code||"").replace(/\s+/g,"").replace(/^NWC-/i,"");
+      const sig = this.b64u(code); if(sig.length!==64) return false;
+      this.key = this.key || await crypto.subtle.importKey("jwk", PUBKEY, {name:"ECDSA",namedCurve:"P-256"}, false, ["verify"]);
+      return await crypto.subtle.verify({name:"ECDSA",hash:"SHA-256"}, this.key, sig, new TextEncoder().encode("NEWWORLD|"+id));
+    }catch(e){ return false; }
+  },
+  async init(){
+    let id = await this.read("id"); if(!id || !/^NW-[A-Z2-9]{4}-[A-Z2-9]{4}$/.test(id)) id = this.newId();
+    await this.write("id", id);
+    const code = await this.read("code");
+    if(code && await this.verify(id, code)){ await this.write("code", code); return {id, active:true}; }
+    const now = Date.now();
+    let start = parseInt(await this.read("start"),10); if(!start || start>now+864e5) start = now;
+    let seen = parseInt(await this.read("seen"),10) || now;
+    let tamper = (await this.read("tz"))==="1";
+    if(now < seen - 10*60*1000) tamper = true;               // heure reculée
+    if(tamper) await this.write("tz","1");
+    await this.write("start", String(start));
+    await this.write("seen", String(Math.max(seen, now)));
+    const end = start + APP.trialDays*864e5;
+    return {id, active:false, tamper, end, left: end-now, expired: tamper || now>=end};
+  },
+  async activate(code){ if(await this.verify(ST.lic.id, code)){ await this.write("code", String(code).replace(/\s+/g,"")); ST.lic = {id:ST.lic.id, active:true}; return true; } return false; }
+};
+const canPlay = () => ST.lic && (ST.lic.active || !ST.lic.expired);
+setInterval(async()=>{ if(ST.lic && !ST.lic.active){ const n=Date.now(); const seen=parseInt(await LIC.read("seen"),10)||n; if(n < seen-10*60*1000){ await LIC.write("tz","1"); ST.lic.tamper=true; ST.lic.expired=true; } else await LIC.write("seen", String(Math.max(seen,n))); if(n>=ST.lic.end) ST.lic.expired=true; } }, 60000);
+
+/* ---------- Rendu ---------- */
+let timerInt = null;
+function go(screen){ clearInterval(timerInt); timerInt=null; ST.screen=screen; render(); window.scrollTo(0,0); }
+function render(){ const f = SCREENS[ST.screen] || SCREENS.home; $("#app").innerHTML = deco(f()); if(AFTER[ST.screen]) AFTER[ST.screen](); }
+const AFTER = {};
+function hdr(title, backTo){ return `<div class="top"><button class="back" data-a="go" data-v="${backTo||"home"}" aria-label="${t("back")}">[[i:back]]</button><h2 class="grow" style="margin:0">${title}</h2></div>`; }
+const tg = (on, a, v) => `<button class="tg ${on?"on":""}" data-a="${a}" data-v="${v||""}"></button>`;
+const sw = (label, on, a, v) => `<div class="switch"><span>${label}</span>${tg(on,a,v)}</div>`;
+const lvTag = lv => `<span class="tag lv-${lv}">${t(lv)}</span>`;
+function modal(html){ closeModal(); const m=document.createElement("div"); m.className="modal"; m.id="modal"; m.innerHTML=deco(`<div class="box">${html}</div>`); document.body.appendChild(m); }
+function closeModal(){ const m=$("#modal"); if(m) m.remove(); }
+function rulesModal(game){ modal(`<h2>${game==="tod"?"[[i:flame]] "+t("tod"):"[[i:incognito]] "+t("intrus")}</h2><p style="white-space:pre-line">${esc(t(game==="tod"?"rulesTod":"rulesIntrus"))}</p><button class="btn pri" data-a="closeRules" data-v="${game}">${t("gotIt")}</button>`); }
+function adultGate(then){ if(ST.set.adult) return then(); PENDING = then; modal(`<h2>[[i:alert]] ${t("adultT")}</h2><p>${t("adultP")}</p><button class="btn pri" data-a="adultOk">${t("adultOk")}</button><button class="btn ghost" data-a="closeModal">${t("cancel")}</button>`); }
+let PENDING = null;
+
+const SCREENS = {};
+SCREENS.home = () => {
+  let trial = "";
+  if(ST.lic){ if(ST.lic.active) trial = `<div class="trial">[[i:check]] ${t("activated")}</div>`;
+    else if(ST.lic.expired) trial = `<div class="trial" style="border-color:var(--bad)">[[i:lock]] ${t("lockedT")} — <a href="#" data-a="go" data-v="lock" style="color:#f9a8d4">${t("activate")}</a></div>`;
+    else { const d=Math.floor(ST.lic.left/864e5); trial = `<div class="trial">[[i:gift]] ${d>=1?t("trialLeft",{n:d}):t("trialHours")} · <a href="#" data-a="go" data-v="lock" style="color:#c4b5fd">${t("activate")}</a></div>`; } }
+  return `<div class="center"><div class="logo">New World</div><div class="mut">${t("tagline")}</div></div>${trial}
+  <div class="game tod" data-a="startGame" data-v="tod"><span class="emo">[[i:flame]]</span><h2>${t("tod")}</h2><p>${t("todSub")}</p></div>
+  <div class="game intrus" data-a="startGame" data-v="intrus"><span class="emo">[[i:incognito]]</span><h2>${t("intrus")}</h2><p>${t("intrusSub")}</p></div>
+  <div class="game party" data-a="startGame" data-v="party"><span class="emo">[[i:sparkles]]</span><h2>${t("party")}</h2><p>${t("partySub")}</p></div>
+  <div class="grid2"><button class="btn ghost" data-a="go" data-v="groups">[[i:users]] ${t("groups")}</button><button class="btn ghost" data-a="go" data-v="settings">[[i:sliders]] ${t("settings")}</button></div>
+  <div class="foot">${t("madeBy")} · <a href="${APP.site}" target="_blank" rel="noopener">${t("website")}</a> · v${APP.version}</div>`;
+};
+
+/* ---- Écran d'activation ---- */
+SCREENS.lock = () => `${hdr("[[i:unlock]] "+t("activation"))}
+  ${ST.lic.active?`<div class="card center"><h2>[[i:check]]</h2><p>${t("activated")}</p></div>`:`
+  <div class="card"><h3>${ST.lic.expired?t("lockedT"):"New World"}</h3>${ST.lic.tamper?`<div class="banner">${t("clockT")}</div>`:""}
+  <p>${t("lockedP",{price:APP.price})}</p><p class="mut" style="white-space:pre-line">${t("howPay",{price:APP.price})}</p>
+  <label class="lb">${t("yourId")}</label><div class="code" id="lid">${esc(ST.lic.id)}</div>
+  <div class="row"><button class="btn sm ghost" data-a="copyId">[[i:copy]] ${t("copy")}</button><a class="btn sm ok" style="text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/${APP.wa}?text=${encodeURIComponent((L()?"Hello! I want to unlock New World. My ID: ":"Bonjour ! Je veux débloquer New World. Mon identifiant : ")+ST.lic.id)}">[[i:msg]] ${t("waBtn")}</a></div>
+  <label class="lb">${t("codeLbl")}</label><textarea id="code" placeholder="NWC-…" autocomplete="off" spellcheck="false"></textarea>
+  <button class="btn pri" data-a="activate">${t("activate")}</button></div>`}`;
+
+/* ---- Groupes ---- */
+SCREENS.groups = () => `${hdr("[[i:users]] "+t("groups"))}
+  ${ST.groups.length? `<div class="list">${ST.groups.map(g=>`<div class="it"><div><b>${esc(g.name)}</b><div class="mut small">${g.players.map(p=>esc(p.name)).join(", ")}</div></div><button class="btn sm ghost" data-a="editGroup" data-v="${g.id}">${t("edit")}</button></div>`).join("")}</div>` : `<p class="mut">${t("noGroup")}</p>`}
+  <button class="btn pri" data-a="editGroup" data-v="">+ ${t("newGroup")}</button>`;
+let EDIT = null;
+const newPlayer = () => ({id:uid(), name:"", g:"m", c:true, w:"all", max:"hard"});
+function playerForm(p, i){
+  const seg = (field, opts) => `<div class="seg">${opts.map(([v,l])=>`<button class="${p[field]===v?"on":""}" data-a="pf" data-v="${i}|${field}|${v}">${l}</button>`).join("")}</div>`;
+  return `<div class="player"><div class="row"><input type="text" maxlength="20" placeholder="${t("name")} ${i+1}" value="${esc(p.name)}" data-in="pname" data-i="${i}"><button class="btn sm bad" data-a="pdel" data-v="${i}">[[i:x]]</button></div>
+  <label class="lb">${t("gender")}</label>${seg("g",[["m",t("m")],["f",t("f")],["o",t("o")]])}
+  <label class="lb">${t("contact")} [[i:hand]]</label>${seg("c",[[true,t("yes")],[false,t("no")]].map(([v,l])=>[v,l]))}
+  ${p.c?`<label class="lb">${t("withWho")}</label>${seg("w",[["m",t("men")],["f",t("women")],["all",t("all")]])}`:""}
+  <label class="lb">${t("maxLv")}</label>${seg("max",LEVELS.map(l=>[l,t(l)]))}</div>`;
+}
+SCREENS.groupEdit = () => `${hdr(EDIT.id?t("edit"):t("newGroup"), EDIT.quick?EDIT.back:"groups")}
+  ${EDIT.quick?`<p class="mut">${t("quick")}</p>`:`<label class="lb">${t("groupName")}</label><input type="text" maxlength="30" value="${esc(EDIT.name)}" data-in="gname">`}
+  <label class="lb">${t("players")} (${EDIT.players.length})</label>
+  ${EDIT.players.map(playerForm).join("")}
+  <button class="btn ghost" data-a="padd">+ ${t("addPlayer")}</button>
+  <button class="btn pri" data-a="gsave">${EDIT.quick?t("continue"):t("save")}</button>
+  ${EDIT.id&&!EDIT.quick?`<button class="btn ghost" style="color:#fca5a5" data-a="gdel">${t("del")}</button>`:""}`;
+
+/* ---- Choix du groupe ---- */
+let NEXT = null;
+SCREENS.pickGroup = () => `${hdr(t("choose"))}
+  <div class="list">${ST.groups.map(g=>`<div class="it" data-a="useGroup" data-v="${g.id}" style="cursor:pointer"><div><b>${esc(g.name)}</b><div class="mut small">${g.players.length} · ${g.players.map(p=>esc(p.name)).join(", ")}</div></div><span>›</span></div>`).join("")}</div>
+  <button class="btn ghost" data-a="quickPlayers">[[i:zap]] ${t("quick")}</button>
+  <button class="btn ghost" data-a="editGroup" data-v="">+ ${t("newGroup")}</button>`;
+
+/* ---- Réglages ---- */
+SCREENS.settings = () => `${hdr("[[i:sliders]] "+t("settings"))}
+  <div class="card"><label class="lb">${t("lang")}</label><div class="seg"><button class="${L()?"":"on"}" data-a="lang" data-v="fr">Français</button><button class="${L()?"on":""}" data-a="lang" data-v="en">English</button></div>
+  ${sw("[[i:speaker]] "+t("sound"), ST.set.sound, "setT", "sound")}${sw("[[i:vibrate]] "+t("vibr"), ST.set.vibr, "setT", "vibr")}
+  ${ST.set.adult?`<button class="btn sm ghost" data-a="adultReset">${t("adultReset")}</button>`:""}</div>
+  <div class="card"><h3>[[i:book]] ${t("rules")}</h3><button class="btn ghost" data-a="showRules" data-v="tod">[[i:flame]] ${t("tod")}</button><button class="btn ghost" data-a="showRules" data-v="intrus">[[i:incognito]] ${t("intrus")}</button></div>
+  <div class="card"><h3>[[i:folder]] ${t("mySeries")}</h3><button class="btn ghost" data-a="openCustom" data-v="settings">[[i:flame]] ${t("tod")} · ${ST.custom.length} ${t("cards")}</button><button class="btn ghost" data-a="openPacks" data-v="settings">[[i:incognito]] ${t("intrus")} · ${ST.myPacks.length} ${t("myPacks").toLowerCase()}</button></div>
+  <div class="card"><h3>[[i:unlock]] ${t("activation")}</h3><p class="mut small">${t("yourId")} : <b>${esc(ST.lic.id)}</b></p><p>${ST.lic.active?t("activated"):(ST.lic.expired?t("lockedT"):t("trialLeft",{n:Math.max(0,Math.floor(ST.lic.left/864e5))}))}</p>${ST.lic.active?"":`<button class="btn pri" data-a="go" data-v="lock">${t("activate")}</button>`}</div>
+  <div class="card"><h3>${t("about")}</h3><p><b>New World</b> v${APP.version}<br><span class="mut">${t("madeBy")}</span></p><a class="btn ghost" style="text-decoration:none;text-align:center" href="${APP.site}" target="_blank" rel="noopener">[[i:globe]] ${t("website")}</a></div>`;
+
+/* ---- Cartes perso ---- */
+let CC = {type:"a", level:"soft", c:false};
+let BACKTO = "settings";
+SCREENS.custom = () => { const series={}; ST.custom.forEach((c,i)=>{ const k=c.s||t("myCards"); (series[k]=series[k]||[]).push([c,i]); });
+  return `${hdr("[[i:pen]] "+t("customT"), BACKTO)}
+  <div class="card"><h3>[[i:plus]] ${t("addCard")}</h3><label class="lb">${t("cardText")}</label><textarea id="ctext" maxlength="220"></textarea>
+  <label class="lb">${t("type")}</label><div class="seg"><button class="${CC.type==="v"?"on":""}" data-a="cc" data-v="type|v">${t("truth")}</button><button class="${CC.type==="a"?"on":""}" data-a="cc" data-v="type|a">${t("dare")}</button></div>
+  <label class="lb">${t("level")}</label><div class="seg">${LEVELS.map(l=>`<button class="${CC.level===l?"on":""}" data-a="cc" data-v="level|${l}">${t(l)}</button>`).join("")}</div>
+  ${sw("[[i:hand]] "+t("isContact"), CC.c, "cc", "c|toggle")}
+  <button class="btn pri" data-a="addCustom">${t("addCard")}</button></div>
+  <div class="card"><h3>[[i:upload]] ${t("importT")}</h3><p class="mut small">${t("importHelpTod")}</p>
+  <label class="lb">${t("seriesName")}</label><input type="text" id="sname" maxlength="40" placeholder="${L()?"My series":"Ma série"}">
+  <label class="lb">${t("defaults")} : ${t("type").toLowerCase()} / ${t("level").toLowerCase()}</label>
+  <div class="seg"><button class="${CC.type==="v"?"on":""}" data-a="cc" data-v="type|v">${t("truth")}</button><button class="${CC.type==="a"?"on":""}" data-a="cc" data-v="type|a">${t("dare")}</button></div>
+  <div class="seg">${LEVELS.map(l=>`<button class="${CC.level===l?"on":""}" data-a="cc" data-v="level|${l}">${t(l)}</button>`).join("")}</div>
+  <textarea id="itext" style="min-height:140px;margin-top:8px" placeholder="${L()?"T: Your worst date?\nD: Dance for 20 seconds [hard]\nD: Hold {p}'s hand [contact]":"V: Ton pire date ?\nA: Danse 20 secondes [hard]\nA: Tiens la main de {p} [contact]"}"></textarea>
+  <button class="btn ghost" data-a="pickFile" data-v="itext">[[i:file]] ${t("pickFile")}</button>
+  <button class="btn pri" data-a="importCards">[[i:upload]] ${t("doImport")}</button></div>
+  ${Object.keys(series).length?Object.entries(series).map(([name,list])=>`<div class="card"><div class="spread"><h3 style="margin:0">[[i:folder]] ${esc(name)} <span class="mut small">· ${list.length} ${t("cards")}</span></h3><button class="btn sm ghost" data-a="delSeries" data-v="${esc(name)}">[[i:trash]]</button></div>
+    <div class="list">${list.map(([c,i])=>`<div class="it"><div>${lvTag(c.level)} <b>${c.type==="v"?t("truth"):t("dare")}</b>${c.c?" [[i:hand]]":""}<div>${esc(c.text)}</div></div><button class="btn sm bad" data-a="delCustom" data-v="${i}">[[i:x]]</button></div>`).join("")}</div></div>`).join("")
+    +`<div class="row"><button class="btn ghost grow" data-a="exportCards">[[i:download]] ${t("export")}</button>${navigator.canShare?`<button class="btn ghost grow" data-a="shareCards">[[i:share]] ${t("shareF")}</button>`:""}</div>`
+    :`<p class="mut">${t("noCustom")}</p>`}`; };
+
+SCREENS.packs = () => `${hdr("[[i:folder]] "+t("packsT"), BACKTO)}
+  <div class="card"><h3>[[i:upload]] ${t("importPack")}</h3><p class="mut small">${t("importHelpPack")}</p>
+  <label class="lb">${t("packName")}</label><input type="text" id="pname" maxlength="40" placeholder="${L()?"My pack":"Mon pack"}">
+  <textarea id="ptext" style="min-height:140px;margin-top:8px" placeholder="Thiéboudienne / Yassa&#10;Car rapide / Ndiaga Ndiaye"></textarea>
+  <button class="btn ghost" data-a="pickFile" data-v="ptext">[[i:file]] ${t("pickFile")}</button>
+  <button class="btn pri" data-a="importPack">[[i:upload]] ${t("doImport")}</button></div>
+  ${ST.myPacks.map(p=>`<div class="card"><div class="spread"><div><b>[[i:folder]] ${esc(p.name)}</b><div class="mut small">${p.pairs.length} ${t("pairs")}</div></div><div><button class="btn sm ghost" data-a="exportPack" data-v="${p.id}">[[i:download]]</button>${navigator.canShare?`<button class="btn sm ghost" data-a="sharePack" data-v="${p.id}">[[i:share]]</button>`:""}<button class="btn sm bad" data-a="delPack" data-v="${p.id}">[[i:trash]]</button></div></div>
+    <div class="mut small" style="margin-top:8px">${p.pairs.slice(0,6).map(x=>esc(x[0])+" / "+esc(x[1])).join(" · ")}${p.pairs.length>6?" …":""}</div></div>`).join("")}`;
+
+/* ---- Import / export ---- */
+const LVALIAS = {soft:"soft",hard:"hard",epice:"spicy",spicy:"spicy",extreme:"extreme"};
+function parseCards(txt, defType, defLevel){
+  const out=[];
+  String(txt).split(/\r?\n/).forEach(line=>{
+    let l=line.trim(); if(!l || l.startsWith("#")) return;
+    let type=defType, level=defLevel, c=false;
+    l=l.replace(/\[([^\]]+)\]/g,(m,k)=>{ const n=norm(k); if(n==="contact"){ c=true; return ""; } if(LVALIAS[n]){ level=LVALIAS[n]; return ""; } return m; });
+    const m=l.match(/^\s*(v|a|t|d|verite|action|truth|dare)\s*[:\-–]\s*/i);
+    if(m){ const k=norm(m[1]); type=(k==="v"||k==="t"||k==="verite"||k==="truth")?"v":"a"; l=l.slice(m[0].length); }
+    l=l.replace(/\s{2,}/g," ").trim(); if(l.length<2) return;
+    out.push({text:l.slice(0,220), type, level, c});
+  });
+  return out;
+}
+function parsePairs(txt){
+  const out=[];
+  String(txt).split(/\r?\n/).forEach(line=>{
+    const l=line.trim(); if(!l || l.startsWith("#")) return;
+    const parts=l.split(/\s*(?:\/|;|\t|\||\s-\s|,)\s*/).map(x=>x.trim()).filter(Boolean);
+    if(parts.length>=2 && norm(parts[0])!==norm(parts[1])) out.push([parts[0].slice(0,40), parts[1].slice(0,40)]);
+  });
+  return out;
+}
+function cardsToText(list){ return "# New World — "+(L()?"custom cards":"cartes perso")+"\n"+list.map(c=>`[${c.level==="spicy"?(L()?"spicy":"épicé"):c.level==="extreme"?(L()?"extreme":"extrême"):c.level}] ${c.type==="v"?(L()?"T":"V"):(L()?"D":"A")}: ${c.text}${c.c?" [contact]":""}`).join("\n")+"\n"; }
+function packToText(p){ return "# New World — pack : "+p.name+"\n"+p.pairs.map(x=>x[0]+" / "+x[1]).join("\n")+"\n"; }
+function fileName(n){ return "new-world-"+norm(n||"export").slice(0,30)+".txt"; }
+function download(name, text){ const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([text],{type:"text/plain;charset=utf-8"})); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },500); }
+async function shareText(name, text){ try{ const f=new File([text], name, {type:"text/plain"}); if(navigator.canShare && navigator.canShare({files:[f]})) await navigator.share({files:[f], title:"New World"}); else download(name,text); }catch(e){} }
+function pickFile(targetId){
+  const inp=document.createElement("input"); inp.type="file"; inp.accept=".txt,.csv,text/plain";
+  inp.onchange=()=>{ const f=inp.files[0]; if(!f || f.size>500000) return; const r=new FileReader(); r.onload=()=>{ const el=$("#"+targetId); if(!el) return; el.value=String(r.result);
+    const first=String(r.result).split(/\r?\n/)[0]; const m=first.match(/pack\s*:\s*(.+)$/i); const nameEl=$(targetId==="ptext"?"#pname":"#sname"); if(nameEl && !nameEl.value) nameEl.value=(m?m[1]:f.name.replace(/\.[^.]+$/,"").replace(/^new-world-/,"")).slice(0,40); }; r.readAsText(f); };
+  inp.click();
+}
+
+/* =================== ACTION OU VÉRITÉ =================== */
+SCREENS.todSetup = () => { const c=ST.todCfg; const modes=[["classic","mClassic"],["rise","mRise"],["own","mOwn"],["duo","mDuo"]];
+  return `${hdr("[[i:flame]] "+t("tod"), "home")}
+  <p class="mut small">[[i:users]] ${ST.players.map(p=>esc(p.name)).join(", ")}</p>
+  <div class="card"><h3>${t("mode")}</h3>${modes.map(([m,k])=>`<div class="rolechip ${c.mode===m?"on":""}" data-a="todMode" data-v="${m}"><div><b>${t(k)}</b><div class="mut small">${t(k+"D")}</div></div></div>`).join("")}</div>
+  ${c.mode==="classic"||c.mode==="duo"?`<div class="card"><h3>${t("levels")}</h3>${LEVELS.map(l=>`<span class="pill ${c.levels.includes(l)?"on":""}" data-a="todLv" data-v="${l}">${t(l)}${ADULT.includes(l)?" <small>18+</small>":""}</span>`).join("")}</div>`:""}
+  <div class="card"><h3>${t("options")}</h3>${sw(t("specials"),c.specials,"todT","specials")}${sw(t("wheel"),c.wheel,"todT","wheel")}${sw(t("contactCards"),c.contact,"todT","contact")}${ST.custom.length?sw(t("customInc"),c.custom,"todT","custom"):""}
+  <div class="switch"><span>${t("jokers")}</span><div class="counter"><button data-a="todJ" data-v="-1">−</button><b>${c.jokers}</b><button data-a="todJ" data-v="1">+</button></div></div></div>
+  <button class="btn pri" data-a="todStart">${t("start")}</button><button class="btn ghost" data-a="openCustom" data-v="todSetup">[[i:upload]] ${t("importCards")}</button><button class="btn ghost" data-a="showRules" data-v="tod">[[i:book]] ${t("rules")}</button>`; };
+
+function todNew(limitTurns, onlyPlayers){
+  const c = ST.todCfg;
+  ST.tod = { start:Date.now(), turn:0, idx:-1, cur:null, phase:"spin", card:null, used:{}, rule:null, angle:0, limit:limitTurns||0, only:onlyPlayers||null,
+    stats:Object.fromEntries(ST.players.map(p=>[p.id,{a:0,v:0,j:0,jk:c.jokers}])) };
+}
+function todLevelFor(p){
+  const c=ST.todCfg;
+  if(c.mode==="rise"){ return LEVELS[Math.min(3, Math.floor((Date.now()-ST.tod.start)/600000))]; }
+  if(c.mode==="own"){ const max=LEVELS.indexOf(p.max||"hard"); const w=[]; for(let i=0;i<=max;i++) for(let k=0;k<=i;k++) w.push(LEVELS[i]); return pick(w); }
+  return pick(c.levels.length?c.levels:["soft"]);
+}
+const accepts = (a,b) => a.c && b.c && (a.w==="all" || a.w===b.g) && (b.w==="all" || b.w===a.g);
+function targetFor(p, card, lv){
+  const others = ST.players.filter(x=>x.id!==p.id);
+  let pool = others;
+  if(card.c){ if(!ST.todCfg.contact) return null; pool = others.filter(o=>accepts(p,o) && (ST.todCfg.mode!=="own" || LEVELS.indexOf(o.max||"hard")>=LEVELS.indexOf(lv))); }
+  return pool.length ? pick(pool) : null;
+}
+function todDraw(type){
+  const p = ST.tod.cur; const lv = todLevelFor(p);
+  let pool = CARDS[lv][type].map((x,i)=>({key:lv+type+i, text:L()?x[1]:x[0], c:!!x[2]}));
+  if(ST.todCfg.custom) ST.custom.forEach((x,i)=>{ if(x.level===lv && x.type===type) pool.push({key:"u"+i, text:x.text, c:!!x.c}); });
+  for(let attempt=0; attempt<2; attempt++){
+    const fresh = shuffle(pool.filter(x=>!ST.tod.used[x.key]));
+    for(const card of fresh){
+      const needs = card.c || card.text.includes("{p}");
+      const tgt = needs ? targetFor(p, card, lv) : null;
+      if(needs && !tgt) continue;
+      ST.tod.used[card.key]=1;
+      return {type, lv, c:card.c, tgt, text:card.text.split("{p}").join(tgt?tgt.name:"")};
+    }
+    pool.forEach(x=>delete ST.tod.used[x.key]);
+  }
+  return {type, lv, c:false, tgt:null, text: L()?"Raconte ton meilleur souvenir avec ce groupe.":"Tell your best memory with this group."};
+}
+function todSpecial(){
+  const ps = ST.players, cur = ST.tod.cur, kinds=["duel","all","vote","rule","inv"];
+  const k = pick(ps.length<3 ? ["all","rule","inv"] : kinds);
+  if(k==="duel"){ const b=pick(ps.filter(x=>x.id!==cur.id)); return {sp:"duel", title:t("spDuel"), text:t("spDuelT",{a:cur.name,b:b.name,x:tx(pick(SPECIAL.duel))})}; }
+  if(k==="all") return {sp:"all", title:t("spAll"), text:tx(pick(SPECIAL.all))};
+  if(k==="vote") return {sp:"vote", title:t("spVote"), text:tx(pick(SPECIAL.vote))+" "+t("spVoteT")};
+  if(k==="rule"){ const r=tx(pick(SPECIAL.rule)); ST.tod.rule={r, n:3}; return {sp:"rule", title:t("spRule"), text:t("spRuleT",{r})}; }
+  return {sp:"inv", title:t("spInv"), text:t("spInvT",{a:cur.name})};
+}
+function todEligible(){ return ST.tod.only ? ST.players.filter(p=>ST.tod.only.includes(p.id)) : ST.players; }
+SCREENS.todPlay = () => {
+  const T=ST.tod, c=ST.todCfg; const p=T.cur;
+  const lvNow = c.mode==="rise" ? lvTag(todLevelFor({})) : "";
+  let head = `<div class="spread"><button class="back" data-a="todQuit">[[i:back]]</button><div>${lvNow}</div><button class="btn sm ghost" data-a="todEnd">${t("endGame")}</button></div>`;
+  if(T.rule) head += `<div class="banner">[[i:book]] ${esc(t("ruleOn",{n:T.rule.n,r:T.rule.r}))}</div>`;
+  if(T.phase==="spin"){
+    const el = todEligible();
+    return head + (c.wheel ? `<div class="wheelbox"><div class="pointer"></div><canvas id="wheel" width="600" height="600"></canvas></div><button class="btn pri" data-a="todSpin" id="spinBtn">[[i:spin]] ${t("spin")}</button>` :
+      `<div class="card center"><div class="mut">${t("turnOf")}</div><div class="who">${esc(el[(T.idx+1)%el.length].name)}</div></div><button class="btn pri" data-a="todSpin">${t("continue")}</button>`);
+  }
+  if(T.phase==="choose") return head + `<div class="card center"><div class="mut">${t("turnOf")}</div><div class="who">${esc(p.name)}</div></div>
+    <div class="choice"><button class="btn v" data-a="todPick" data-v="v">[[i:msg]]<br>${t("truth")}</button><button class="btn a" data-a="todPick" data-v="a">[[i:flame]]<br>${t("dare")}</button></div>`;
+  if(T.phase==="special"){ const s=T.card; return head + `<div class="bigcard sp"><div><span class="tag" style="background:#fff;color:#065f46">${esc(s.title)}</span></div><div class="q">${esc(s.text)}</div></div><button class="btn pri" data-a="todNext">${t("next")}</button>`; }
+  const k=T.card, st=T.stats[p.id];
+  return head + `<div class="bigcard ${k.type}"><div>${lvTag(k.lv)} <span class="tag" style="background:#fff2;color:#fff">${k.type==="v"?t("truth"):t("dare")}${k.c?" [[i:hand]]":""}</span></div>
+    <div class="mut" style="color:#ddd;margin-top:10px">${esc(p.name)}</div><div class="q">${esc(k.text)}</div></div>
+    ${k.type==="a"?`<div class="row"><button class="btn sm ghost grow" data-a="todTimer" data-v="30">[[i:timer]] 30 s</button><button class="btn sm ghost grow" data-a="todTimer" data-v="60">[[i:timer]] 60 s</button></div><div class="timer" id="tmr"></div>`:""}
+    <button class="btn ok" data-a="todDone">${t("done")}</button>
+    ${k.c&&k.tgt?`<button class="btn ghost" data-a="todRefuse">${esc(t("refuse",{p:k.tgt.name}))}</button>`:""}
+    <button class="btn warn" data-a="todJoker">[[i:skip]] ${t("joker",{n:st.jk})}</button>`;
+};
+AFTER.todPlay = () => { if(ST.tod.phase==="spin" && ST.todCfg.wheel) drawWheel(ST.tod.angle); };
+const WCOL = ["#8b5cf6","#ec4899","#f97316","#0ea5e9","#22c55e","#eab308","#6366f1","#ef4444","#14b8a6","#a855f7"];
+function drawWheel(ang){
+  const cv=$("#wheel"); if(!cv) return; const x=cv.getContext("2d"), ps=todEligible(), n=ps.length, R=290, C=300;
+  x.clearRect(0,0,600,600);
+  for(let i=0;i<n;i++){ const a0=ang+i*2*Math.PI/n - Math.PI/2, a1=a0+2*Math.PI/n;
+    x.beginPath(); x.moveTo(C,C); x.arc(C,C,R,a0,a1); x.closePath(); x.fillStyle=WCOL[i%WCOL.length]; x.fill(); x.strokeStyle="#0d0b1a"; x.lineWidth=4; x.stroke();
+    x.save(); x.translate(C,C); x.rotate((a0+a1)/2); x.textAlign="right"; x.fillStyle="#fff"; x.font="bold "+(n>8?28:36)+"px system-ui"; x.fillText(ps[i].name.slice(0,12), R-24, 12); x.restore(); }
+  x.beginPath(); x.arc(C,C,38,0,2*Math.PI); x.fillStyle="#0d0b1a"; x.fill(); x.fillStyle="#fff"; x.font="bold 30px system-ui"; x.textAlign="center"; x.fillText("NW",C,C+10);
+}
+function todSpin(){
+  const T=ST.tod, ps=todEligible();
+  if(!ST.todCfg.wheel){ T.idx=(T.idx+1)%ps.length; return todAfterPick(ps[T.idx]); }
+  const btn=$("#spinBtn"); if(btn) btn.disabled=true;
+  let target = rnd(ps.length); if(ps.length>2 && T.cur && ps[target].id===T.cur.id) target=(target+1)%ps.length;
+  const seg=2*Math.PI/ps.length; const end = 2*Math.PI*(5+rnd(3)) + (2*Math.PI - (target*seg+seg/2));
+  const from=T.angle%(2*Math.PI), t0=performance.now(), dur=3200; let lastSeg=-1;
+  (function step(now){ const k=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-k,3), a=from+(end-from)*e; drawWheel(a);
+    const s=Math.floor(((2*Math.PI-(a%(2*Math.PI)))%(2*Math.PI))/seg); if(s!==lastSeg){ lastSeg=s; beep("tick"); }
+    if(k<1) requestAnimationFrame(step); else { T.angle=a; beep("reveal"); setTimeout(()=>todAfterPick(ps[target]),450); } })(t0);
+}
+function todAfterPick(p){
+  const T=ST.tod; T.cur=p; T.turn++;
+  if(T.rule){ T.rule.n--; if(T.rule.n<=0) T.rule=null; }
+  if(ST.todCfg.specials && !T.only && T.turn>2 && Math.random()<0.15){ T.card=todSpecial(); T.phase="special"; }
+  else T.phase="choose";
+  render();
+}
+function todNext(){
+  const T=ST.tod; T.phase="spin"; T.card=null;
+  if(T.limit && T.turn>=T.limit){ return partyAfterTod(); }
+  render();
+}
+
+SCREENS.todEnd = () => {
+  const s=ST.tod.stats, ps=ST.players; const best=(f)=>{ let m=-1,w=null; ps.forEach(p=>{ const v=f(s[p.id]); if(v>m){m=v;w=p;} }); return m>0?w:null; };
+  const aw=[["[[i:zap]]",t("awBrave"),best(x=>x.a)],["[[i:skip]]",t("awJoker"),best(x=>x.j)],["[[i:heart]]",t("awHonest"),best(x=>x.v)],["[[i:star]]",t("awStar"),best(x=>x.a+x.v)]].filter(x=>x[2]);
+  return `<div class="center"><div class="logo" style="font-size:2rem">${t("endT")}</div></div>
+  ${aw.map(([e,l,p])=>`<div class="title-award"><span class="e">${e}</span><div><div class="mut small">${l}</div><b style="font-size:1.2rem">${esc(p.name)}</b></div></div>`).join("")}
+  <div class="card"><table class="score">${ps.map(p=>`<tr><td><b>${esc(p.name)}</b></td><td class="mut small">${t("statsLine",{a:s[p.id].a,v:s[p.id].v,j:s[p.id].j})}</td></tr>`).join("")}</table></div>
+  <div class="foot">New World · ${t("madeBy")}</div>
+  <button class="btn pri" data-a="todStart">${t("replay")}</button><button class="btn ghost" data-a="go" data-v="home">${t("home")}</button>`;
+};
+
+/* =================== L'INTRUS =================== */
+SCREENS.inSetup = () => { const c=ST.inCfg, n=ST.players.length; const maxInf=Math.max(1,Math.floor((n-1)/2));
+  if(c.intrus+(c.white?1:0)>maxInf){ c.intrus=Math.max(c.white?0:1, maxInf-(c.white?1:0)); }
+  const ctr=(label,val,a)=>`<div class="switch"><span>${label}</span><div class="counter"><button data-a="${a}" data-v="-1">−</button><b>${val}</b><button data-a="${a}" data-v="1">+</button></div></div>`;
+  return `${hdr("[[i:incognito]] "+t("intrus"), ST.party?"partySetup":"home")}
+  <p class="mut small">[[i:users]] ${ST.players.map(p=>esc(p.name)).join(", ")}</p>
+  <div class="card">${ctr(t("nbIntrus"),c.intrus,"inN")}${sw("[[i:help]] "+t("mrWhite"),c.white,"inT","white")}</div>
+  <div class="card"><div class="spread"><h3>${t("themes")}</h3><span><span class="pill" data-a="inAllT" data-v="1">${t("selAll")}</span><span class="pill" data-a="inAllT" data-v="0">${t("selNone")}</span></span></div>${Object.entries(THEMES).map(([k,v])=>`<span class="pill ${c.themes.includes(k)?"on":""}" data-a="inTheme" data-v="${k}">${v.icon} ${L()?v.en:v.fr}</span>`).join("")}
+  <h3 style="margin-top:14px">${t("packs")}</h3>${Object.entries(PACKS).map(([k,v])=>`<span class="pill ${c.packs.includes(k)?"on":""}" data-a="inPack" data-v="${k}">${v.icon} ${L()?v.en:v.fr}</span>`).join("")}
+  <h3 style="margin-top:14px">${t("mineT")}</h3>${ST.myPacks.map(p=>`<span class="pill ${(c.mine||[]).includes(p.id)?"on":""}" data-a="inMine" data-v="${p.id}">[[i:folder]] ${esc(p.name)} <small>(${p.pairs.length})</small></span>`).join("")}
+  <button class="btn sm ghost" data-a="openPacks" data-v="inSetup">[[i:upload]] ${t("importPack")}</button></div>
+  <div class="card"><div class="spread"><h3>${t("roles")}</h3><span><span class="pill" data-a="inAllR" data-v="1">${t("selAll")}</span><span class="pill" data-a="inAllR" data-v="0">${t("selNone")}</span></span></div>
+  ${ctr(t("rolesNb"),c.rolesNb,"inR")}
+  ${Object.entries(ROLES).map(([k,r])=>`<div class="rolechip ${c.roles.includes(k)?"on":""}" data-a="inRole" data-v="${k}"><span class="e">${r.e}</span><div><b>${tx(r.n)}</b><div class="mut small">${tx(r.d)}</div></div></div>`).join("")}</div>
+  <div class="card"><label class="lb">${t("debate")}</label><div class="seg">${[[0,t("off")],[60,"60 s"],[90,"90 s"],[120,"120 s"]].map(([v,l])=>`<button class="${c.debate===v?"on":""}" data-a="inDeb" data-v="${v}">${l}</button>`).join("")}</div>
+  ${sw("[[i:flame]] "+t("gage"),c.gage,"inT","gage")}${c.gage?`<label class="lb">${t("gageLv")}</label><div class="seg">${LEVELS.map(l=>`<button class="${c.gageLv===l?"on":""}" data-a="inGL" data-v="${l}">${t(l)}</button>`).join("")}</div>`:""}</div>
+  <button class="btn pri" data-a="inStart">${t("start")}</button><button class="btn ghost" data-a="showRules" data-v="intrus">[[i:book]] ${t("rules")}</button>`; };
+
+function inPairPool(){
+  const c=ST.inCfg; let pool=[];
+  c.themes.forEach(k=>THEMES[k] && pool.push(...THEMES[k].pairs));
+  c.packs.forEach(k=>PACKS[k] && pool.push(...PACKS[k].pairs));
+  (c.mine||[]).forEach(id=>{ const p=ST.myPacks.find(x=>x.id===id); if(p) pool.push(...p.pairs); });
+  return pool.length?pool:THEMES.food.pairs;
+}
+function inNew(){
+  const c=ST.inCfg, ps=shuffle(ST.players);
+  const usedPairs = ST.game && ST.game.usedPairs || {};
+  let pool=inPairPool(); let fresh=pool.filter(p=>!usedPairs[p.join("/")]); if(!fresh.length){ fresh=pool; for(const k in usedPairs) delete usedPairs[k]; }
+  let pair=pick(fresh); usedPairs[pair.join("/")]=1; if(Math.random()<.5) pair=[pair[1],pair[0]];
+  const pl = ps.map(p=>({id:p.id, name:p.name, team:"civ", word:pair[0], alive:true, role:null, used:false, prot:false}));
+  let k=0; for(let i=0;i<c.intrus;i++){ pl[k].team="intr"; pl[k].word=pair[1]; k++; }
+  if(c.white){ pl[k].team="white"; pl[k].word=null; k++; }
+  // rôles
+  let roles = shuffle(c.roles.slice()); const order=shuffle(pl.map((_,i)=>i)); let nb=Math.min(c.rolesNb, pl.length); const assign=[];
+  for(const r of roles){ if(assign.length>=nb) break; if(r==="jumeaux"){ if(assign.length+2>nb) continue; assign.push("jumeaux","jumeaux"); } else assign.push(r); }
+  assign.slice(0,pl.length).forEach((r,i)=>{ pl[order[i]].role=r; });
+  const tw=pl.filter(p=>p.role==="jumeaux"); if(tw.length===1) tw[0].role=null; if(tw.length===2){ tw[0].twin=tw[1].id; tw[1].twin=tw[0].id; }
+  pl.forEach(p=>{ if(p.role==="vendeur") p.vend=pick(Object.keys(VENDOR)); });
+  const scores = ST.game && ST.game.scores || Object.fromEntries(ST.players.map(p=>[p.id,0]));
+  const manche = ST.game ? ST.game.manche+1 : 1;
+  ST.game = { hadIntr: c.intrus>0, pl, pair, phase:"reveal", ri:0, shown:false, round:1, votes:0, first:null, scores, manche, usedPairs, log:[], gossip:null, pending:null };
+}
+const G = () => ST.game;
+const gp = id => G().pl.find(p=>p.id===id);
+const alive = () => G().pl.filter(p=>p.alive);
+const showWord = p => p.word==null ? null : wfr(p.word);
+const teamName = tm => t(tm==="civ"?"civ":tm==="intr"?"intr":"white");
+
+SCREENS.inReveal = () => { const g=G(), p=g.pl[g.ri];
+  if(!g.shown) return `<div class="center mut">${g.ri+1} / ${g.pl.length}</div><div class="secret"><div class="mut">${t("passTo")}</div><div class="who">${esc(p.name)}</div><button class="btn pri" data-a="inShow">[[i:eye]] ${t("tapReveal")}</button></div>`;
+  let role="";
+  if(p.role){ const r=ROLES[p.role]; role=`<div class="role"><div class="mut small">${t("yourRole")}</div><b>${r.e} ${tx(r.n)}</b><div class="small">${tx(r.d)}</div>`;
+    if(p.role==="jumeaux") role+=`<div style="margin-top:8px">[[i:link]] ${esc(t("twinIs",{p:gp(p.twin).name}))}</div>`;
+    if(p.role==="vendeur") role+=`<div style="margin-top:8px">[[i:bag]] ${esc(t("vendorGot",{x:tx(VENDOR[p.vend])}))}</div>`;
+    if(p.role==="garde"){ role+=`<div style="margin-top:8px">${t("guardPick")}</div><div class="grid2" style="margin-top:8px">${g.pl.filter(x=>x.id!==p.id).map(x=>`<button class="pbtn ${p.guard===x.id?"sel":""}" data-a="inGuard" data-v="${x.id}">${esc(x.name)}</button>`).join("")}</div>`; }
+    role+="</div>"; }
+  const w=showWord(p);
+  return `<div class="center mut">${g.ri+1} / ${g.pl.length}</div><div class="secret"><div class="mut">${esc(p.name)}</div>
+    ${w==null?`<div class="word">[[i:help]]</div><b>${t("youWhite")}</b><p class="small">${t("whiteHelp")}</p>`:`<div class="mut small">${t("yourWord")}</div><div class="word">${esc(w)}</div>`}
+    ${role}</div><button class="btn pri" data-a="inHide" ${p.role==="garde"&&!p.guard?"disabled":""}>[[i:eyeoff]] ${t("hide")}</button>`; };
+
+function inStartRound(){
+  const g=G(), al=alive(); let cands=al.filter(p=>p.team!=="white"); if(!cands.length) cands=al;
+  g.first=pick(cands).id; g.phase="round"; go("inRound");
+}
+function inOrder(){ const g=G(), al=alive(); const i=al.findIndex(p=>p.id===g.first); return i<0?al:al.slice(i).concat(al.slice(0,i)); }
+SCREENS.inRound = () => { const g=G(), ord=inOrder(); const app=alive().find(p=>p.role==="apprenti");
+  return `<div class="spread"><button class="back" data-a="inQuit">[[i:back]]</button><b>${t("round",{n:g.manche,t:g.round})}</b><span></span></div>
+  ${g.gossip?`<div class="banner info">${esc(g.gossip)}</div>`:""}
+  <div class="card"><p>${t("cluesHelp")}</p>${ord.map((p,i)=>`<div class="it" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)"><span><b>${i+1}.</b> ${esc(p.name)}</span><span class="mut small">${p.role==="muet"?"[[i:micoff]] "+t("mime"):""}</span></div>`).join("")}</div>
+  ${app?`<button class="btn ghost" data-a="inApprenti">${t("apprenti")}</button>`:""}
+  ${ST.inCfg.debate?`<div class="timer" id="tmr">${ST.inCfg.debate}</div><button class="btn ghost" data-a="inDebate">[[i:timer]] ${t("debate")}</button>`:""}
+  <button class="btn ghost" data-a="inPower">${t("usePower")}</button>
+  <button class="btn pri" data-a="inVote">[[i:vote]] ${t("toVote")}</button>
+  <div class="card small mut">${G().pl.filter(p=>!p.alive).map(p=>`[[i:xcircle]] ${esc(p.name)} — ${teamName(p.team)}${p.role?" · "+ROLES[p.role].e:""}`).join("<br>")||""}</div>`; };
+
+/* ---- Pouvoirs secrets ---- */
+let PW = null; // {who, step, ability, result}
+function powersOf(p){
+  const out=[];
+  if(!p.alive) return out;
+  if(p.role==="griot" && !p.used) out.push("check");
+  if(p.role==="detective" && !p.used) out.push("peek");
+  if(p.role==="commere" && !p.used) out.push("gossip");
+  if(p.role==="marchand" && !p.used) out.push("swap");
+  if(p.role==="vendeur" && !p.used && (p.vend==="peek"||p.vend==="check")) out.push(p.vend);
+  return out;
+}
+const PWL = {check:["[[i:drum]] Savoir si un joueur a mon mot","[[i:drum]] Check if a player has my word"], peek:["[[i:search]] Voir le mot d'un joueur","[[i:search]] See a player's word"], gossip:["[[i:megaphone]] Révéler le camp d'un joueur au hasard","[[i:megaphone]] Reveal a random player's side"], swap:["[[i:repeat]] Échanger mon mot avec un joueur","[[i:repeat]] Swap my word with a player"]};
+SCREENS.inPower = () => { const g=G();
+  if(!PW.who) return `${hdr("[[i:sparkles]] "+t("usePower"),"inRound")}<p>${t("whoAreYou")}</p><div class="grid2">${alive().map(p=>`<button class="pbtn" data-a="pwWho" data-v="${p.id}">${esc(p.name)}</button>`).join("")}</div>`;
+  const me=gp(PW.who);
+  if(PW.result) return `<div class="secret"><div class="mut">${esc(me.name)}</div><div class="q" style="font-size:1.4rem;font-weight:800;margin:14px 0">${esc(PW.result)}</div></div><button class="btn pri" data-a="pwClose">[[i:eyeoff]] ${t("hide")}</button>`;
+  const pws=powersOf(me);
+  if(!PW.ab) return `<div class="secret"><div class="mut">${esc(me.name)}</div>${pws.length?pws.map(a=>`<button class="btn pri" data-a="pwAb" data-v="${a}">${tx(PWL[a])}</button>`).join(""):`<p>${t("noPower")}</p>`}</div><button class="btn ghost" data-a="pwClose">[[i:eyeoff]] ${t("hide")}</button>`;
+  return `<div class="secret"><div class="mut">${esc(me.name)} · ${tx(PWL[PW.ab])}</div><p>${t("pickTarget")}</p><div class="grid2">${alive().filter(x=>x.id!==me.id).map(x=>`<button class="pbtn" data-a="pwTarget" data-v="${x.id}">${esc(x.name)}</button>`).join("")}</div></div><button class="btn ghost" data-a="pwClose">${t("cancel")}</button>`;
+};
+function pwApply(targetId){
+  const g=G(), me=gp(PW.who), tg=gp(targetId), ab=PW.ab;
+  me.used=true;
+  if(ab==="check") PW.result = (tg.word!=null && me.word!=null && tg.word===me.word) ? t("same",{p:tg.name}) : t("diff",{p:tg.name});
+  else if(ab==="peek") PW.result = t("wordOf",{p:tg.name, w: tg.word==null?t("noWord"):wfr(tg.word)});
+  else if(ab==="swap"){ [me.word,tg.word]=[tg.word,me.word]; [me.team,tg.team]=[tg.team,me.team]; PW.result=t("swapDone",{w: me.word==null?t("noWord"):wfr(me.word)}); g.pending={notice:tg.id}; }
+  render();
+}
+
+/* ---- Vote ---- */
+let VT = null; // {voters:[], i, ballots:{}, among:null, shown}
+function inVoteStart(among){
+  const g=G(); const voters=alive().map(p=>p.id); g.pl.forEach(p=>{ if(!p.alive && p.role==="fantome") voters.push(p.id); });
+  VT={voters, i:0, ballots:{}, among:among||null, shown:false}; go("inVote");
+}
+const weight = p => (p.role==="driankee" || (p.role==="vendeur" && p.vend==="double")) ? 2 : 1;
+SCREENS.inVote = () => { const g=G();
+  if(VT.judge){ const j=gp(VT.judge); return `<div class="secret"><p>${esc(t("judgeDecides",{p:j.name}))}</p><div class="grid2">${VT.among.map(id=>`<button class="pbtn" data-a="inElim" data-v="${id}">${esc(gp(id).name)}</button>`).join("")}</div></div>`; }
+  const v=gp(VT.voters[VT.i]);
+  if(!VT.shown) return `<div class="spread"><button class="back" data-a="go" data-v="inRound">[[i:back]]</button><b>${t("voteT")} ${VT.i+1}/${VT.voters.length}</b><span></span></div>
+    ${VT.among?`<div class="banner">${esc(t("tie",{l:VT.among.map(id=>gp(id).name).join(", ")}))}</div>`:""}
+    <div class="secret"><div class="mut">${v.alive?t("voteOf"):t("voteGhost")}</div><div class="who">${esc(v.name)}</div><button class="btn pri" data-a="vtShow">[[i:eye]] ${t("tapReveal").replace(/mot|word/,"vote")}</button></div>
+    ${VT.i===0&&!VT.among?`<button class="btn ghost" data-a="vtHand">[[i:hand]] ${t("voteHand")}</button>`:""}`;
+  const opts=(VT.among||alive().map(p=>p.id)).filter(id=>id!==v.id);
+  return `<div class="secret"><div class="mut">${t("voteOf")} ${esc(v.name)}</div><p>${t("pickElim")}</p><div class="grid2">${opts.map(id=>`<button class="pbtn" data-a="vtCast" data-v="${id}">${esc(gp(id).name)}</button>`).join("")}</div></div>`;
+};
+SCREENS.inHand = () => `${hdr("[[i:hand]] "+t("pickElim"),"inRound")}<div class="grid2">${alive().map(p=>`<button class="pbtn" data-a="inElim" data-v="${p.id}">${esc(p.name)}</button>`).join("")}</div>`;
+function vtTally(){
+  const g=G(), tally={};
+  for(const [vid,tid] of Object.entries(VT.ballots)){ tally[tid]=(tally[tid]||0)+weight(gp(vid)); }
+  let max=0; for(const k in tally) max=Math.max(max,tally[k]);
+  const top_=Object.keys(tally).filter(k=>tally[k]===max);
+  if(top_.length===1) return inEliminate(top_[0]);
+  const judge=alive().find(p=>p.role==="juge");
+  if(judge){ VT.judge=judge.id; VT.among=top_; return render(); }
+  if(!VT.among){ return inVoteStart(top_); }
+  toast(t("randomPick")); inEliminate(pick(top_));
+}
+
+/* ---- Élimination ---- */
+let RES = null; // {msgs:[], next}
+function inEliminate(id){
+  const g=G(); g.votes++; const p=gp(id); const msgs=[];
+  const guard=g.pl.find(x=>x.role==="garde" && x.guard===id && !x.gUsed);
+  if(guard){ guard.gUsed=true; msgs.push(t("saved",{p:p.name})); RES={msgs, next:"round"}; beep("ok"); return go("inResult"); }
+  if(p.role==="lutteur" && !p.lUsed){ p.lUsed=true; msgs.push(t("wrestler",{p:p.name})); RES={msgs, next:"round"}; beep("ok"); return go("inResult"); }
+  if(p.role==="vendeur" && p.vend==="immune" && !p.used){ p.used=true; msgs.push(t("immune",{p:p.name})); RES={msgs, next:"round"}; beep("ok"); return go("inResult"); }
+  inKill(p, msgs);
+  if(p.role==="bouffon" && g.votes===1){ return inEnd("jester", msgs, p); }
+  if(p.twin){ const tw=gp(p.twin); if(tw.alive){ inKill(tw, msgs, true); } }
+  const whites=[p, p.twin?gp(p.twin):null].filter(x=>x && x.team==="white");
+  RES={msgs, next:"check", white: whites.length?whites[0].id:null, avenger: p.role==="vengeur"?p.id:(p.twin && gp(p.twin).role==="vengeur"?p.twin:null)};
+  beep("bad"); go("inResult");
+}
+function inKill(p, msgs, twin){ p.alive=false; if(twin) msgs.push(t("twinFall",{p:p.name})); else msgs.push(t("elim",{p:p.name})); msgs.push((p.team==="civ"?t("wasCiv"):p.team==="intr"?t("wasIntrus"):t("wasWhite")) + (p.role?" "+ROLES[p.role].e+" "+tx(ROLES[p.role].n):"")); }
+SCREENS.inResult = () => { const g=G();
+  let html = `<div class="secret">${RES.msgs.map((m,i)=>`<div style="${i%2?"":"font-size:1.3rem;font-weight:800;margin-top:8px"}">${esc(m)}</div>`).join("")}</div>`;
+  if(RES.white){ return html+`<div class="card"><label class="lb">${t("whiteGuess")}</label><input type="text" id="wguess" autocomplete="off"><button class="btn pri" data-a="inWhite">${t("guessBtn")}</button></div>`; }
+  if(RES.avenger){ const a=gp(RES.avenger); return html+`<div class="card"><p>${esc(t("avengerPick",{p:a.name}))}</p><div class="grid2">${alive().map(x=>`<button class="pbtn" data-a="inAvenge" data-v="${x.id}">${esc(x.name)}</button>`).join("")}</div></div>`; }
+  return html+`<button class="btn pri" data-a="inAfter">${t("continue")}</button>`; };
+const norm = s => String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]/g,"");
+function inCheckWin(){
+  const al=alive(), inf=al.filter(p=>p.team!=="civ");
+  if(!inf.length) return "civ";
+  if(al.length<=2) return inf.some(p=>p.team==="intr") ? "intr" : "white";
+  return null;
+}
+function inAfter(){
+  const g=G(); const w=inCheckWin();
+  if(w) return inEnd(w, []);
+  if(g.pending && g.pending.notice){ const n=g.pending.notice; g.pending=null; const pl=gp(n); if(pl.alive){ NOTICE=n; return go("inNotice"); } }
+  g.round++; inStartRound();
+}
+let NOTICE=null;
+SCREENS.inNotice = () => { const p=gp(NOTICE); return `<div class="secret"><p>${esc(t("swapNotice",{p:p.name}))}</p><div id="nw" style="display:none"><div class="mut small">${t("yourWord")}</div><div class="word">${esc(p.word==null?"[[i:help]]":wfr(p.word))}</div></div><button class="btn pri" data-a="noticeShow">[[i:eye]] ${t("tapReveal")}</button></div><button class="btn ghost" data-a="noticeDone">[[i:eyeoff]] ${t("hide")}</button>`; };
+
+/* ---- Fin de manche ---- */
+let END = null;
+function inEnd(win, msgs, jester){
+  const g=G(); g.phase="end"; const winners=[];
+  g.pl.forEach(p=>{ let won=false;
+    if(win==="civ" && p.team==="civ") won=true;
+    if(win==="intr" && p.team==="intr") won=true;
+    if(win==="white" && p.team==="white") won=true;
+    if(win==="jester" && jester && p.id===jester.id) won=true;
+    if(won){ winners.push(p.id); g.scores[p.id]=(g.scores[p.id]||0)+(win==="civ"?1:win==="intr"?2:3); } });
+  END={win, msgs, jester:jester?jester.name:null, winners, losers:g.pl.filter(p=>!winners.includes(p.id)).map(p=>p.id)};
+  beep("win"); go("inEnd");
+}
+SCREENS.inEnd = () => { const g=G(), e=END;
+  const title = e.win==="civ"?t("winCiv"):e.win==="intr"?t("winIntrus"):e.win==="white"?t("winWhite"):t("winJester",{p:e.jester});
+  const civW = g.pair ? wfr(g.pl.find(p=>p.team==="civ")?.word || g.pair[0]) : "";
+  return `${e.msgs.length?`<div class="secret">${e.msgs.map(m=>`<div>${esc(m)}</div>`).join("")}</div>`:""}
+  <div class="center"><div class="logo" style="font-size:2rem">${esc(title)}</div><p class="mut">${esc(g.hadIntr?t("wordsWere",{c:wfr(g.pair[0]),i:wfr(g.pair[1])}):t("wordsWere",{c:wfr(g.pair[0]),i:"—"}))}</p></div>
+  <div class="card">${g.pl.map(p=>`<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><span>${e.winners.includes(p.id)?"[[i:trophy]]":"·"} <b>${esc(p.name)}</b> <span class="mut small">${teamName(p.team)}${p.role?" · "+ROLES[p.role].e+" "+tx(ROLES[p.role].n):""}</span></span><span class="mut small">${esc(p.word==null?"[[i:help]]":wfr(p.word))}</span></div>`).join("")}</div>
+  <div class="card"><h3>[[i:trophy]] ${t("scores")}</h3><table class="score">${ST.players.slice().sort((a,b)=>(g.scores[b.id]||0)-(g.scores[a.id]||0)).map(p=>`<tr><td>${esc(p.name)}</td><td style="text-align:right"><b>${g.scores[p.id]||0}</b></td></tr>`).join("")}</table></div>
+  ${(ST.inCfg.gage||ST.party)&&e.losers.length?`<button class="btn warn" data-a="inGages">[[i:flame]] ${t("gages")}</button>`:""}
+  ${ST.party?`<button class="btn pri" data-a="partyTod">[[i:spin]] ${t("partyNext")}</button>`:`<button class="btn pri" data-a="inStart">${t("newRound")}</button>`}
+  <button class="btn ghost" data-a="go" data-v="home">${t("home")}</button>`; };
+let GAGE=null; // {list:[ids], i, card}
+SCREENS.inGage = () => { const p=ST.players.find(x=>x.id===GAGE.list[GAGE.i]);
+  if(!GAGE.card) return `<div class="center mut">${GAGE.i+1}/${GAGE.list.length}</div><div class="card center"><div class="mut">${esc(t("gageFor",{p:p.name}))}</div><div class="who">${esc(p.name)}</div></div><div class="choice"><button class="btn v" data-a="gagePick" data-v="v">[[i:msg]]<br>${t("truth")}</button><button class="btn a" data-a="gagePick" data-v="a">[[i:flame]]<br>${t("dare")}</button></div>`;
+  const k=GAGE.card; return `<div class="bigcard ${k.type}"><div>${lvTag(k.lv)}</div><div class="mut" style="color:#ddd;margin-top:10px">${esc(p.name)}</div><div class="q">${esc(k.text)}</div></div>
+    ${k.c&&k.tgt?`<button class="btn ghost" data-a="gageRefuse">${esc(t("refuse",{p:k.tgt.name}))}</button>`:""}<button class="btn ok" data-a="gageNext">${t("done")}</button>`; };
+function gageDraw(type){
+  const p=ST.players.find(x=>x.id===GAGE.list[GAGE.i]); const keep=ST.tod; const cfgMode=ST.todCfg.mode, cfgLv=ST.todCfg.levels;
+  if(!ST.tod) todNew();
+  ST.tod.cur=p; ST.todCfg.mode="classic"; ST.todCfg.levels=[ST.party?ST.party.lv:ST.inCfg.gageLv];
+  const card=todDraw(type); ST.todCfg.mode=cfgMode; ST.todCfg.levels=cfgLv; if(!keep) ST.tod=null;
+  return card;
+}
+
+/* ---- Mode Soirée ---- */
+function partyTod(){
+  // Un tour d'Action ou Vérité pour chaque joueur, puis retour à L'Intrus
+  const saved = Object.assign({}, ST.todCfg);
+  ST.party.todBackup = saved;
+  ST.todCfg = Object.assign({}, ST.todCfg, {mode:"classic", levels:[ST.party.lv], specials:true});
+  todNew(ST.players.length); ST.tod.phase="spin"; go("todPlay");
+}
+function partyAfterTod(){ if(ST.party && ST.party.todBackup){ ST.todCfg=ST.party.todBackup; ST.party.todBackup=null; } if(ST.party){ inNew(); go("inReveal"); } else go("todEnd"); }
+SCREENS.partySetup = () => `${hdr(" "+t("party"),"home")}<p class="mut small">[[i:users]] ${ST.players.map(p=>esc(p.name)).join(", ")}</p>
+  <div class="card"><p>${t("partySub")}</p><label class="lb">${t("gageLv")}</label><div class="seg">${LEVELS.map(l=>`<button class="${ST.party.lv===l?"on":""}" data-a="partyLv" data-v="${l}">${t(l)}</button>`).join("")}</div></div>
+  <p class="mut small">${t("intrus")} : ${ST.inCfg.intrus} ${t("intr")}${ST.inCfg.white?" + Mr. White":""} · ${ST.inCfg.roles.length} ${t("roles").toLowerCase()}</p>
+  <button class="btn ghost" data-a="go" data-v="inSetup">[[i:sliders]] ${t("intrus")} — ${t("options")}</button>
+  <button class="btn pri" data-a="partyStart">${t("start")}</button>`;
+
+/* =================== ACTIONS =================== */
+const ACT = {
+  go: v => go(v),
+  closeModal: () => closeModal(),
+  closeRules: v => { ST.set.seenRules[v]=1; saveSet(); closeModal(); },
+  showRules: v => rulesModal(v),
+  adultOk: () => { ST.set.adult=true; saveSet(); closeModal(); if(PENDING){ const f=PENDING; PENDING=null; f(); } },
+  adultReset: () => { ST.set.adult=false; saveSet(); render(); },
+  lang: v => { ST.set.lang=v; saveSet(); document.documentElement.lang=v; render(); },
+  setT: v => { ST.set[v]=!ST.set[v]; saveSet(); render(); },
+  copyId: () => { const s=ST.lic.id; (navigator.clipboard?navigator.clipboard.writeText(s):Promise.reject()).then(()=>toast(t("copied"))).catch(()=>{ const r=document.createRange(); r.selectNode($("#lid")); getSelection().removeAllRanges(); getSelection().addRange(r); toast(s); }); },
+  activate: async () => { const code=$("#code").value.trim(); if(await LIC.activate(code)){ beep("win"); toast(t("okCode")); go("home"); } else { beep("bad"); toast(t("badCode")); } },
+  startGame: v => {
+    if(!canPlay()) return go("lock");
+    NEXT=v;
+    if(v==="party") ST.party={lv:"hard"}; else ST.party=null;
+    if(ST.groups.length) go("pickGroup"); else ACT.quickPlayers();
+  },
+  quickPlayers: () => { EDIT={quick:true, back:"pickGroup", players:(ST.players.length?ST.players:[newPlayer(),newPlayer(),newPlayer()]).map(p=>Object.assign({},p))}; if(!ST.groups.length) EDIT.back="home"; go("groupEdit"); },
+  useGroup: v => { const g=ST.groups.find(x=>x.id===v); ST.players=g.players.map(p=>Object.assign({},p)); afterPlayers(); },
+  editGroup: v => { if(v){ const g=ST.groups.find(x=>x.id===v); EDIT=JSON.parse(JSON.stringify(g)); } else EDIT={id:null, name:"", players:[newPlayer(),newPlayer(),newPlayer()]}; EDIT.fromPick = ST.screen==="pickGroup"; go("groupEdit"); },
+  padd: () => { EDIT.players.push(newPlayer()); render(); },
+  pdel: v => { EDIT.players.splice(+v,1); render(); },
+  pf: v => { const [i,f,val]=v.split("|"); EDIT.players[+i][f] = val==="true"?true:val==="false"?false:val; render(); },
+  gsave: () => {
+    EDIT.players = EDIT.players.map(p=>Object.assign(p,{name:p.name.trim()})).filter(p=>p.name);
+    const seen={}; EDIT.players.forEach(p=>{ let n=p.name, k=2; while(seen[n.toLowerCase()]) n=p.name+" "+(k++); p.name=n; seen[n.toLowerCase()]=1; });
+    if(EDIT.quick){ if(EDIT.players.length<2) return toast(t("minP",{n:2})); ST.players=EDIT.players; return afterPlayers(); }
+    if(!EDIT.players.length) return toast(t("minP",{n:2}));
+    if(!EDIT.name.trim()) EDIT.name = (L()?"Group ":"Groupe ")+(ST.groups.length+1);
+    if(EDIT.id){ const i=ST.groups.findIndex(g=>g.id===EDIT.id); ST.groups[i]={id:EDIT.id,name:EDIT.name.trim(),players:EDIT.players}; }
+    else { EDIT.id=uid(); ST.groups.push({id:EDIT.id,name:EDIT.name.trim(),players:EDIT.players}); }
+    saveGroups();
+    if(EDIT.fromPick) go("pickGroup"); else go("groups");
+  },
+  gdel: () => { ST.groups=ST.groups.filter(g=>g.id!==EDIT.id); saveGroups(); go("groups"); },
+  // Action ou Vérité
+  todMode: v => { const f=()=>{ ST.todCfg.mode=v; lsSet("todCfg",ST.todCfg); render(); }; (v==="rise"||v==="own") ? adultGate(f) : f(); },
+  todLv: v => { const c=ST.todCfg; const f=()=>{ c.levels = c.levels.includes(v) ? c.levels.filter(x=>x!==v) : c.levels.concat(v); if(!c.levels.length) c.levels=["soft"]; c.levels.sort((a,b)=>LEVELS.indexOf(a)-LEVELS.indexOf(b)); lsSet("todCfg",c); render(); };
+    (ADULT.includes(v) && !c.levels.includes(v)) ? adultGate(f) : f(); },
+  todT: v => { ST.todCfg[v]=!ST.todCfg[v]; lsSet("todCfg",ST.todCfg); render(); },
+  todJ: v => { ST.todCfg.jokers=Math.max(0,Math.min(10,ST.todCfg.jokers+(+v))); lsSet("todCfg",ST.todCfg); render(); },
+  todStart: () => {
+    if(!canPlay()) return go("lock");
+    const c=ST.todCfg; if(c.mode==="duo" && ST.players.length!==2){ toast(L()?"Duo mode: exactly 2 players.":"Mode Duo : exactement 2 joueurs."); return go("todSetup"); }
+    if(ST.players.length<2) return toast(t("minP",{n:2}));
+    const go_=()=>{ todNew(); go("todPlay"); if(!ST.set.seenRules.tod) rulesModal("tod"); };
+    const adult = c.mode==="rise" || (c.mode==="own" && ST.players.some(p=>ADULT.includes(p.max))) || c.levels.some(l=>ADULT.includes(l)&&c.mode!=="rise"&&c.mode!=="own");
+    adult ? adultGate(go_) : go_();
+  },
+  todSpin: () => todSpin(),
+  todPick: v => { ST.tod.card=todDraw(v); ST.tod.phase="card"; beep("reveal"); render(); },
+  todDone: () => { const s=ST.tod.stats[ST.tod.cur.id]; s[ST.tod.card.type]++; beep("ok"); todNext(); },
+  todRefuse: () => { ST.tod.card=todDraw(ST.tod.card.type); beep("tap"); render(); },
+  todJoker: () => { const s=ST.tod.stats[ST.tod.cur.id]; if(s.jk>0){ s.jk--; s.j++; beep("tap"); todNext(); } else { beep("bad"); toast(t("noJoker")); s.j++; todNext(); } },
+  todNext: () => todNext(),
+  todTimer: v => { clearInterval(timerInt); let n=+v; const el=$("#tmr"); el.textContent=n; timerInt=setInterval(()=>{ n--; const e=$("#tmr"); if(!e){ clearInterval(timerInt); return; } e.textContent=n>0?n:t("timeUp"); if(n<=5&&n>0) beep("tick"); if(n<=0){ clearInterval(timerInt); beep("time"); } },1000); },
+  todEnd: () => { if(ST.tod.limit) return partyAfterTod(); go("todEnd"); },
+  todQuit: () => { if(ST.tod.limit) return partyAfterTod(); go("todEnd"); },
+  cc: v => { const [k,val]=v.split("|"); CC[k] = val==="toggle" ? !CC[k] : val; const keep={}; ["ctext","itext","sname"].forEach(id=>{ if($("#"+id)) keep[id]=$("#"+id).value; }); render(); for(const id in keep) if($("#"+id)) $("#"+id).value=keep[id]; },
+  addCustom: () => { const tx_=$("#ctext").value.trim(); if(!tx_) return; ST.custom.push({text:tx_.slice(0,220), type:CC.type, level:CC.level, c:CC.c, s:t("myCards")}); lsSet("custom",ST.custom); beep("ok"); render(); },
+  pickFile: v => pickFile(v),
+  importCards: () => { const list=parseCards($("#itext").value, CC.type, CC.level); if(!list.length){ beep("bad"); return toast(t("nothing")); } const sn=($("#sname").value.trim()||(L()?"Imported series":"Série importée")).slice(0,40); list.forEach(c=>{ c.s=sn; ST.custom.push(c); }); lsSet("custom",ST.custom); ST.todCfg.custom=true; lsSet("todCfg",ST.todCfg); beep("ok"); toast(t("imported",{n:list.length})); render(); },
+  delSeries: v => { ST.custom=ST.custom.filter(c=>(c.s||t("myCards"))!==v); lsSet("custom",ST.custom); render(); },
+  exportCards: () => download(fileName(L()?"cards":"cartes"), cardsToText(ST.custom)),
+  shareCards: () => shareText(fileName(L()?"cards":"cartes"), cardsToText(ST.custom)),
+  importPack: () => { const pairs=parsePairs($("#ptext").value); if(!pairs.length){ beep("bad"); return toast(t("nothing")); } const name=($("#pname").value.trim()||(L()?"My pack":"Mon pack")+" "+(ST.myPacks.length+1)).slice(0,40); const id=uid(); ST.myPacks.push({id,name,pairs}); lsSet("packs",ST.myPacks); ST.inCfg.mine=(ST.inCfg.mine||[]).concat(id); lsSet("inCfg",ST.inCfg); beep("ok"); toast(t("imported",{n:pairs.length})); render(); },
+  delPack: v => { ST.myPacks=ST.myPacks.filter(p=>p.id!==v); lsSet("packs",ST.myPacks); ST.inCfg.mine=(ST.inCfg.mine||[]).filter(x=>x!==v); lsSet("inCfg",ST.inCfg); render(); },
+  exportPack: v => { const p=ST.myPacks.find(x=>x.id===v); download(fileName(p.name), packToText(p)); },
+  sharePack: v => { const p=ST.myPacks.find(x=>x.id===v); shareText(fileName(p.name), packToText(p)); },
+  inMine: v => { const c=ST.inCfg; c.mine=c.mine||[]; c.mine = c.mine.includes(v)?c.mine.filter(x=>x!==v):c.mine.concat(v); lsSet("inCfg",c); render(); },
+  openCustom: v => { BACKTO=v||"settings"; go("custom"); },
+  openPacks: v => { BACKTO=v||"settings"; go("packs"); },
+  delCustom: v => { ST.custom.splice(+v,1); lsSet("custom",ST.custom); render(); },
+  // Intrus
+  inN: v => { const c=ST.inCfg, n=ST.players.length, maxInf=Math.max(1,Math.floor((n-1)/2)); c.intrus=Math.max(c.white?0:1, Math.min(maxInf-(c.white?1:0), c.intrus+(+v))); lsSet("inCfg",c); render(); },
+  inT: v => { const c=ST.inCfg; c[v]=!c[v]; if(v==="white" && !c.white && c.intrus<1) c.intrus=1; lsSet("inCfg",c); render(); },
+  inTheme: v => { const c=ST.inCfg; c.themes = c.themes.includes(v)?c.themes.filter(x=>x!==v):c.themes.concat(v); lsSet("inCfg",c); render(); },
+  inPack: v => { const c=ST.inCfg; c.packs = c.packs.includes(v)?c.packs.filter(x=>x!==v):c.packs.concat(v); lsSet("inCfg",c); render(); },
+  inAllT: v => { const c=ST.inCfg; if(v==="1"){ c.themes=Object.keys(THEMES); c.packs=Object.keys(PACKS); } else { c.themes=[]; c.packs=[]; } lsSet("inCfg",c); render(); },
+  inRole: v => { const c=ST.inCfg; c.roles = c.roles.includes(v)?c.roles.filter(x=>x!==v):c.roles.concat(v); lsSet("inCfg",c); render(); },
+  inAllR: v => { ST.inCfg.roles = v==="1"?Object.keys(ROLES):[]; lsSet("inCfg",ST.inCfg); render(); },
+  inR: v => { const c=ST.inCfg; c.rolesNb=Math.max(0,Math.min(15,c.rolesNb+(+v))); lsSet("inCfg",c); render(); },
+  inDeb: v => { ST.inCfg.debate=+v; lsSet("inCfg",ST.inCfg); render(); },
+  inGL: v => { const f=()=>{ ST.inCfg.gageLv=v; lsSet("inCfg",ST.inCfg); render(); }; ADULT.includes(v)?adultGate(f):f(); },
+  inStart: () => {
+    if(!canPlay()) return go("lock");
+    if(ST.players.length<3) return toast(t("minP",{n:3}));
+    if(ST.party && ST.screen==="inSetup") return go("partySetup");
+    inNew(); go("inReveal"); if(!ST.set.seenRules.intrus) rulesModal("intrus");
+  },
+  inShow: () => { G().shown=true; beep("reveal"); render(); },
+  inGuard: v => { G().pl[G().ri].guard=v; render(); },
+  inHide: () => { const g=G(); g.shown=false; g.ri++; beep("tap"); if(g.ri>=g.pl.length){ inStartRound(); } else render(); },
+  inApprenti: () => { const g=G(); modal(`<h3>${t("apprenti")}</h3><div class="grid2">${alive().map(p=>`<button class="pbtn" data-a="inFirst" data-v="${p.id}">${esc(p.name)}</button>`).join("")}</div>`); },
+  inFirst: v => { G().first=v; closeModal(); render(); },
+  inDebate: () => { clearInterval(timerInt); let n=ST.inCfg.debate; timerInt=setInterval(()=>{ n--; const e=$("#tmr"); if(!e){ clearInterval(timerInt); return; } e.textContent=n>0?n:t("timeUp"); if(n<=5&&n>0) beep("tick"); if(n<=0){ clearInterval(timerInt); beep("time"); } },1000); },
+  inPower: () => { PW={}; go("inPower"); },
+  pwWho: v => { PW.who=v; beep("tap"); render(); },
+  pwAb: v => { if(v==="gossip"){ const me=gp(PW.who); me.used=true; const tg=pick(alive().filter(x=>x.id!==me.id)); G().gossip=t("gossip",{p:tg.name, r:teamName(tg.team)}); PW={}; beep("reveal"); return go("inRound"); } PW.ab=v; render(); },
+  pwTarget: v => pwApply(v),
+  pwClose: () => { const g=G(); PW=null; if(g.pending && g.pending.notice){ const n=g.pending.notice; g.pending=null; NOTICE=n; NOTICE_BACK="inRound"; return go("inNotice"); } go("inRound"); },
+  noticeShow: () => { const e=$("#nw"); if(e) e.style.display="block"; beep("reveal"); },
+  noticeDone: () => { const b=NOTICE_BACK; NOTICE_BACK=null; NOTICE=null; if(b) return go(b); const g=G(); g.round++; inStartRound(); },
+  inVote: () => inVoteStart(),
+  vtShow: () => { VT.shown=true; beep("tap"); render(); },
+  vtCast: v => { VT.ballots[VT.voters[VT.i]]=v; VT.i++; VT.shown=false; beep("tap"); if(VT.i>=VT.voters.length) vtTally(); else render(); },
+  vtHand: () => go("inHand"),
+  inElim: v => { if(VT) VT.judge=null; inEliminate(v); },
+  inWhite: () => { const g=G(); const guess=$("#wguess").value; const civ=g.pl.find(p=>p.team==="civ"); const target=civ?civ.word:g.pair[0];
+    const ok = String(target).split("|").some(w=>norm(w)===norm(guess)) && norm(guess).length>0;
+    if(ok){ const w=gp(RES.white); RES=null; return inEndWhite(w); }
+    RES.white=null; beep("bad"); render(); },
+  inAvenge: v => { const tg=gp(v); const msgs=RES.msgs; RES.avenger=null; inKill(tg, msgs); if(tg.twin && gp(tg.twin).alive) inKill(gp(tg.twin), msgs, true); if(tg.team==="white") RES.white=tg.id; beep("bad"); render(); },
+  inAfter: () => { if(RES && RES.next==="round"){ RES=null; const g=G(); g.round++; return inStartRound(); } RES=null; inAfter(); },
+  inQuit: () => { if(confirmQuit()) go("home"); },
+  inGages: () => { GAGE={list:END.losers.slice(), i:0, card:null}; go("inGage"); },
+  gagePick: v => { GAGE.card=gageDraw(v); beep("reveal"); render(); },
+  gageRefuse: () => { GAGE.card=gageDraw(GAGE.card.type); render(); },
+  gageNext: () => { GAGE.i++; GAGE.card=null; beep("ok"); if(GAGE.i>=GAGE.list.length) go("inEnd"); else render(); },
+  // Soirée
+  partyLv: v => { const f=()=>{ ST.party.lv=v; render(); }; ADULT.includes(v)?adultGate(f):f(); },
+  partyStart: () => { if(ST.players.length<3) return toast(t("minP",{n:3})); const f=()=>{ ST.game=null; inNew(); go("inReveal"); if(!ST.set.seenRules.intrus) rulesModal("intrus"); }; ADULT.includes(ST.party.lv)?adultGate(f):f(); },
+  partyTod: () => partyTod()
+};
+let NOTICE_BACK=null;
+function inEndWhite(w){ inEnd("white", [], null); }
+function confirmQuit(){ return true; }
+function afterPlayers(){
+  if(NEXT==="tod") go("todSetup");
+  else if(NEXT==="intrus"){ if(ST.players.length<3) return toast(t("minP",{n:3})); ST.game=null; go("inSetup"); }
+  else { if(ST.players.length<3) return toast(t("minP",{n:3})); ST.game=null; go("partySetup"); }
+}
+
+/* ---------- Évènements ---------- */
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-a]"); if(!el) return;
+  if(el.tagName==="A" && el.getAttribute("href")!=="#") return;
+  e.preventDefault(); const f=ACT[el.dataset.a]; if(f){ if(!["todSpin","vtCast","todDone","todPick"].includes(el.dataset.a)) beep("tap"); f(el.dataset.v); }
+});
+document.addEventListener("input", e => {
+  const el=e.target; if(!el.dataset || !el.dataset.in) return;
+  if(el.dataset.in==="pname") EDIT.players[+el.dataset.i].name=el.value;
+  if(el.dataset.in==="gname") EDIT.name=el.value;
+});
+
+/* ---------- Démarrage ---------- */
+(async function(){
+  document.documentElement.lang = ST.set.lang;
+  $("#app").innerHTML = `<div class="center" style="margin-top:40vh"><div class="logo">New World</div></div>`;
+  ST.lic = await LIC.init();
+  render();
+  if("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("sw.js").catch(()=>{});
+})();
+</script>
+</body>
+</html>
