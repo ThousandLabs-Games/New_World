@@ -4,12 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0d0b1a">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="New World">
 <meta name="description" content="New World — jeux de soirée : Action ou Vérité et Incognito. Par Thousand Labs Games.">
 <title>New World — Thousand Labs Games</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png?v=2">
+<link rel="apple-touch-icon" href="icon-192.png?v=2">
 <style>:root{
   --bg:#0d0b1a;--bg2:#161330;--card:#1e1a3d;--card2:#272250;--line:#352f66;
   --txt:#f3f1ff;--mut:#a7a2cc;--pri:#8b5cf6;--pri2:#ec4899;--ok:#22c55e;--warn:#f59e0b;--bad:#ef4444;
@@ -904,7 +906,7 @@ madeBy:["Une création Thousand Labs Games","A Thousand Labs Games creation"], w
 rulesTod:["• Entrez les joueurs, choisissez un mode et des niveaux.\n• La roue désigne un joueur : il choisit Action ou Vérité.\n• « Fait » s'il relève le défi, « Joker » pour passer (3 par partie). Sans joker, le groupe choisit le gage.\n• Les cartes [[i:hand]] ne visent que les joueurs qui acceptent le contact, et la personne visée peut toujours refuser sans pénalité.\n• Cartes spéciales : Duel, Tout le monde, Vote, Règle (3 tours), Inversion.","• Enter players, choose a mode and levels.\n• The wheel picks a player: they choose Truth or Dare.\n• \"Done\" if they do it, \"Joker\" to skip (3 per game). With no jokers left, the group picks the forfeit.\n• [[i:hand]] cards only target players who accept contact, and the targeted person can always refuse with no penalty.\n• Special cards: Duel, Everyone, Vote, Rule (3 turns), Reverse."],
 rulesIntrus:["• Les Civils ont tous le même mot. Les Undercovers ont un mot proche… sans savoir qu'ils sont Undercover. Mr. White n'a aucun mot.\n• Chacun donne UN indice sur son mot, puis on débat et on vote pour éliminer quelqu'un.\n• Mr. White éliminé peut gagner en devinant le mot des Civils.\n• Les Civils gagnent s'ils éliminent tous les Undercovers et Mr. White. Les infiltrés gagnent s'ils tiennent jusqu'à ce qu'il ne reste que 2 joueurs.\n• Les rôles spéciaux ajoutent des pouvoirs secrets : utilise-les avec le bouton [[i:sparkles]].","• Civilians all share the same word. Undercovers have a close word… without knowing they're Undercovers. Mr. White has no word.\n• Everyone gives ONE clue about their word, then you debate and vote someone out.\n• An eliminated Mr. White can win by guessing the Civilians' word.\n• Civilians win by eliminating all Undercovers and Mr. White. Infiltrators win if they last until only 2 players remain.\n• Special roles add secret powers: use them with the [[i:sparkles]] button."],
 gotIt:["C'est compris !","Got it!"],
-installT:["Installer l'application","Install the app"], installBtn:["Télécharger New World","Download New World"], installP:["Installe New World sur ton écran d'accueil : elle s'ouvre comme une vraie appli, en plein écran, même sans Internet.","Install New World on your home screen: it opens like a real app, full screen, even offline."],
+installT:["Installer l'application","Install the app"], diag:["État","Status"], installBtn:["Télécharger New World","Download New World"], installP:["Installe New World sur ton écran d'accueil : elle s'ouvre comme une vraie appli, en plein écran, même sans Internet.","Install New World on your home screen: it opens like a real app, full screen, even offline."],
 howInstall:["Comment installer, pas à pas","How to install, step by step"], installedOk:["New World est installée sur ce téléphone.","New World is installed on this phone."],
 stepsAndroid:["1. Ouvre le lien de New World dans Chrome, avec Internet.\n2. Touche le menu ⋮ en haut à droite.\n3. Choisis « Installer l'application » (évite « Ajouter à l'écran d'accueil », qui crée un simple raccourci).\n4. Si l'option n'apparaît pas, recharge la page et réessaie après quelques secondes.\n5. Si tu as déjà une icône New World avec le petit logo de Chrome, c'est un simple raccourci : supprime-la, puis installe l'appli.","1. Open the New World link in Chrome, with Internet.\n2. Tap the ⋮ menu at the top right.\n3. Choose \"Install app\" (avoid \"Add to Home screen\", which only creates a shortcut).\n4. If the option doesn't appear, reload the page and try again after a few seconds.\n5. If you already have a New World icon with the small Chrome logo, it's only a shortcut: delete it, then install the app."],
 stepsIOS:["1. Ouvre le lien de New World dans Safari.\n2. Touche Partager (le carré avec une flèche).\n3. Choisis « Sur l'écran d'accueil », puis Ajouter.\n4. Ouvre ensuite toujours New World depuis son icône, et active-la depuis là.","1. Open the New World link in Safari.\n2. Tap Share (the square with an arrow).\n3. Choose \"Add to Home Screen\", then Add.\n4. Always open New World from its icon afterwards, and activate it there."],
@@ -1080,6 +1082,7 @@ function installCard(compact){
   if(compact) return `<button class="btn ghost" data-a="install">[[i:download]] ${t("installBtn")}</button>`;
   return `<div class="card"><h3>[[i:download]] ${t("installT")}</h3><p class="mut small">${t("installP")}</p>
     ${INSTALL_EVT?`<button class="btn pri" data-a="install">[[i:download]] ${t("installBtn")}</button>`:""}
+    <p class="mut small">${t("diag")} : ${navigator.serviceWorker&&navigator.serviceWorker.controller?"SW ✓":"SW ✗"} · ${INSTALL_EVT?"PWA ✓":"PWA ✗"} · ${esc((navigator.userAgent.match(/(SamsungBrowser|OPR|Opera|Edg|Firefox|Brave|Chrome|Version)\/[\d.]+/)||["?"])[0])}</p>
     <details ${INSTALL_EVT?"":"open"}><summary style="cursor:pointer;font-weight:700;margin:8px 0">${t("howInstall")}</summary><p class="small" style="white-space:pre-line">${esc(steps)}</p></details></div>`;
 }
 
@@ -1729,7 +1732,7 @@ document.addEventListener("input", e => {
   $("#app").innerHTML = `<div class="center" style="margin-top:40vh"><div class="logo">New World</div></div>`;
   ST.lic = await LIC.init();
   render();
-  if("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("sw.js").catch(()=>{});
+  if("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("sw.js").then(r=>{ try{ r.update(); }catch(e){} }).catch(()=>{});
 })();
 </script>
 </body>
