@@ -1,6 +1,6 @@
 # New World — Thousand Labs Games
 
-Jeux de soirée entre amis : **Action ou Vérité** et **Incognito** (Undercover).
+Jeux de soirée entre amis : **Action ou Vérité**, **Incognito** (Undercover) et **Blitz** (mots à faire deviner en équipes, en 3 manches : décrire, un seul mot, mime).
 
 - 🌐 Jouer : https://thousandlabs-games.github.io/New_World/
 - 📦 Dépôt officiel : https://github.com/ThousandLabs-Games/New_World

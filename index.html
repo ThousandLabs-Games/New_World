@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="New World">
-<meta name="description" content="New World — jeux de soirée : Action ou Vérité et Incognito. Par Thousand Labs Games.">
+<meta name="description" content="New World — jeux de soirée : Action ou Vérité, Incognito et Blitz. Par Thousand Labs Games.">
 <title>New World — Thousand Labs Games</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png?v=2">
@@ -108,6 +108,23 @@ label.lb{display:block;margin:12px 0 6px;color:var(--mut);font-size:.9rem;font-w
 .choice .ic{width:28px;height:28px}
 .title-award .e .ic{width:30px;height:30px;color:#fbbf24}
 .secret .word .ic{width:56px;height:56px}
+.game.blitz{background:linear-gradient(135deg,#059669,#ca8a04)}
+.blteam{border:1px solid;border-radius:14px;padding:10px 12px;margin:8px 0;background:var(--bg2)}
+.tagteam{display:inline-block;padding:6px 14px;border-radius:999px;font-weight:800;color:#fff;margin:8px 0 0}
+.bltimer{font-size:2.4rem;font-weight:900;font-variant-numeric:tabular-nums}
+.bltimer.hot{color:#f87171;animation:blpulse .5s infinite alternate}
+@keyframes blpulse{to{transform:scale(1.12)}}
+.blbar{height:8px;background:var(--bg2);border-radius:99px;overflow:hidden;margin:8px 0}
+.blbar div{height:100%;transition:width .2s linear}
+.blword{min-height:250px;border-width:2px}
+.blword .q{word-break:break-word;line-height:1.15}
+.btn.blfound{background:linear-gradient(160deg,#16a34a,#059669)}
+.btn.blpass{background:var(--card2)}
+.choice .btn.blfound,.choice .btn.blpass{font-size:1.35rem;padding:34px 10px}
+.blcount{font-size:7rem;font-weight:900;animation:pop .35s ease}
+.blround{background:linear-gradient(160deg,#065f46,#854d0e)}
+.blic .ic{width:48px;height:48px}
+.blic.big .ic{width:64px;height:64px;color:#fbbf24}
 </style>
 </head>
 <body>
@@ -875,9 +892,58 @@ PACKS.ml.pairs.push(["Sikasso","Koutiala"],["Riz au gras|Fatty rice","Tiguadègu
 PACKS.ga.pairs.push(["Libreville","Oyem"],["Poisson salé|Salted fish","Poisson fumé|Smoked fish"],["Manioc|Cassava","Igname|Yam"],["Akanda","Owendo"],["Panthères|Panthers","Éléphants|Elephants"]);
 PACKS.world.pairs.push(["Tokyo","Séoul|Seoul"],["Istanbul","Le Caire|Cairo"],["Rio","Buenos Aires"],["Burger","Hot-dog"],["Pizza","Lasagne|Lasagna"]);
 
+// New World — mots Blitz. "fr|en" (sans | = identique). Les thèmes et packs d'Incognito sont aussi utilisés (chaque mot des paires).
+const BLITZ = {
+stars: {fr:"Célébrités", en:"Celebrities", icon:"[[i:star]]", words:[
+"Youssou Ndour","Sadio Mané","Akon","Didier Drogba","Samuel Eto'o","Nelson Mandela","Beyoncé","Rihanna","Cristiano Ronaldo","Lionel Messi",
+"Kylian Mbappé","Michael Jackson","Bob Marley","Léopold Sédar Senghor","Cheikh Anta Diop","Aya Nakamura","Burna Boy","Wizkid","Davido","Fally Ipupa",
+"Magic System","Usain Bolt","Serena Williams","Mohamed Salah","Achraf Hakimi","Riyad Mahrez","Albert Einstein","Napoléon|Napoleon","Cléopâtre|Cleopatra","Martin Luther King",
+"Elon Musk","Mark Zuckerberg","Shakira","Drake","Eminem","Stromae","Omar Sy","Will Smith","Jackie Chan","Dwayne Johnson",
+"LeBron James","Michael Jordan","Mike Tyson","Mohamed Ali|Muhammad Ali","Zinedine Zidane","Thierry Henry","Pelé","Maradona","Neymar","Kalidou Koulibaly",
+"Édouard Mendy","Wally Seck","Viviane Chidid","Baaba Maal","Ismaël Lô","Angélique Kidjo","Miriam Makeba","Salif Keïta","Oumou Sangaré","Thomas Sankara",
+"Kwame Nkrumah","Mansa Moussa|Mansa Musa","Soundiata Keïta|Sundiata Keita","Taylor Swift","Céline Dion","Nicki Minaj","Lamine Yamal","Victor Osimhen","Tiken Jah Fakoly","Alpha Blondy",
+"Gims","Dadju","Tayc","Ninho","Werenoi","Booba","Mbaye Guèye","Modou Lô","Balla Gaye 2","Eumeu Sène",
+"Christopher Colomb|Christopher Columbus","Mozart","Picasso","Léonard de Vinci|Leonardo da Vinci","Shakespeare","Victor Hugo","Steve Jobs","Bill Gates","Jeff Bezos","Charlie Chaplin"
+]},
+legends: {fr:"Personnages & légendes", en:"Characters & legends", icon:"[[i:crown]]", words:[
+"Père Noël|Santa Claus","Dracula","Sherlock Holmes","Robin des Bois|Robin Hood","Tarzan","Cendrillon|Cinderella","Blanche-Neige|Snow White","Pinocchio","Le Petit Chaperon rouge|Little Red Riding Hood","Aladdin",
+"Hercule|Hercules","Zeus","Kirikou","Spider-Man","Batman","Superman","Wonder Woman","Naruto","Goku","Luffy",
+"Mario","Pikachu","Harry Potter","James Bond","Shrek","Mickey","Simba","Leuk le lièvre|Leuk the hare","Bouki l'hyène|Bouki the hyena","Frankenstein",
+"Une sirène|A mermaid","Un vampire|A vampire","Un zombie|A zombie","Un fantôme|A ghost","Un pirate|A pirate","Un ninja|A ninja","Un chevalier|A knight","Une sorcière|A witch","Un génie|A genie","Un dragon|A dragon",
+"Le roi Lion|The Lion King","Tintin","Astérix|Asterix","Obélix|Obelix","Les Schtroumpfs|The Smurfs","Bob l'éponge|SpongeBob","Les Simpson|The Simpsons","Scooby-Doo","Hulk","Iron Man",
+"Captain America","Black Panther","Thor","Le Joker|The Joker","Dark Vador|Darth Vader","Yoda","Gandalf","King Kong","Godzilla","La Belle au bois dormant|Sleeping Beauty",
+"Mowgli","Peter Pan","Capitaine Crochet|Captain Hook","Le Petit Prince|The Little Prince","Zorro","Indiana Jones","Rambo","Rocky","Mr. Bean","Sonic"
+]},
+actions: {fr:"Actions (spécial mime)", en:"Actions (great for mime)", icon:"[[i:hand]]", words:[
+"Se brosser les dents|Brushing your teeth","Conduire|Driving","Nager|Swimming","Pêcher|Fishing","Danser le sabar|Dancing sabar","Faire la lessive|Doing laundry","Pleurer|Crying","Éternuer|Sneezing","Prendre un selfie|Taking a selfie","Jouer au foot|Playing football",
+"Cuisiner|Cooking","Dormir|Sleeping","Courir après le bus|Running after the bus","Préparer l'attaya|Making attaya tea","Repasser|Ironing","Se maquiller|Putting on makeup","Se raser|Shaving","Faire des pompes|Doing push-ups","Grimper à un arbre|Climbing a tree","Taper sur un clavier|Typing on a keyboard",
+"Négocier au marché|Bargaining at the market","Tomber amoureux|Falling in love","Se marier|Getting married","Ouvrir une bouteille|Opening a bottle","Faire du vélo|Riding a bike","Jongler|Juggling","Peindre un mur|Painting a wall","Pousser une voiture en panne|Pushing a broken-down car","Applaudir|Clapping","Siffler|Whistling",
+"Faire un câlin|Hugging","Manger avec la main|Eating with your hand","Jouer de la guitare|Playing guitar","Jouer du djembé|Playing djembe","Chanter sous la douche|Singing in the shower","Faire du yoga|Doing yoga","Boxer|Boxing","Patiner|Skating","Coudre|Sewing","Planter un arbre|Planting a tree",
+"Traire une vache|Milking a cow","Monter à cheval|Horse riding","Chasser un moustique|Swatting a mosquito","Attendre un taxi|Waiting for a taxi","Rater une marche|Missing a step","Réveiller quelqu'un|Waking someone up","Faire un discours|Giving a speech","Prendre l'avion|Taking a plane","Surfer|Surfing","Sortir les poubelles|Taking out the trash",
+"Changer une couche|Changing a diaper","Promener un chien|Walking a dog","Lacer ses chaussures|Tying your shoes","Faire un gâteau|Baking a cake","Se coiffer|Doing your hair","Faire du ménage|Cleaning the house","Jouer aux cartes|Playing cards","Faire la vaisselle|Washing the dishes","Escalader une montagne|Climbing a mountain","Passer l'aspirateur|Vacuuming",
+"Dribbler|Dribbling","Tirer un penalty|Taking a penalty","Arbitrer un match|Refereeing a match","Faire un tour de magie|Doing a magic trick","Prendre une douche froide|Taking a cold shower","Bâiller|Yawning","Ronfler|Snoring","Chuchoter un secret|Whispering a secret","Envoyer un vocal|Sending a voice note","Charger son téléphone|Charging your phone"
+]},
+campus: {fr:"Vie étudiante", en:"Student life", icon:"[[i:book]]", words:[
+"Partiel|Exam","Amphi|Lecture hall","Bibliothèque|Library","Révisions|Revision","Rattrapage|Resit","Mémoire|Thesis","Stage|Internship","Soutenance|Defense","Bourse|Scholarship","Délégué de classe|Class rep",
+"Emploi du temps|Timetable","Wi-Fi","Photocopie|Photocopy","Retard|Being late","Absence","Exposé|Presentation","Diplôme|Diploma","Calculatrice|Calculator","Cantine|Canteen","Note|Grade",
+"Professeur|Teacher","Tableau|Board","Clé USB|USB stick","PowerPoint","Excel","Comptabilité|Accounting","Bilan|Balance sheet","Interro surprise|Pop quiz","Antisèche|Cheat sheet","Groupe WhatsApp|WhatsApp group",
+"Carte d'étudiant|Student card","Inscription|Registration","Frais de scolarité|Tuition fees","Fin de mois|End of the month","Nuit blanche|All-nighter","Colocation|Flatshare","Restau universitaire|University canteen","Sortie de classe|Class trip","Remise des diplômes|Graduation","Incubateur|Incubator",
+"Travail de groupe|Group work","Plagiat|Plagiarism","Moyenne|Average grade","Bulletin|Report card","Major de promo|Top of the class","Prof absent|Absent teacher","Clim de la classe|Classroom AC","Pause café|Coffee break","Rentrée|Back to school","Vacances|Holidays",
+"Entretien d'embauche|Job interview","CV|Resume","Lettre de motivation|Cover letter","Startup","Business plan","Pitch","Réseautage|Networking","LinkedIn","Projecteur|Projector","Micro-onde de la cafét|Cafeteria microwave"
+]},
+daily: {fr:"Vie quotidienne", en:"Everyday life", icon:"[[i:home]]", words:[
+"Embouteillage|Traffic jam","Coupure de courant|Power cut","Réveil|Alarm clock","Douche froide|Cold shower","Crédit téléphonique|Phone credit","Pass Internet|Data bundle","Transfert d'argent|Money transfer","Facture|Bill","Monnaie|Change","Ticket de bus|Bus ticket",
+"Tailleur|Tailor","Coiffeur|Barber","Boutiquier|Corner shop owner","Vendeur ambulant|Street vendor","Gardien|Guard","Voisin bruyant|Noisy neighbour","Mariage du quartier|Neighbourhood wedding","Baptême|Naming ceremony","Tabaski","Korité|Eid",
+"Noël|Christmas","Nouvel An|New Year","Anniversaire surprise|Surprise party","Dispute de couple|Couple argument","Premier rendez-vous|First date","Ex|Ex","Crush","Vu sans réponse|Left on read","Batterie à 1 %|1% battery","Mot de passe oublié|Forgotten password",
+"Selfie raté|Failed selfie","Story Instagram|Instagram story","TikTok","Vidéo virale|Viral video","Influenceur|Influencer","Live Facebook","Appel vidéo|Video call","Message vocal|Voice note","Écran cassé|Cracked screen","Chargeur|Charger",
+"Moustique|Mosquito","Ventilateur|Fan","Climatiseur|Air conditioner","Groupe électrogène|Generator","Gaz qui finit|Running out of gas","Marmite|Cooking pot","Bol de riz|Bowl of rice","Petit-déjeuner|Breakfast","Sieste|Nap","Grasse matinée|Lie-in",
+"Pluie|Rain","Poussière|Dust","Chaleur|Heat","Harmattan","Plage le dimanche|Sunday at the beach","Match de navétanes|Navétanes match","Combat de lutte|Wrestling match","Soirée foot|Football night","Karaoké|Karaoke","Jeu de dames|Checkers"
+]}
+};
+
 "use strict";
 /* ============ New World — Thousand Labs Games ============ */
-const APP = { name:"New World", version:"1.0.0", site:"https://thousandlabs-games.github.io/New_World/", price:"500 F", wa:"221711216581", trialDays:7 };
+const APP = { name:"New World", version:"1.1.0", site:"https://thousandlabs-games.github.io/New_World/", price:"500 F", wa:"221711216581", trialDays:7 };
 // Clé publique de vérification des codes (paire propre à New World — la clé privée n'est JAMAIS dans ce fichier)
 const PUBKEY = { kty:"EC", crv:"P-256", x:"gwc78zldjurWjIIEKM5X7RrI_YlO1wu8Ic3v4-JFHHw", y:"xnSzDe_6d_eGuJRO8z5d867LmmE07nNn131pkRen0hA", ext:true };
 const LEVELS = ["soft","hard","spicy","extreme"];
@@ -1060,11 +1126,11 @@ const saveGroups = () => lsSet("groups", ST.groups);
 /* ---------- Sons & vibrations ---------- */
 let AC = null;
 function beep(type){
-  if(ST.set.vibr && navigator.vibrate){ const v={tap:15,tick:6,reveal:40,ok:[30,40,30],bad:[80,40,80],win:[60,50,60,50,120],spin:10}[type]; if(v) try{navigator.vibrate(v);}catch(e){} }
+  if(ST.set.vibr && navigator.vibrate){ const v={found:25,pass:[15,30,15],tap:15,tick:6,reveal:40,ok:[30,40,30],bad:[80,40,80],win:[60,50,60,50,120],spin:10}[type]; if(v) try{navigator.vibrate(v);}catch(e){} }
   if(!ST.set.sound) return;
   try{
     AC = AC || new (window.AudioContext||window.webkitAudioContext)();
-    const seq = {tap:[[660,.05]],tick:[[1200,.02]],reveal:[[440,.08],[660,.1]],ok:[[523,.08],[659,.08],[784,.14]],bad:[[300,.12],[200,.2]],win:[[523,.1],[659,.1],[784,.1],[1047,.25]],time:[[880,.15],[880,.15],[880,.3]]}[type] || [[500,.05]];
+    const seq = {found:[[880,.05],[1320,.09]],pass:[[330,.06],[250,.08]],tap:[[660,.05]],tick:[[1200,.02]],reveal:[[440,.08],[660,.1]],ok:[[523,.08],[659,.08],[784,.14]],bad:[[300,.12],[200,.2]],win:[[523,.1],[659,.1],[784,.1],[1047,.25]],time:[[880,.15],[880,.15],[880,.3]]}[type] || [[500,.05]];
     let at = AC.currentTime;
     seq.forEach(([f,d])=>{ const o=AC.createOscillator(), g=AC.createGain(); o.type="triangle"; o.frequency.value=f; g.gain.setValueAtTime(.18,at); g.gain.exponentialRampToValueAtTime(.001,at+d); o.connect(g); g.connect(AC.destination); o.start(at); o.stop(at+d+.02); at+=d*.9; });
   }catch(e){}
@@ -1143,7 +1209,7 @@ const sw = (label, on, a, v) => `<div class="switch"><span>${label}</span>${tg(o
 const lvTag = lv => `<span class="tag lv-${lv}">${t(lv)}</span>`;
 function modal(html){ closeModal(); const m=document.createElement("div"); m.className="modal"; m.id="modal"; m.innerHTML=deco(`<div class="box">${html}</div>`); document.body.appendChild(m); }
 function closeModal(){ const m=$("#modal"); if(m) m.remove(); }
-function rulesModal(game){ modal(`<h2>${game==="tod"?"[[i:flame]] "+t("tod"):"[[i:incognito]] "+t("intrus")}</h2><p style="white-space:pre-line">${esc(t(game==="tod"?"rulesTod":"rulesIntrus"))}</p><button class="btn pri" data-a="closeRules" data-v="${game}">${t("gotIt")}</button>`); }
+function rulesModal(game){ const R={tod:["flame","tod","rulesTod"],intrus:["incognito","intrus","rulesIntrus"],blitz:["zap","blitz","rulesBlitz"]}[game]||["flame","tod","rulesTod"]; modal(`<h2>[[i:${R[0]}]] ${t(R[1])}</h2><p style="white-space:pre-line">${esc(t(R[2]))}</p><button class="btn pri" data-a="closeRules" data-v="${game}">${t("gotIt")}</button>`); }
 function adultGate(then){ if(ST.set.adult) return then(); PENDING = then; modal(`<h2>[[i:alert]] ${t("adultT")}</h2><p>${t("adultP")}</p><button class="btn pri" data-a="adultOk">${t("adultOk")}</button><button class="btn ghost" data-a="closeModal">${t("cancel")}</button>`); }
 let PENDING = null;
 
@@ -1156,6 +1222,7 @@ SCREENS.home = () => {
   return `<div class="center"><div class="logo">New World</div><div class="mut">${t("tagline")}</div></div>${trial}
   <div class="game tod" data-a="startGame" data-v="tod"><span class="emo">[[i:flame]]</span><h2>${t("tod")}</h2><p>${t("todSub")}</p></div>
   <div class="game intrus" data-a="startGame" data-v="intrus"><span class="emo">[[i:incognito]]</span><h2>${t("intrus")}</h2><p>${t("intrusSub")}</p></div>
+  <div class="game blitz" data-a="startGame" data-v="blitz"><span class="emo">[[i:zap]]</span><h2>${t("blitz")}</h2><p>${t("blitzSub")}</p></div>
   <div class="game party" data-a="startGame" data-v="party"><span class="emo">[[i:sparkles]]</span><h2>${t("party")}</h2><p>${t("partySub")}</p></div>
   ${installCard(true)}
   <div class="grid2"><button class="btn ghost" data-a="go" data-v="groups">[[i:users]] ${t("groups")}</button><button class="btn ghost" data-a="go" data-v="settings">[[i:sliders]] ${t("settings")}</button></div>
@@ -1207,8 +1274,8 @@ SCREENS.settings = () => `${hdr("[[i:sliders]] "+t("settings"))}
   <div class="card"><label class="lb">${t("lang")}</label><div class="seg"><button class="${L()?"":"on"}" data-a="lang" data-v="fr">Français</button><button class="${L()?"on":""}" data-a="lang" data-v="en">English</button></div>
   ${sw("[[i:speaker]] "+t("sound"), ST.set.sound, "setT", "sound")}${sw("[[i:vibrate]] "+t("vibr"), ST.set.vibr, "setT", "vibr")}
   ${ST.set.adult?`<button class="btn sm ghost" data-a="adultReset">${t("adultReset")}</button>`:""}</div>
-  <div class="card"><h3>[[i:book]] ${t("rules")}</h3><button class="btn ghost" data-a="showRules" data-v="tod">[[i:flame]] ${t("tod")}</button><button class="btn ghost" data-a="showRules" data-v="intrus">[[i:incognito]] ${t("intrus")}</button></div>
-  <div class="card"><h3>[[i:folder]] ${t("mySeries")}</h3><button class="btn ghost" data-a="openCustom" data-v="settings">[[i:flame]] ${t("tod")} · ${ST.custom.length} ${t("cards")}</button><button class="btn ghost" data-a="openPacks" data-v="settings">[[i:incognito]] ${t("intrus")} · ${ST.myPacks.length} ${t("myPacks").toLowerCase()}</button></div>
+  <div class="card"><h3>[[i:book]] ${t("rules")}</h3><button class="btn ghost" data-a="showRules" data-v="tod">[[i:flame]] ${t("tod")}</button><button class="btn ghost" data-a="showRules" data-v="intrus">[[i:incognito]] ${t("intrus")}</button><button class="btn ghost" data-a="showRules" data-v="blitz">[[i:zap]] ${t("blitz")}</button></div>
+  <div class="card"><h3>[[i:folder]] ${t("mySeries")}</h3><button class="btn ghost" data-a="openCustom" data-v="settings">[[i:flame]] ${t("tod")} · ${ST.custom.length} ${t("cards")}</button><button class="btn ghost" data-a="openPacks" data-v="settings">[[i:incognito]] ${t("intrus")} · ${ST.myPacks.length} ${t("myPacks").toLowerCase()}</button><button class="btn ghost" data-a="openBlLists" data-v="settings">[[i:zap]] ${t("blitz")} · ${ST.blLists.length} ${t("blLists").toLowerCase()}</button></div>
   <div class="card"><h3>[[i:unlock]] ${t("activation")}</h3><p class="mut small">${t("yourId")} : <b>${esc(ST.lic.id)}</b></p><p>${ST.lic.active?t("activated"):(ST.lic.expired?t("lockedT"):t("trialLeft",{n:Math.max(0,Math.floor(ST.lic.left/864e5))}))}</p>${ST.lic.active?"":`<button class="btn pri" data-a="go" data-v="lock">${t("activate")}</button>`}</div>
   ${installCard(false)}
   <div class="card"><h3>${t("about")}</h3><p><b>New World</b> v${APP.version}<br><span class="mut">${t("madeBy")}</span></p><a class="btn ghost" style="text-decoration:none;text-align:center" href="${APP.site}" target="_blank" rel="noopener">[[i:globe]] ${t("website")}</a></div>`;
@@ -1277,7 +1344,7 @@ async function shareText(name, text){ try{ const f=new File([text], name, {type:
 function pickFile(targetId){
   const inp=document.createElement("input"); inp.type="file"; inp.accept=".txt,.csv,text/plain";
   inp.onchange=()=>{ const f=inp.files[0]; if(!f || f.size>500000) return; const r=new FileReader(); r.onload=()=>{ const el=$("#"+targetId); if(!el) return; el.value=String(r.result);
-    const first=String(r.result).split(/\r?\n/)[0]; const m=first.match(/pack\s*:\s*(.+)$/i); const nameEl=$(targetId==="ptext"?"#pname":"#sname"); if(nameEl && !nameEl.value) nameEl.value=(m?m[1]:f.name.replace(/\.[^.]+$/,"").replace(/^new-world-/,"")).slice(0,40); }; r.readAsText(f); };
+    const first=String(r.result).split(/\r?\n/)[0]; const m=first.match(/pack\s*:\s*(.+)$/i); const nameEl=$(targetId==="ptext"?"#pname":targetId==="ltext"?"#lname":"#sname"); if(nameEl && !nameEl.value) nameEl.value=(m?m[1]:f.name.replace(/\.[^.]+$/,"").replace(/^new-world-/,"")).slice(0,40); }; r.readAsText(f); };
   inp.click();
 }
 
@@ -1606,7 +1673,7 @@ SCREENS.inGage = () => { const p=ST.players.find(x=>x.id===GAGE.list[GAGE.i]);
 function gageDraw(type){
   const p=ST.players.find(x=>x.id===GAGE.list[GAGE.i]); const keep=ST.tod; const cfgMode=ST.todCfg.mode, cfgLv=ST.todCfg.levels;
   if(!ST.tod) todNew();
-  ST.tod.cur=p; ST.todCfg.mode="classic"; ST.todCfg.levels=[ST.party?ST.party.lv:ST.inCfg.gageLv];
+  ST.tod.cur=p; ST.todCfg.mode="classic"; ST.todCfg.levels=[GAGE.lv||(ST.party?ST.party.lv:ST.inCfg.gageLv)];
   const card=todDraw(type); ST.todCfg.mode=cfgMode; ST.todCfg.levels=cfgLv; if(!keep) ST.tod=null;
   return card;
 }
@@ -1625,6 +1692,225 @@ SCREENS.partySetup = () => `${hdr(" "+t("party"),"home")}<p class="mut small">[[
   <p class="mut small">${t("intrus")} : ${ST.inCfg.intrus} ${t("intr")}${ST.inCfg.white?" + Mr. White":""} · ${ST.inCfg.roles.length} ${t("roles").toLowerCase()}</p>
   <button class="btn ghost" data-a="go" data-v="inSetup">[[i:sliders]] ${t("intrus")} — ${t("options")}</button>
   <button class="btn pri" data-a="partyStart">${t("start")}</button>`;
+
+/* =================== BLITZ (jeu de mots en équipes, contre la montre) =================== */
+Object.assign(I, {
+blitz:["Blitz","Blitz"], blitzSub:["Fais deviner un max de mots à ton équipe avant la fin du chrono","Get your team to guess as many words as possible before time runs out"],
+blMode:["Mode de jeu","Game mode"], blTeams:["Équipes","Teams"], blSolo:["Chacun pour soi","Every player for themselves"],
+blTeamsD:["Une équipe fait deviner ses propres coéquipiers. Il faut au moins 4 joueurs.","Each team guesses its own teammate's words. At least 4 players."],
+blSoloD:["Tout le monde devine. Celui qui trouve et celui qui fait deviner marquent chacun 1 point.","Everyone guesses. The finder and the speaker each score 1 point."],
+blNeed4:["Le mode Équipes demande au moins 4 joueurs : on joue en Chacun pour soi.","Teams mode needs at least 4 players: playing Every player for themselves."],
+blNbTeams:["Nombre d'équipes","Number of teams"], blShuffle:["Mélanger les équipes","Shuffle the teams"], blTapMove:["Touche un joueur pour le changer d'équipe.","Tap a player to move them to another team."],
+blTeamSmall:["Chaque équipe doit avoir au moins 2 joueurs.","Each team needs at least 2 players."],
+blTime:["Durée d'un tour","Turn length"], blNb:["Nombre de mots","Number of words"], blRounds:["Manches","Rounds"], blRoundsMin:["Garde au moins une manche.","Keep at least one round."],
+blAvail:["{n} mots disponibles avec ces choix","{n} words available with these choices"],
+blOwn:["Mots des joueurs","Players' words"], blOwnD:["Avant la partie, chacun écrit en secret quelques mots à faire deviner.","Before the game, everyone secretly writes a few words to guess."], blPer:["{n} par joueur","{n} per player"],
+blPassPen:["−1 point quand on passe un mot","−1 point when you skip a word"], blLists:["Mes listes de mots","My word lists"], blImport:["Importer une liste","Import a list"],
+blImportHelp:["Un mot ou une expression par ligne (exemple : Thiéboudienne). Tu peux aussi les séparer par des virgules.","One word or phrase per line (example: Pizza). You can also separate them with commas."],
+blListName:["Nom de la liste","List name"], words:["mots","words"], blThemes:["Thèmes","Themes"], blThemesB:["Spécial Blitz","Blitz specials"],
+r0:["Décrire","Describe"], r1:["Un seul mot","One word"], r2:["Mime","Mime"],
+r0D:["Décris le mot avec autant de mots que tu veux, sans le dire, sans sa traduction ni un mot de la même famille. Pas de « ça commence par… ».","Describe the word with as many words as you like, without saying it, translating it or using a word from the same family. No \"it starts with…\"."],
+r1D:["Un seul mot pour faire deviner ! Ton équipe n'a droit qu'à une seule proposition par mot. Les mots sont les mêmes qu'avant : souvenez-vous-en.","Just one word to give a hint! Your team gets only one guess per word. The words are the same as before: remember them."],
+r2D:["Aucun son, aucun mot : uniquement des gestes et des mimes. Les bruitages sont interdits.","No sound, no words: only gestures and mime. Sound effects are not allowed."],
+blRoundN:["Manche {n} sur {m}","Round {n} of {m}"], blSameWords:["Les mêmes {n} mots reviennent à chaque manche.","The same {n} words come back every round."],
+blStartRound:["Commencer la manche","Start the round"], blTurnOf:["fait deviner","gives the clues"], blGuessers:["Devinent : {l}","Guessing: {l}"], blEveryone:["Tout le monde devine !","Everyone guesses!"],
+blPassPhone:["Passe le téléphone à","Pass the phone to"], blGo:["C'est parti !","Let's go!"], blLeft:["{n} mot(s) restant(s)","{n} word(s) left"],
+blFound:["Trouvé","Got it"], blPass:["Passer","Skip"], blWhoFound:["Qui a trouvé ?","Who got it?"], blPause:["Pause","Pause"], blResume:["Reprendre","Resume"], blPaused:["Partie en pause","Game paused"],
+blTimeUp:["Temps écoulé !","Time's up!"], blEmpty:["Plus de mots dans cette manche !","No more words in this round!"],
+blCheck:["Touche un mot pour l'annuler s'il y a eu une faute.","Tap a word to cancel it if a rule was broken."], blNone:["Aucun mot trouvé ce tour-ci.","No words found this turn."],
+blPassesN:["{n} mot(s) passé(s)","{n} word(s) skipped"], blTurnPts:["Points de ce tour : {n}","Points this turn: {n}"], blValidate:["Valider","Confirm"],
+blCarry:["Il restait {n} s : {p} les garde pour commencer la manche suivante !","{n} s were left: {p} keeps them to start the next round!"],
+blRoundEnd:["Fin de la manche {n}","End of round {n}"], blNextRound:["Manche suivante : {r}","Next round: {r}"], blFinal:["Voir le classement final","See the final ranking"],
+blTotal:["Total","Total"], blWinner:["{w} gagne !","{w} wins!"], blTieW:["Égalité : {w} !","Tie: {w}!"],
+blAwSpeaker:["Meilleur orateur","Best speaker"], blAwSpeakerD:["a fait deviner {n} mots","got {n} words guessed"], blAwTurn:["Le tour le plus fou","The craziest turn"], blAwTurnD:["{n} mots en un seul tour","{n} words in a single turn"],
+blAwGuess:["Meilleur devin","Best guesser"], blAwGuessD:["a trouvé {n} mots","found {n} words"],
+blRematch:["Revanche (nouveaux mots)","Rematch (new words)"], blChange:["Changer les réglages","Change the settings"],
+blQuitT:["Quitter la partie ?","Quit the game?"], blQuitP:["Les scores de cette partie seront perdus.","This game's scores will be lost."], blQuit:["Quitter","Quit"], blStay:["Continuer à jouer","Keep playing"],
+blOwnTitle:["Mots des joueurs","Players' words"], blOwnFor:["{p}, écris {n} mot(s) en secret","{p}, secretly write {n} word(s)"], blOwnShow:["Je suis {p} : écrire mes mots","I'm {p}: write my words"], blWordN:["Mot {n}","Word {n}"],
+blOwnHint:["Personnes, objets, films, lieux… évite les mots trop faciles !","People, objects, films, places… avoid words that are too easy!"],
+team:["Équipe {c}","{c} team"],
+rulesBlitz:["• Formez des équipes (ou jouez chacun pour soi). Les mêmes mots servent pendant les 3 manches.\n• À chaque tour, un joueur prend le téléphone et fait deviner un maximum de mots à son équipe avant la fin du chrono.\n• Manche 1 — Décrire : on parle librement, sans dire le mot.\n• Manche 2 — Un seul mot : un seul mot d'indice, une seule proposition.\n• Manche 3 — Mime : uniquement des gestes, sans aucun son.\n• « Trouvé » donne 1 point, « Passer » remet le mot dans la pile. À la fin du tour, on peut annuler un mot en cas de faute.\n• Quand la pile est vide, la manche s'arrête : le temps restant est gardé pour la manche suivante.\n• L'équipe qui a le plus de points après les 3 manches gagne.","• Form teams (or play every player for themselves). The same words are used for all 3 rounds.\n• Each turn, one player takes the phone and gets their team to guess as many words as possible before time runs out.\n• Round 1 — Describe: talk freely, without saying the word.\n• Round 2 — One word: a single-word clue, a single guess.\n• Round 3 — Mime: gestures only, no sound at all.\n• \"Got it\" scores 1 point, \"Skip\" puts the word back in the pile. At the end of the turn, a word can be cancelled if a rule was broken.\n• When the pile is empty, the round ends: the time left is kept for the next round.\n• The team with the most points after the 3 rounds wins."]
+});
+const BL_COLORS = [["Violette","Purple","#8b5cf6"],["Rose","Pink","#ec4899"],["Orange","Orange","#f97316"],["Bleue","Blue","#0ea5e9"]];
+const BL_KIND_IC = ["msg","zap","hand"];
+ST.blCfg = Object.assign({mode:"teams", nTeams:2, time:45, nb:40, rounds:[true,true,true], themes:["stars","legends","actions","campus","daily","food","animals","objects","jobs","places"], packs:["sn","world"], mine:[], own:0, passPen:false, gage:true, gageLv:"hard"}, lsGet("blCfg",{}));
+ST.blLists = lsGet("blLists", []);
+let BLA = {}; // affectation joueur -> équipe
+let BG = null; // partie en cours
+let OWN = null; // saisie des mots des joueurs
+const blSave = () => lsSet("blCfg", ST.blCfg);
+const blTeamName = i => t("team",{c:BL_COLORS[i][L()]});
+const blN = () => ST.players.length;
+const blMaxTeams = () => Math.max(2, Math.min(4, Math.floor(blN()/2)));
+const blMode = () => (ST.blCfg.mode==="teams" && blN()>=4) ? "teams" : "solo";
+const blKinds = () => [0,1,2].filter(k=>ST.blCfg.rounds[k]);
+function blDeal(){ const c=ST.blCfg; c.nTeams=Math.min(c.nTeams, blMaxTeams()); BLA={}; shuffle(ST.players).forEach((p,i)=>BLA[p.id]=i%c.nTeams); }
+function blAssignOk(){ const c=ST.blCfg; return ST.players.every(p=>BLA[p.id]!=null && BLA[p.id]<c.nTeams); }
+function blPool(){
+  const c=ST.blCfg, seen={}, out=[];
+  const add = w => { const k=norm(String(w).split("|")[0]); if(k && !seen[k]){ seen[k]=1; out.push(w); } };
+  c.themes.forEach(k=>{ if(BLITZ[k]) BLITZ[k].words.forEach(add); else if(THEMES[k]) THEMES[k].pairs.forEach(p=>p.forEach(add)); });
+  c.packs.forEach(k=>PACKS[k] && PACKS[k].pairs.forEach(p=>p.forEach(add)));
+  (c.mine||[]).forEach(id=>{ const l=ST.blLists.find(x=>x.id===id); if(l) l.words.forEach(add); });
+  return out;
+}
+
+SCREENS.blSetup = () => { const c=ST.blCfg, n=blN(), mode=blMode(), avail=blPool().length;
+  if(mode==="teams" && !blAssignOk()) blDeal();
+  const ctr=(label,val,a)=>`<div class="switch"><span>${label}</span><div class="counter"><button data-a="${a}" data-v="-1">−</button><b>${val}</b><button data-a="${a}" data-v="1">+</button></div></div>`;
+  const teamsBox = mode!=="teams" ? "" : `${ctr(t("blNbTeams"),c.nTeams,"blNT")}
+    <p class="mut small">${t("blTapMove")}</p>
+    ${Array.from({length:c.nTeams},(_,ti)=>`<div class="blteam" style="border-color:${BL_COLORS[ti][2]}"><b style="color:${BL_COLORS[ti][2]}">${esc(blTeamName(ti))}</b><div>${ST.players.filter(p=>BLA[p.id]===ti).map(p=>`<span class="pill" data-a="blMove" data-v="${p.id}">${esc(p.name)}</span>`).join("")||`<span class="mut small">—</span>`}</div></div>`).join("")}
+    <button class="btn ghost" data-a="blDeal">[[i:repeat]] ${t("blShuffle")}</button>`;
+  const pills = (obj, sel, a) => Object.entries(obj).map(([k,v])=>`<span class="pill ${sel.includes(k)?"on":""}" data-a="${a}" data-v="${k}">${v.icon} ${L()?v.en:v.fr}</span>`).join("");
+  return `${hdr("[[i:zap]] "+t("blitz"),"home")}
+  <p class="mut small">[[i:users]] ${ST.players.map(p=>esc(p.name)).join(", ")}</p>
+  <div class="card"><label class="lb">${t("blMode")}</label><div class="seg"><button class="${mode==="teams"?"on":""}" data-a="blSet" data-v="mode|teams">${t("blTeams")}</button><button class="${mode==="solo"?"on":""}" data-a="blSet" data-v="mode|solo">${t("blSolo")}</button></div>
+  <p class="mut small">${n<4?t("blNeed4"):t(mode==="teams"?"blTeamsD":"blSoloD")}</p>${teamsBox}</div>
+  <div class="card"><label class="lb">[[i:timer]] ${t("blTime")}</label><div class="seg">${[30,45,60,90].map(v=>`<button class="${c.time===v?"on":""}" data-a="blSet" data-v="time|${v}">${v} s</button>`).join("")}</div>
+  <label class="lb">${t("blNb")}</label><div class="seg">${[20,30,40,50,60].map(v=>`<button class="${c.nb===v?"on":""}" data-a="blSet" data-v="nb|${v}">${v}</button>`).join("")}</div></div>
+  <div class="card"><h3>${t("blRounds")}</h3>${[0,1,2].map(k=>`<div class="rolechip ${c.rounds[k]?"on":""}" data-a="blRound" data-v="${k}"><span class="e">[[i:${BL_KIND_IC[k]}]]</span><div><b>${k+1}. ${t("r"+k)}</b><div class="mut small">${t("r"+k+"D")}</div></div></div>`).join("")}</div>
+  <div class="card"><div class="spread"><h3>${t("blThemesB")}</h3><span><span class="pill" data-a="blAll" data-v="1">${t("selAll")}</span><span class="pill" data-a="blAll" data-v="0">${t("selNone")}</span></span></div>${pills(BLITZ,c.themes,"blTheme")}
+  <h3 style="margin-top:14px">${t("blThemes")}</h3>${pills(THEMES,c.themes,"blTheme")}
+  <h3 style="margin-top:14px">${t("packs")}</h3>${pills(PACKS,c.packs,"blPack")}
+  <h3 style="margin-top:14px">${t("blLists")}</h3>${ST.blLists.map(l=>`<span class="pill ${(c.mine||[]).includes(l.id)?"on":""}" data-a="blMine" data-v="${l.id}">[[i:folder]] ${esc(l.name)} <small>(${l.words.length})</small></span>`).join("")}
+  <button class="btn sm ghost" data-a="openBlLists" data-v="blSetup">[[i:upload]] ${t("blImport")}</button>
+  <p class="mut small" style="margin-top:10px">[[i:book]] ${t("blAvail",{n:avail})}</p></div>
+  <div class="card"><label class="lb">[[i:pen]] ${t("blOwn")}</label><p class="mut small" style="margin-top:0">${t("blOwnD")}</p><div class="seg">${[0,2,3,5].map(v=>`<button class="${c.own===v?"on":""}" data-a="blSet" data-v="own|${v}">${v?t("blPer",{n:v}):t("off")}</button>`).join("")}</div>
+  ${sw("[[i:skip]] "+t("blPassPen"),c.passPen,"blTog","passPen")}
+  ${sw("[[i:flame]] "+t("gage"),c.gage,"blTog","gage")}${c.gage?`<label class="lb">${t("gageLv")}</label><div class="seg">${LEVELS.map(l=>`<button class="${c.gageLv===l?"on":""}" data-a="blGL" data-v="${l}">${t(l)}</button>`).join("")}</div>`:""}</div>
+  <button class="btn pri" data-a="blStart">${t("start")}</button><button class="btn ghost" data-a="showRules" data-v="blitz">[[i:book]] ${t("rules")}</button>`; };
+
+SCREENS.blLists = () => `${hdr("[[i:folder]] "+t("blLists"), BACKTO)}
+  <div class="card"><h3>[[i:upload]] ${t("blImport")}</h3><p class="mut small">${t("blImportHelp")}</p>
+  <label class="lb">${t("blListName")}</label><input type="text" id="lname" maxlength="40" placeholder="${L()?"My list":"Ma liste"}">
+  <textarea id="ltext" style="min-height:140px;margin-top:8px" placeholder="Thiéboudienne&#10;Sadio Mané&#10;${L()?"Brushing your teeth":"Se brosser les dents"}"></textarea>
+  <button class="btn ghost" data-a="pickFile" data-v="ltext">[[i:file]] ${t("pickFile")}</button>
+  <button class="btn pri" data-a="blImport">[[i:upload]] ${t("doImport")}</button></div>
+  ${ST.blLists.map(l=>`<div class="card"><div class="spread"><div><b>[[i:folder]] ${esc(l.name)}</b><div class="mut small">${l.words.length} ${t("words")}</div></div><div><button class="btn sm ghost" data-a="blExport" data-v="${l.id}">[[i:download]]</button>${navigator.canShare?`<button class="btn sm ghost" data-a="blShare" data-v="${l.id}">[[i:share]]</button>`:""}<button class="btn sm bad" data-a="blDelList" data-v="${l.id}">[[i:trash]]</button></div></div>
+    <div class="mut small" style="margin-top:8px">${l.words.slice(0,10).map(esc).join(" · ")}${l.words.length>10?" …":""}</div></div>`).join("")}`;
+function parseWords(txt){ const seen={}, out=[]; String(txt).split(/\r?\n/).forEach(line=>{ const l=line.trim(); if(!l||l.startsWith("#")) return; l.split(/\s*[,;\t]\s*/).forEach(w=>{ w=w.trim().slice(0,50); const k=norm(w); if(k && !seen[k]){ seen[k]=1; out.push(w); } }); }); return out; }
+const listToText = l => "# New World — Blitz : "+l.name+"\n"+l.words.join("\n")+"\n";
+
+/* ---- Mots des joueurs ---- */
+SCREENS.blOwn = () => { const p=ST.players[OWN.i], n=ST.blCfg.own;
+  return `${hdr("[[i:pen]] "+t("blOwnTitle"),"blSetup")}<div class="center mut">${OWN.i+1}/${ST.players.length}</div>
+  ${OWN.shown?`<div class="card"><h3>${esc(t("blOwnFor",{p:p.name,n}))}</h3><p class="mut small">${t("blOwnHint")}</p>${Array.from({length:n},(_,i)=>`<input type="text" class="ownw" maxlength="50" placeholder="${esc(t("blWordN",{n:i+1}))}" style="margin:6px 0" autocomplete="off">`).join("")}</div>
+    <button class="btn pri" data-a="blOwnNext">${t("blValidate")}</button>`
+  :`<div class="secret"><div class="mut">${t("blPassPhone")}</div><div class="who">${esc(p.name)}</div></div><button class="btn pri" data-a="blOwnShow">${esc(t("blOwnShow",{p:p.name}))}</button>`}`; };
+
+/* ---- Moteur ---- */
+function blNew(ownWords){
+  const c=ST.blCfg, mode=blMode(), own=ownWords||[];
+  const seen={}; own.forEach(w=>seen[norm(w)]=1);
+  const pool = shuffle(blPool().filter(w=>!seen[norm(String(w).split("|")[0])]));
+  const words = shuffle(own.concat(pool.slice(0, Math.max(0, c.nb-own.length))));
+  BG = { mode, kinds:blKinds(), ri:0, words, pile:[], ti:0, si:0, carry:0, turn:null,
+    teams: mode==="teams" ? Array.from({length:c.nTeams},(_,i)=>({i, ids:shuffle(ST.players.filter(p=>BLA[p.id]===i)).map(p=>p.id), si:0, pts:[0,0,0]})) : [],
+    order: shuffle(ST.players).map(p=>p.id), pts:Object.fromEntries(ST.players.map(p=>[p.id,[0,0,0]])),
+    made:{}, guessed:{}, best:{n:0, id:null}, rstart:{} };
+  blRoundStart();
+}
+function blRoundStart(){ BG.pile = shuffle(BG.words); BG.rstart = blTotals(); go("blIntro"); }
+const blPname = id => { const p=ST.players.find(x=>x.id===id); return p?p.name:"?"; };
+function blSpeaker(){ if(BG.mode==="teams"){ const tm=BG.teams[BG.ti]; return tm.ids[tm.si%tm.ids.length]; } return BG.order[BG.si%BG.order.length]; }
+function blTotals(){ const o={}; if(BG.mode==="teams") BG.teams.forEach(tm=>o["t"+tm.i]=tm.pts.reduce((a,b)=>a+b,0)); else for(const id in BG.pts) o[id]=BG.pts[id].reduce((a,b)=>a+b,0); return o; }
+function blRanking(){ // [{key,name,color,total,pts}]
+  const rows = BG.mode==="teams" ? BG.teams.map(tm=>({key:"t"+tm.i, name:blTeamName(tm.i), color:BL_COLORS[tm.i][2], sub:tm.ids.map(blPname).join(", "), pts:tm.pts, ids:tm.ids}))
+    : ST.players.map(p=>({key:p.id, name:p.name, color:null, sub:"", pts:BG.pts[p.id], ids:[p.id]}));
+  rows.forEach(r=>r.total=r.pts.reduce((a,b)=>a+b,0)); return rows.sort((a,b)=>b.total-a.total);
+}
+function blScoreTable(showRounds){ const rows=blRanking(), ks=BG.kinds;
+  return `<table class="score">${showRounds?`<tr class="mut small"><td></td>${ks.map(k=>`<td style="text-align:right">[[i:${BL_KIND_IC[k]}]]</td>`).join("")}<td style="text-align:right">${t("blTotal")}</td></tr>`:""}${rows.map((r,i)=>`<tr><td>${i===0&&r.total>0?"[[i:crown]] ":""}<b style="${r.color?"color:"+r.color:""}">${esc(r.name)}</b>${r.sub?`<div class="mut small">${esc(r.sub)}</div>`:""}</td>${showRounds?ks.map(k=>`<td style="text-align:right" class="mut">${r.pts[k]}</td>`).join(""):""}<td style="text-align:right"><b style="font-size:1.15rem">${r.total}</b></td></tr>`).join("")}</table>`; }
+
+SCREENS.blIntro = () => { const k=BG.kinds[BG.ri];
+  return `<div class="top"><button class="back" data-a="blQuitAsk">[[i:x]]</button><h2 class="grow" style="margin:0">[[i:zap]] ${t("blitz")}</h2></div>
+  <div class="center mut">${t("blRoundN",{n:BG.ri+1,m:BG.kinds.length})}</div>
+  <div class="bigcard blround"><div class="blic">[[i:${BL_KIND_IC[k]}]]</div><div class="q" style="font-size:2rem">${t("r"+k)}</div><p style="margin:0">${t("r"+k+"D")}</p></div>
+  <p class="mut small center">${t("blSameWords",{n:BG.words.length})}</p>
+  ${BG.ri>0?`<div class="card">${blScoreTable(false)}</div>`:""}
+  <button class="btn pri" data-a="blReady">${t("blStartRound")}</button>`; };
+
+SCREENS.blReady = () => { const spk=blSpeaker(), secs=BG.carry||ST.blCfg.time;
+  let who, col="var(--pri2)";
+  if(BG.mode==="teams"){ const tm=BG.teams[BG.ti]; col=BL_COLORS[tm.i][2]; who=`<div class="tagteam" style="background:${col}">${esc(blTeamName(tm.i))}</div><p class="mut small">${esc(t("blGuessers",{l:tm.ids.filter(x=>x!==spk).map(blPname).join(", ")}))}</p>`; }
+  else who=`<p class="mut small">${t("blEveryone")}</p>`;
+  return `<div class="top"><button class="back" data-a="blQuitAsk">[[i:x]]</button><h2 class="grow" style="margin:0">${t("blRoundN",{n:BG.ri+1,m:BG.kinds.length})} · ${t("r"+BG.kinds[BG.ri])}</h2></div>
+  <div class="secret" style="border-color:${col}"><div class="mut">${t("blPassPhone")}</div><div class="who">${esc(blPname(spk))}</div><div class="mut">${t("blTurnOf")}</div>${who}</div>
+  <div class="center"><span class="pill">[[i:timer]] ${secs} s</span><span class="pill">[[i:book]] ${esc(t("blLeft",{n:BG.pile.length}))}</span></div>
+  <button class="btn pri" style="font-size:1.3rem;padding:20px" data-a="blGo">[[i:zap]] ${t("blGo")}</button>`; };
+
+function blSize(w){ const n=w.length; return n<=10?"2.6rem":n<=16?"2.1rem":n<=24?"1.7rem":"1.4rem"; }
+SCREENS.blPlay = () => { const tr=BG.turn;
+  if(tr.phase==="count") return `<div class="center" style="margin-top:22vh"><div class="mut">${esc(blPname(tr.spk))}</div><div class="blcount">${tr.count}</div></div>`;
+  const w=wfr(tr.cur), spk=tr.spk;
+  const col = BG.mode==="teams" ? BL_COLORS[BG.teams[BG.ti].i][2] : "var(--pri2)";
+  const btns = BG.mode==="teams"
+    ? `<div class="choice"><button class="btn blpass" data-a="blPass">[[i:skip]]<br>${t("blPass")}</button><button class="btn blfound" data-a="blFound" data-v="">[[i:check]]<br>${t("blFound")}</button></div>`
+    : `<div class="mut small center">${t("blWhoFound")}</div><div class="grid2">${ST.players.filter(p=>p.id!==spk).map(p=>`<button class="btn blfound" style="margin:0;padding:22px 8px" data-a="blFound" data-v="${p.id}">[[i:check]] ${esc(p.name)}</button>`).join("")}</div><button class="btn blpass" data-a="blPass">[[i:skip]] ${t("blPass")}</button>`;
+  return `<div class="spread"><span class="pill" style="border-color:${col}">${esc(blPname(spk))}</span><b id="bt" class="bltimer ${blLeftMs()<=5000?"hot":""}">${Math.ceil(blLeftMs()/1000)}</b><button class="btn sm ghost" style="width:auto" data-a="blPause">[[i:timer]] ${t("blPause")}</button></div>
+  <div class="blbar"><div id="bbar" style="width:${100*blLeftMs()/(tr.dur*1000)}%;background:${col}"></div></div>
+  <div class="bigcard blword" style="border-color:${col}"><div class="mut small">${t("r"+BG.kinds[BG.ri])}</div><div class="q" style="font-size:${blSize(w)}">${esc(w)}</div><div class="mut small">[[i:check]] ${tr.found.length} · ${esc(t("blLeft",{n:BG.pile.length+1}))}</div></div>
+  ${btns}
+  ${tr.paused!=null?`<div class="modal"><div class="box center"><h2>[[i:timer]] ${t("blPaused")}</h2><p class="mut">${Math.ceil(tr.paused/1000)} s</p><button class="btn pri" data-a="blResume">${t("blResume")}</button><button class="btn ghost" data-a="blQuitAsk">${t("blQuit")}</button></div></div>`:""}`; };
+const blLeftMs = () => { const tr=BG.turn; return tr.paused!=null ? tr.paused : Math.max(0, tr.end-Date.now()); };
+let WAKE=null;
+function blWake(on){ try{ if(on){ if(!WAKE && navigator.wakeLock) navigator.wakeLock.request("screen").then(w=>WAKE=w).catch(()=>{}); } else if(WAKE){ WAKE.release(); WAKE=null; } }catch(e){} }
+AFTER.blPlay = () => { const tr=BG.turn; if(timerInt) return;
+  if(tr.phase==="count"){ timerInt=setInterval(()=>{ tr.count--; if(tr.count<=0){ clearInterval(timerInt); timerInt=null; tr.phase="play"; tr.end=Date.now()+tr.dur*1000; tr.cur=BG.pile.shift(); beep("reveal"); render(); } else { beep("tick"); render(); } },800); return; }
+  if(tr.paused!=null) return;
+  let lastS=Math.ceil(blLeftMs()/1000);
+  timerInt=setInterval(()=>{ const ms=blLeftMs(), s=Math.ceil(ms/1000); const e=$("#bt"), b=$("#bbar"); if(e) e.textContent=s; if(b) b.style.width=(100*ms/(tr.dur*1000))+"%";
+    if(s!==lastS){ lastS=s; if(s<=5 && s>0){ beep("tick"); if(e) e.classList.add("hot"); } }
+    if(ms<=0){ clearInterval(timerInt); timerInt=null; BG.pile.push(tr.cur); tr.cur=null; beep("time"); blTurnEnd("time"); } },200); };
+function blTurnEnd(why){ const tr=BG.turn; tr.why=why; tr.leftS = why==="empty" ? Math.floor(blLeftMs()/1000) : 0; tr.cancel={}; blWake(false); go("blTurn"); }
+
+SCREENS.blTurn = () => { const tr=BG.turn, c=ST.blCfg;
+  const ok=tr.found.filter((f,i)=>!tr.cancel[i]).length, pen=c.passPen?tr.passes:0;
+  return `<div class="center"><div class="logo" style="font-size:2rem">${tr.why==="time"?t("blTimeUp"):t("blEmpty")}</div><div class="mut">${esc(blPname(tr.spk))}</div></div>
+  <div class="card">${tr.found.length?`<p class="mut small" style="margin-top:0">${t("blCheck")}</p><div>${tr.found.map((f,i)=>`<span class="pill ${tr.cancel[i]?"":"on"}" style="${tr.cancel[i]?"text-decoration:line-through;opacity:.6":""}" data-a="blCancel" data-v="${i}">${tr.cancel[i]?"[[i:x]]":"[[i:check]]"} ${esc(wfr(f.w))}${f.by?` <small>· ${esc(blPname(f.by))}</small>`:""}</span>`).join("")}</div>`:`<p class="mut">${t("blNone")}</p>`}
+  ${tr.passes?`<p class="mut small">[[i:skip]] ${t("blPassesN",{n:tr.passes})}${pen?" (−"+pen+")":""}</p>`:""}
+  <h3 style="margin:10px 0 0">${t("blTurnPts",{n:ok-pen})}</h3></div>
+  ${tr.why==="empty" && tr.leftS>=3 && BG.ri<BG.kinds.length-1 && !Object.keys(tr.cancel).some(k=>tr.cancel[k])?`<div class="banner info">[[i:timer]] ${esc(t("blCarry",{n:tr.leftS,p:blPname(tr.spk)}))}</div>`:""}
+  <button class="btn pri" data-a="blValidate">${t("blValidate")}</button>`; };
+
+function blApplyTurn(){
+  const tr=BG.turn, c=ST.blCfg, k=BG.kinds[BG.ri];
+  const good=tr.found.filter((f,i)=>!tr.cancel[i]); tr.found.forEach((f,i)=>{ if(tr.cancel[i]) BG.pile.push(f.w); });
+  BG.pile=shuffle(BG.pile);
+  const pen=c.passPen?tr.passes:0;
+  if(BG.mode==="teams") BG.teams[BG.ti].pts[k]+=good.length-pen;
+  else { BG.pts[tr.spk][k]+=good.length-pen; good.forEach(f=>{ if(f.by){ BG.pts[f.by][k]++; BG.guessed[f.by]=(BG.guessed[f.by]||0)+1; } }); }
+  BG.made[tr.spk]=(BG.made[tr.spk]||0)+good.length;
+  if(good.length>BG.best.n) BG.best={n:good.length, id:tr.spk};
+  const emptied = BG.pile.length===0;
+  const carry = emptied && tr.why==="empty" && tr.leftS>=3 && BG.ri<BG.kinds.length-1 ? tr.leftS : 0;
+  BG.carry = carry;
+  if(!carry){ // rotation normale
+    if(BG.mode==="teams"){ BG.teams[BG.ti].si++; BG.ti=(BG.ti+1)%BG.teams.length; } else BG.si++;
+  }
+  BG.turn=null;
+  if(emptied){ beep("win"); go("blRound"); } else go("blReady");
+}
+
+SCREENS.blRound = () => { const last=BG.ri>=BG.kinds.length-1;
+  return `<div class="center"><div class="logo" style="font-size:2rem">${t("blRoundEnd",{n:BG.ri+1})}</div><div class="mut">${t("r"+BG.kinds[BG.ri])}</div></div>
+  <div class="card"><h3>[[i:trophy]] ${t("scores")}</h3>${blScoreTable(true)}</div>
+  ${last?`<button class="btn pri" data-a="blFinal">[[i:trophy]] ${t("blFinal")}</button>`:`<button class="btn pri" data-a="blNextRound">${esc(t("blNextRound",{r:t("r"+BG.kinds[BG.ri+1])}))}</button>`}`; };
+
+function blLosers(){ const rows=blRanking(); if(rows.length<2) return []; const min=rows[rows.length-1].total; if(rows[0].total===min) return []; return rows.filter(r=>r.total===min).flatMap(r=>r.ids); }
+SCREENS.blEnd = () => { const rows=blRanking(), top=rows[0].total, win=rows.filter(r=>r.total===top);
+  const title = win.length>1 ? t("blTieW",{w:win.map(r=>r.name).join(" & ")}) : t("blWinner",{w:win[0].name});
+  const maxOf = o => { let m=0,id=null; for(const k in o) if(o[k]>m){ m=o[k]; id=k; } return id?{id,n:m}:null; };
+  const sp=maxOf(BG.made), gs=BG.mode==="solo"?maxOf(BG.guessed):null;
+  const aw=(icon,ttl,who,desc)=>`<div class="title-award"><span class="e">[[i:${icon}]]</span><div><b>${ttl}</b><div>${esc(who)} <span class="mut small">· ${desc}</span></div></div></div>`;
+  return `<div class="center"><div class="blic big">[[i:trophy]]</div><div class="logo" style="font-size:2rem;margin-top:4px">${esc(title)}</div></div>
+  <div class="card"><h3>[[i:trophy]] ${t("scores")}</h3>${blScoreTable(BG.kinds.length>1)}</div>
+  ${sp||BG.best.id||gs?`<div class="card">${sp?aw("megaphone",t("blAwSpeaker"),blPname(sp.id),t("blAwSpeakerD",{n:sp.n})):""}${BG.best.id?aw("zap",t("blAwTurn"),blPname(BG.best.id),t("blAwTurnD",{n:BG.best.n})):""}${gs?aw("search",t("blAwGuess"),blPname(gs.id),t("blAwGuessD",{n:gs.n})):""}</div>`:""}
+  ${ST.blCfg.gage&&blLosers().length?`<button class="btn warn" data-a="blGages">[[i:flame]] ${t("gages")}</button>`:""}
+  <button class="btn pri" data-a="blRematch">[[i:repeat]] ${t("blRematch")}</button>
+  <button class="btn ghost" data-a="go" data-v="blSetup">[[i:sliders]] ${t("blChange")}</button>
+  <button class="btn ghost" data-a="go" data-v="home">${t("home")}</button>`; };
 
 /* =================== ACTIONS =================== */
 const ACT = {
@@ -1747,17 +2033,67 @@ const ACT = {
   inGages: () => { GAGE={list:END.losers.slice(), i:0, card:null}; go("inGage"); },
   gagePick: v => { GAGE.card=gageDraw(v); beep("reveal"); render(); },
   gageRefuse: () => { GAGE.card=gageDraw(GAGE.card.type); render(); },
-  gageNext: () => { GAGE.i++; GAGE.card=null; beep("ok"); if(GAGE.i>=GAGE.list.length) go("inEnd"); else render(); },
+  gageNext: () => { GAGE.i++; GAGE.card=null; beep("ok"); if(GAGE.i>=GAGE.list.length) go(GAGE.back||"inEnd"); else render(); },
   // Soirée
   partyLv: v => { const f=()=>{ ST.party.lv=v; render(); }; ADULT.includes(v)?adultGate(f):f(); },
   partyStart: () => { if(ST.players.length<3) return toast(t("minP",{n:3})); const f=()=>{ ST.game=null; inNew(); go("inReveal"); if(!ST.set.seenRules.intrus) rulesModal("intrus"); }; ADULT.includes(ST.party.lv)?adultGate(f):f(); },
   partyTod: () => partyTod()
 };
+/* ---- Actions Blitz ---- */
+Object.assign(ACT, {
+  blSet: v => { const [k,val]=v.split("|"); const c=ST.blCfg; c[k] = (k==="mode") ? val : +val; if(k==="mode" && val==="teams" && blN()<4) toast(t("blNeed4")); blSave(); render(); },
+  blTog: v => { ST.blCfg[v]=!ST.blCfg[v]; blSave(); render(); },
+  blGL: v => { const f=()=>{ ST.blCfg.gageLv=v; blSave(); render(); }; ADULT.includes(v)?adultGate(f):f(); },
+  blNT: v => { const c=ST.blCfg; const n=Math.max(2, Math.min(blMaxTeams(), c.nTeams+(+v))); if(n!==c.nTeams){ c.nTeams=n; blSave(); blDeal(); } render(); },
+  blDeal: () => { blDeal(); beep("spin"); render(); },
+  blMove: v => { BLA[v]=(BLA[v]+1)%ST.blCfg.nTeams; render(); },
+  blRound: v => { const c=ST.blCfg; c.rounds[+v]=!c.rounds[+v]; if(!c.rounds.some(Boolean)){ c.rounds[+v]=true; toast(t("blRoundsMin")); } blSave(); render(); },
+  blTheme: v => { const c=ST.blCfg; c.themes = c.themes.includes(v)?c.themes.filter(x=>x!==v):c.themes.concat(v); blSave(); render(); },
+  blPack: v => { const c=ST.blCfg; c.packs = c.packs.includes(v)?c.packs.filter(x=>x!==v):c.packs.concat(v); blSave(); render(); },
+  blMine: v => { const c=ST.blCfg; c.mine=c.mine||[]; c.mine = c.mine.includes(v)?c.mine.filter(x=>x!==v):c.mine.concat(v); blSave(); render(); },
+  blAll: v => { const c=ST.blCfg; if(v==="1"){ c.themes=Object.keys(BLITZ).concat(Object.keys(THEMES)); c.packs=Object.keys(PACKS); } else { c.themes=[]; c.packs=[]; } blSave(); render(); },
+  openBlLists: v => { BACKTO=v||"settings"; go("blLists"); },
+  blImport: () => { const words=parseWords($("#ltext").value); if(!words.length) return toast(t("nothing"));
+    const name=($("#lname").value.trim()||(L()?"My list ":"Ma liste ")+(ST.blLists.length+1)).slice(0,40); const id=uid();
+    ST.blLists.push({id, name, words}); lsSet("blLists", ST.blLists); const c=ST.blCfg; c.mine=(c.mine||[]).concat(id); blSave(); toast(t("imported",{n:words.length})); render(); },
+  blExport: v => { const l=ST.blLists.find(x=>x.id===v); download(fileName("blitz-"+l.name), listToText(l)); },
+  blShare: v => { const l=ST.blLists.find(x=>x.id===v); shareText(fileName("blitz-"+l.name), listToText(l)); },
+  blDelList: v => { ST.blLists=ST.blLists.filter(x=>x.id!==v); lsSet("blLists", ST.blLists); ST.blCfg.mine=(ST.blCfg.mine||[]).filter(x=>x!==v); blSave(); render(); },
+  blStart: () => {
+    if(!canPlay()) return go("lock");
+    const c=ST.blCfg;
+    if(blN()<3) return toast(t("minP",{n:3}));
+    if(blMode()==="teams"){ if(!blAssignOk()) blDeal(); for(let i=0;i<c.nTeams;i++) if(ST.players.filter(p=>BLA[p.id]===i).length<2) return toast(t("blTeamSmall")); }
+    if(!c.own && blPool().length<5) return toast(t("nothing"));
+    if(c.own){ OWN={i:0, shown:false, words:[]}; return go("blOwn"); }
+    blNew(); if(!ST.set.seenRules.blitz) rulesModal("blitz");
+  },
+  blOwnShow: () => { OWN.shown=true; beep("reveal"); render(); },
+  blOwnNext: () => { document.querySelectorAll(".ownw").forEach(e=>{ const w=e.value.trim().slice(0,50); if(w) OWN.words.push(w); }); OWN.i++; OWN.shown=false;
+    if(OWN.i>=ST.players.length){ const seen={}, ws=OWN.words.filter(w=>{ const k=norm(w); if(!k||seen[k]) return false; seen[k]=1; return true; }); OWN=null; blNew(ws); if(!ST.set.seenRules.blitz) rulesModal("blitz"); } else render(); },
+  blReady: () => go("blReady"),
+  blGo: () => { const dur=BG.carry||ST.blCfg.time; BG.carry=0; BG.turn={spk:blSpeaker(), dur, phase:"count", count:3, found:[], passes:0, cur:null, end:0, paused:null}; blWake(true); beep("tap"); go("blPlay"); },
+  blFound: v => { const tr=BG.turn; if(!tr||tr.phase!=="play"||tr.paused!=null||!tr.cur) return; tr.found.push({w:tr.cur, by:v||null}); beep("found");
+    if(!BG.pile.length){ tr.cur=null; clearInterval(timerInt); timerInt=null; return blTurnEnd("empty"); }
+    tr.cur=BG.pile.shift(); render(); },
+  blPass: () => { const tr=BG.turn; if(!tr||tr.phase!=="play"||tr.paused!=null||!tr.cur) return; tr.passes++; beep("pass"); BG.pile.push(tr.cur); tr.cur=BG.pile.shift(); render(); },
+  blPause: () => { const tr=BG.turn; if(!tr||tr.phase!=="play"||tr.paused!=null) return; tr.paused=blLeftMs(); clearInterval(timerInt); timerInt=null; render(); },
+  blResume: () => { const tr=BG.turn; if(!tr||tr.paused==null) return; tr.end=Date.now()+tr.paused; tr.paused=null; render(); },
+  blCancel: v => { const tr=BG.turn; tr.cancel[+v]=!tr.cancel[+v]; render(); },
+  blValidate: () => blApplyTurn(),
+  blNextRound: () => { BG.ri++; blRoundStart(); },
+  blFinal: () => { beep("win"); go("blEnd"); },
+  blRematch: () => { if(!canPlay()) return go("lock"); ACT.blStart(); },
+  blGages: () => { GAGE={list:blLosers(), i:0, card:null, back:"blEnd", lv:ST.blCfg.gageLv}; go("inGage"); },
+  blQuitAsk: () => { const tr=BG&&BG.turn; if(tr && tr.phase==="play" && tr.paused==null) ACT.blPause(); modal(`<h2>${t("blQuitT")}</h2><p class="mut">${t("blQuitP")}</p><button class="btn bad" data-a="blQuit">${t("blQuit")}</button><button class="btn ghost" data-a="closeModal">${t("blStay")}</button>`); },
+  blQuit: () => { closeModal(); blWake(false); BG=null; go("home"); }
+});
 let NOTICE_BACK=null;
 function inEndWhite(w){ inEnd("white", [], null); }
 function confirmQuit(){ return true; }
 function afterPlayers(){
   if(NEXT==="tod") go("todSetup");
+  else if(NEXT==="blitz"){ if(ST.players.length<3) return toast(t("minP",{n:3})); BG=null; go("blSetup"); }
   else if(NEXT==="intrus"){ if(ST.players.length<3) return toast(t("minP",{n:3})); ST.game=null; go("inSetup"); }
   else { if(ST.players.length<3) return toast(t("minP",{n:3})); ST.game=null; go("partySetup"); }
 }
@@ -1766,7 +2102,7 @@ function afterPlayers(){
 document.addEventListener("click", e => {
   const el = e.target.closest("[data-a]"); if(!el) return;
   if(el.tagName==="A" && el.getAttribute("href")!=="#") return;
-  e.preventDefault(); const f=ACT[el.dataset.a]; if(f){ if(!["todSpin","vtCast","todDone","todPick"].includes(el.dataset.a)) beep("tap"); f(el.dataset.v); }
+  e.preventDefault(); const f=ACT[el.dataset.a]; if(f){ if(!["todSpin","vtCast","todDone","todPick","blFound","blPass","blGo"].includes(el.dataset.a)) beep("tap"); f(el.dataset.v); }
 });
 document.addEventListener("input", e => {
   const el=e.target; if(!el.dataset || !el.dataset.in) return;
