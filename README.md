@@ -5,6 +5,6 @@ Jeux de soirée entre amis : **Action ou Vérité**, **Incognito** (Undercover) 
 - 🌐 Jouer : https://thousandlabs-games.github.io/New_World/
 - 📦 Dépôt officiel : https://github.com/ThousandLabs-Games/New_World
 
-Appli web hors ligne, installable sur téléphone. 7 jours d'essai gratuit, puis déblocage définitif par code d'activation (500 F).
+Appli web hors ligne, installable sur téléphone. 7 jours d'essai gratuit, puis déblocage définitif par code d'activation (1 000 F).
 
 © Thousand Labs Games
