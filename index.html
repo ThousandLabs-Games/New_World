@@ -1177,10 +1177,11 @@ SCREENS.groups = () => `${hdr("[[i:users]] "+t("groups"))}
   ${ST.groups.length? `<div class="list">${ST.groups.map(g=>`<div class="it"><div><b>${esc(g.name)}</b><div class="mut small">${g.players.map(p=>esc(p.name)).join(", ")}</div></div><button class="btn sm ghost" data-a="editGroup" data-v="${g.id}">${t("edit")}</button></div>`).join("")}</div>` : `<p class="mut">${t("noGroup")}</p>`}
   <button class="btn pri" data-a="editGroup" data-v="">+ ${t("newGroup")}</button>`;
 let EDIT = null;
-const newPlayer = () => ({id:uid(), name:"", g:"m", c:true, w:"f", max:"hard"});
+const defName = i => (L()?"Player ":"Joueur ")+i;
+const newPlayer = (i) => ({id:uid(), name:defName(i||1), g:"m", c:true, w:"f", max:"hard"});
 function playerForm(p, i){
   const seg = (field, opts) => `<div class="seg">${opts.map(([v,l])=>`<button class="${p[field]===v?"on":""}" data-a="pf" data-v="${i}|${field}|${v}">${l}</button>`).join("")}</div>`;
-  return `<div class="player"><div class="row"><input type="text" maxlength="20" placeholder="${t("name")} ${i+1}" value="${esc(p.name)}" data-in="pname" data-i="${i}"><button class="btn sm bad" data-a="pdel" data-v="${i}">[[i:x]]</button></div>
+  return `<div class="player"><div class="row"><input type="text" maxlength="20" placeholder="${defName(i+1)}" value="${esc(p.name)}" data-in="pname" data-i="${i}" onfocus="this.select()"><button class="btn sm bad" data-a="pdel" data-v="${i}">[[i:x]]</button></div>
   <label class="lb">${t("gender")}</label>${seg("g",[["m",t("m")],["f",t("f")]])}
   <label class="lb">${t("contact")} [[i:hand]]</label>${seg("c",[[true,t("yes")],[false,t("no")]].map(([v,l])=>[v,l]))}
   ${p.c?`<label class="lb">${t("withWho")}</label>${seg("w",[["m",t("men")],["f",t("women")]])}`:""}
@@ -1645,17 +1646,17 @@ const ACT = {
     if(v==="party") ST.party={lv:"hard"}; else ST.party=null;
     if(ST.groups.length) go("pickGroup"); else ACT.quickPlayers();
   },
-  quickPlayers: () => { EDIT={quick:true, back:"pickGroup", players:(ST.players.length?ST.players:[newPlayer(),newPlayer(),newPlayer()]).map(p=>Object.assign({},p))}; if(!ST.groups.length) EDIT.back="home"; go("groupEdit"); },
+  quickPlayers: () => { EDIT={quick:true, back:"pickGroup", players:(ST.players.length?ST.players:[newPlayer(1),newPlayer(2)]).map(p=>Object.assign({},p))}; if(!ST.groups.length) EDIT.back="home"; go("groupEdit"); },
   useGroup: v => { const g=ST.groups.find(x=>x.id===v); ST.players=g.players.map(p=>Object.assign({},p)); afterPlayers(); },
-  editGroup: v => { if(v){ const g=ST.groups.find(x=>x.id===v); EDIT=JSON.parse(JSON.stringify(g)); } else EDIT={id:null, name:"", players:[newPlayer(),newPlayer(),newPlayer()]}; EDIT.fromPick = ST.screen==="pickGroup"; go("groupEdit"); },
-  padd: () => { EDIT.players.push(newPlayer()); render(); },
+  editGroup: v => { if(v){ const g=ST.groups.find(x=>x.id===v); EDIT=JSON.parse(JSON.stringify(g)); } else EDIT={id:null, name:"", players:[newPlayer(1),newPlayer(2)]}; EDIT.fromPick = ST.screen==="pickGroup"; go("groupEdit"); },
+  padd: () => { EDIT.players.push(newPlayer(EDIT.players.length+1)); render(); },
   pdel: v => { EDIT.players.splice(+v,1); render(); },
   pf: v => { const [i,f,val]=v.split("|"); const pl=EDIT.players[+i]; pl[f] = val==="true"?true:val==="false"?false:val; if(f==="g") pl.w = val==="m"?"f":"m"; render(); },
   gsave: () => {
-    EDIT.players = EDIT.players.map(p=>Object.assign(p,{name:p.name.trim()})).filter(p=>p.name);
+    EDIT.players = EDIT.players.map((p,i)=>Object.assign(p,{name:(p.name||"").trim()||defName(i+1)}));
     const seen={}; EDIT.players.forEach(p=>{ let n=p.name, k=2; while(seen[n.toLowerCase()]) n=p.name+" "+(k++); p.name=n; seen[n.toLowerCase()]=1; });
     if(EDIT.quick){ if(EDIT.players.length<2) return toast(t("minP",{n:2})); ST.players=EDIT.players; return afterPlayers(); }
-    if(!EDIT.players.length) return toast(t("minP",{n:2}));
+    if(EDIT.players.length<2) return toast(t("minP",{n:2}));
     if(!EDIT.name.trim()) EDIT.name = (L()?"Group ":"Groupe ")+(ST.groups.length+1);
     if(EDIT.id){ const i=ST.groups.findIndex(g=>g.id===EDIT.id); ST.groups[i]={id:EDIT.id,name:EDIT.name.trim(),players:EDIT.players}; }
     else { EDIT.id=uid(); ST.groups.push({id:EDIT.id,name:EDIT.name.trim(),players:EDIT.players}); }

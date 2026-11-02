@@ -1,5 +1,5 @@
 /* New World — service worker : appli disponible hors ligne, mises à jour automatiques */
-const CACHE = 'newworld-v12';
+const CACHE = 'newworld-v13';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png?v=2', './icon-512.png?v=2', './icon-maskable-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS.map(u => new Request(u, {cache: 'reload'}))))); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('newworld-') && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
