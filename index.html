@@ -982,7 +982,7 @@ BLITZ.manga = {fr:"Manga (One Piece, Naruto, Bleach, Dragon Ball)", en:"Manga (O
 "Boules de cristal|Dragon Balls","Haricot magique|Senzu bean","Nuage magique|Flying Nimbus","Capsule Corp","Scouter"
 ]};
 
-// Action ou Vérité : 100 cartes manga (activables dans les options). Format : [fr, en, contact?]
+// Action ou Vérité : 200 cartes manga (50 par niveau) (activables dans les options). Format : [fr, en, contact?]
 const MANGA_CARDS = {
 soft: {
 v: [
@@ -1093,12 +1093,122 @@ a: [
 ["Fais une prière dramatique à Shenron pour un vœu que tu choisis devant tout le monde.","Make a dramatic wish to Shenron, chosen in front of everyone."],
 ["Laisse {p} choisir ton zanpakutô (n'importe quel objet de la pièce) : tu le gardes en main jusqu'au prochain tour.","Let {p} choose your zanpakuto (any object in the room): hold it until your next turn."],
 ["Fais ton entrée dans la pièce comme un personnage qui arrive pour sauver ses amis.","Make your entrance into the room like a character arriving to save their friends."]
+]},
+spicy: {
+v: [
+["Si quelqu'un ici était ton Sasuke, celui que tu poursuivrais jusqu'au bout du monde, qui serait-ce ?","If someone here were your Sasuke, the one you'd chase to the ends of the earth, who would it be?"],
+["Qui ici serait ton Hinata, amoureux en secret de toi depuis des années ?","Who here would be your Hinata, secretly in love with you for years?"],
+["Comme Sanji, as-tu déjà perdu tous tes moyens devant quelqu'un ? Raconte.","Like Sanji, have you ever completely lost it in front of someone? Tell us."],
+["Quel personnage d'anime te fait vraiment craquer, honnêtement ?","Which anime character do you honestly have a thing for?"],
+["Si tu devais former un couple Goku-Chichi avec quelqu'un ici, qui serait ta Chichi ?","If you had to be Goku and Chichi with someone here, who would be your partner?"],
+["As-tu déjà fait une déclaration aussi ratée que celle d'un perso secondaire d'anime ?","Have you ever made a love confession as clumsy as an anime side character's?"],
+["Qui ici serait ton rival en amour, comme Sakura et Ino pour Sasuke ?","Who here would be your rival in love, like Sakura and Ino over Sasuke?"],
+["Qui ici a le charme de Boa Hancock, qui fait craquer tout le monde ?","Who here has Boa Hancock's charm, making everyone fall for them?"],
+["As-tu déjà espionné le profil d'un ex comme un ninja en mission ? Avoue.","Have you ever stalked an ex's profile like a ninja on a mission? Admit it."],
+["Quel couple d'anime ressemble le plus à ta dernière histoire d'amour ?","Which anime couple looks most like your last relationship?"],
+["Avec quel joueur ici formerais-tu l'équipe la plus forte, en amour comme au combat ?","Which player here would you team up with, in love and in battle?"],
+["Qui ici attendrait des années comme Hinata sans jamais oser parler ?","Who here would wait years like Hinata without ever daring to speak up?"],
+["As-tu déjà eu un crush sur quelqu'un qui préférait ton meilleur ami, comme dans un triangle d'anime ?","Have you ever had a crush on someone who preferred your best friend, anime love-triangle style?"],
+["Quel message as-tu déjà envoyé en regrettant aussitôt, comme une attaque lancée trop tôt ?","What message did you send and regret instantly, like an attack launched too early?"],
+["Qui ici serait ton Orihime, toujours là pour te soigner après un coup dur ?","Who here would be your Orihime, always there to heal you after a hard blow?"],
+["Ton secret le mieux gardé, aussi bien caché que l'identité de Barbe Noire ?","Your best-kept secret, as well hidden as Blackbeard's plans?"],
+["Qui ici as-tu déjà trouvé attirant au moins une fois, même une seconde ?","Who here have you found attractive at least once, even for a second?"],
+["Si tu pouvais faire un vœu à Shenron pour ta vie amoureuse, lequel ?","If you could make one wish to Shenron for your love life, what would it be?"],
+["As-tu déjà été en couple en cachette, comme un membre infiltré de l'Akatsuki ?","Have you ever been in a secret relationship, like an undercover Akatsuki member?"],
+["Qui ici est le plus Vegeta en amour : fier, et incapable de dire ce qu'il ressent ?","Who here is the most Vegeta in love: proud and unable to say what they feel?"],
+["Raconte ton premier crush, présenté comme le premier épisode d'un anime.","Tell us about your first crush, as if it were an anime's first episode."],
+["Qui ici a déjà eu une « période Hancock », à refuser tout le monde ?","Who here has had a \"Hancock phase\", turning everyone down?"],
+["Quelle qualité d'un personnage de manga cherches-tu chez ton futur partenaire ?","Which manga character's quality do you look for in a future partner?"],
+["Qui ici protégerais-tu comme Naruto protège ses amis, sans réfléchir ?","Who here would you protect like Naruto protects his friends, without thinking?"],
+["Si tu devais choisir quelqu'un ici pour une mission de couple à deux, qui ?","If you had to pick someone here for a two-person couple mission, who?"]
+],
+a: [
+["Fais une déclaration d'amour (inventée) à {p} comme Sanji, avec les yeux en cœur.","Make a (made-up) love confession to {p} like Sanji, heart eyes included."],
+["Mets-toi à genoux devant {p} comme un chevalier et jure-lui fidélité comme un shinobi.","Kneel before {p} like a knight and swear loyalty to them like a shinobi."],
+["Dis à {p} trois compliments, chacun avec la voix d'un personnage différent.","Give {p} three compliments, each in a different character's voice."],
+["Fais un câlin à {p} comme Naruto qui retrouve Sasuke après des années.","Hug {p} like Naruto reuniting with Sasuke after years apart.",1],
+["Laisse {p} choisir ton couple d'anime officiel avec un joueur ici, jusqu'à la fin de la partie.","Let {p} choose your official anime couple with a player here, until the end of the game."],
+["Murmure à l'oreille de {p} ta réplique de personnage la plus dramatique.","Whisper your most dramatic character line in {p}'s ear.",1],
+["Fais une séance photo de couple d'anime avec {p} : trois poses célèbres.","Do an anime-couple photoshoot with {p}: three famous poses.",1],
+["Joue une scène de demande en mariage façon Goku : maladroite et sans comprendre ce qu'est le mariage.","Act out a marriage proposal Goku-style: clumsy and clueless about what marriage is."],
+["Laisse {p} lire ton dernier message envoyé à ton crush ou à la personne de ton choix.","Let {p} read your last message to your crush or the person of your choice."],
+["Envoie à un contact « Je t'attendrai comme Hinata attend Naruto » sans explication.","Send a contact \"I'll wait for you like Hinata waits for Naruto\" with no explanation."],
+["Tiens la main de {p} en faisant le signe d'invocation ensemble.","Hold {p}'s hand while doing the summoning sign together.",1],
+["Choisis ton « nakama de cœur » ici : il ou elle sera ton partenaire jusqu'à la fin de la partie.","Pick your \"heart nakama\" here: they'll be your partner until the end of the game."],
+["Imite Boa Hancock qui tombe amoureuse, en regardant {p}.","Imitate Boa Hancock falling in love, while looking at {p}."],
+["Fais une sérénade d'opening d'anime à {p}.","Serenade {p} with an anime opening."],
+["Laisse {p} écrire ta bio Instagram ou TikTok sur le thème manga pour 24 h.","Let {p} write a manga-themed Instagram or TikTok bio for you for 24 hours."],
+["Fais à {p} un regard romantique façon Sharingan pendant 10 secondes, sans rire.","Give {p} a romantic Sharingan stare for 10 seconds, without laughing."],
+["Raconte ta vie amoureuse comme un résumé d'arc de One Piece.","Tell your love life as if it were a One Piece arc recap."],
+["Assieds-toi dos à dos avec {p} et levez-vous ensemble sans les mains, comme une fusion ratée.","Sit back to back with {p} and stand up together without hands, like a failed fusion.",1],
+["Joue Vegeta qui essaie de dire « je t'aime » à Bulma sans y arriver, en regardant {p}.","Play Vegeta trying and failing to say \"I love you\" to Bulma, while looking at {p}."],
+["Montre au groupe la personne avec qui tu discutes le plus en ce moment.","Show the group who you've been chatting with most lately."],
+["Fais un compliment sincère à chaque joueur, avec le nom du personnage qu'il te rappelle.","Give each player a sincere compliment, naming the character they remind you of."],
+["Mets une photo de couple d'anime en fond d'écran pendant une heure.","Set an anime-couple picture as your wallpaper for an hour."],
+["Joue avec {p} la scène des retrouvailles la plus dramatique possible, au ralenti.","Act out the most dramatic slow-motion reunion scene with {p}."],
+["Appelle {p} « mon capitaine » jusqu'à ton prochain tour.","Call {p} \"my captain\" until your next turn."],
+["Laisse le groupe choisir avec qui tu fais la pose finale d'un couple d'anime.","Let the group choose who you do an anime couple's final pose with.",1]
+]},
+extreme: {
+v: [
+["Classe les joueurs comme une liste de primes : du plus au moins attirant.","Rank the players like a bounty list: from most to least attractive."],
+["Si tu devais embrasser quelqu'un ici pour sauver le monde, comme dans un anime, qui ?","If you had to kiss someone here to save the world, anime-style, who?"],
+["Note de 1 à 10 le charme de chaque joueur, en le comparant à un personnage.","Rate each player's charm from 1 to 10, comparing them to a character."],
+["As-tu déjà eu deux crushs en même temps, comme un triangle amoureux d'anime ?","Have you ever had two crushes at once, like an anime love triangle?"],
+["Quelle est la plus grosse folie que tu as faite pour quelqu'un, digne d'un héros de shônen ?","What's the craziest thing you've done for someone, worthy of a shonen hero?"],
+["As-tu déjà eu des sentiments pour quelqu'un ici ? Réponds comme si c'était la révélation de fin de saison.","Have you ever had feelings for someone here? Answer like a season-finale reveal."],
+["Avec qui ici partirais-tu en voyage sur le Thousand Sunny, juste à deux ?","Who here would you sail away with on the Thousand Sunny, just the two of you?"],
+["Qu'est-ce qui t'attire chez {p}, honnêtement, comme si tu étais Sanji ?","What attracts you to {p}, honestly, as if you were Sanji?"],
+["As-tu déjà embrassé quelqu'un que tu n'aurais pas dû ? Raconte comme un flashback.","Have you ever kissed someone you shouldn't have? Tell it like a flashback."],
+["Quel est le message le plus osé que tu aies envoyé ? Résume-le comme un titre d'épisode.","What's the boldest message you've ever sent? Sum it up like an episode title."],
+["Qui ici trahirait son meilleur ami pour son crush, comme un vrai méchant ?","Who here would betray their best friend for their crush, like a real villain?"],
+["Si tu devais te marier avec quelqu'un ici comme Goku et Chichi, sans réfléchir, qui ?","If you had to marry someone here like Goku and Chichi, without thinking, who?"],
+["Ton pire râteau, raconté comme une défaite humiliante de Vegeta ?","Your worst rejection, told like one of Vegeta's humiliating defeats?"],
+["Qui ici serait ton ennemi juré en amour, et pourquoi ?","Who here would be your sworn enemy in love, and why?"],
+["Quelle est la chose la plus jalouse que tu aies faite, digne de Sasuke ?","What's the most jealous thing you've ever done, worthy of Sasuke?"],
+["Qui ici sortirait avec son rival plutôt qu'avec son meilleur ami ?","Who here would date their rival rather than their best friend?"],
+["As-tu déjà trompé ou été trompé ? Réponds sans donner de nom.","Have you ever cheated or been cheated on? Answer without naming anyone."],
+["Si Aizen pouvait te faire croire à une illusion, de qui voudrais-tu qu'elle soit ?","If Aizen could trap you in an illusion, who would you want it to be about?"],
+["Qui ici as-tu déjà imaginé en couple avec toi ? Avoue.","Who here have you ever imagined as your partner? Admit it."],
+["Le secret amoureux que tu emporterais dans la tombe, comme Itachi ?","The love secret you'd take to the grave, like Itachi?"],
+["Quel joueur ici ferait le meilleur partenaire de vie, et lequel le pire ?","Which player here would make the best life partner, and which the worst?"],
+["As-tu déjà dragué quelqu'un en utilisant une référence d'anime ? Ça a marché ?","Have you ever flirted using an anime reference? Did it work?"],
+["Qui ici a le plus de chances d'avoir un harem comme dans un anime ?","Who here is most likely to have a fan club like in an anime?"],
+["Le crush le plus inattendu que tu aies eu, aussi surprenant qu'un retour de personnage ?","Your most unexpected crush, as surprising as a character's comeback?"],
+["Chaque joueur te pose une question, et tu jures sur ton nindô de ne pas mentir.","Every player asks you a question, and you swear on your ninja way not to lie."]
+],
+a: [
+["Avoue tes sentiments (vrais ou inventés) à {p}, comme une déclaration d'anime avec musique dramatique.","Confess your feelings (real or made up) to {p}, like an anime confession with dramatic music."],
+["Porte {p} dans tes bras comme un héros qui sauve quelqu'un, pendant 10 secondes.","Carry {p} in your arms like a hero saving someone, for 10 seconds.",1],
+["Tiens {p} par la taille pour une photo de « couple officiel » façon affiche d'anime.","Hold {p} by the waist for an \"official couple\" photo, anime-poster style.",1],
+["Échange ton téléphone avec celui de {p} pendant deux tours, comme un échange de corps.","Swap phones with {p} for two turns, like a body swap."],
+["Envoie ton selfie le plus séducteur en pose de personnage d'anime à ton dernier contact WhatsApp.","Send your most seductive anime-pose selfie to your last WhatsApp contact."],
+["Fais un câlin à {p} pendant 15 secondes en lui disant ce que tu apprécies chez lui ou elle.","Hug {p} for 15 seconds while telling them what you appreciate about them.",1],
+["Laisse {p} choisir un de tes contacts à qui tu écris « Tu es ma Hancock » ou « Tu es mon Sanji ».","Let {p} pick a contact you must text \"You're my Hancock\" or \"You're my Sanji\"."],
+["Fais une demande en mariage à genoux à {p}, façon fin d'anime romantique.","Propose to {p} on one knee, like a romantic anime finale."],
+["Garde la main de {p} dans la tienne jusqu'à la fin du tour suivant, comme deux nakamas.","Hold {p}'s hand until the end of the next turn, like two nakama.",1],
+["Laisse {p} lire à voix haute tes trois derniers messages avec la personne de ton choix.","Let {p} read aloud your last three messages with the person of your choice."],
+["Danse un slow de 20 secondes avec {p} sur un opening d'anime chanté par le groupe.","Slow-dance with {p} for 20 seconds to an anime opening sung by the group.",1],
+["Appelle ton crush (ou un ami) et dis-lui que tu le considères comme ton nakama pour la vie.","Call your crush (or a friend) and tell them they're your nakama for life."],
+["Fais un baisemain à {p} comme Sanji devant une princesse.","Kiss {p}'s hand like Sanji in front of a princess.",1],
+["Laisse le groupe choisir ton partenaire de fusion : vous faites la danse complète, doigts qui se touchent.","Let the group choose your fusion partner: do the full dance, fingertips touching.",1],
+["Mets ta tête sur l'épaule de {p} pendant tout le tour suivant.","Rest your head on {p}'s shoulder for the whole next turn.",1],
+["Publie en story une photo de toi avec {p} légendée « Mon nakama préféré ».","Post a story photo of you with {p} captioned \"My favourite nakama\"."],
+["Fais à {p} une déclaration sur le ton de Vegeta, fier, mais en lui disant enfin ce que tu penses.","Make a declaration to {p} in Vegeta's tone, proud, but finally saying what you think."],
+["Laisse {p} choisir ton fond d'écran pour 24 h parmi ses photos.","Let {p} choose your wallpaper for 24 hours from their photos."],
+["Joue avec {p} la scène finale d'un anime romantique : vous vous regardez et la musique monte.","Act out an anime romance finale with {p}: you look at each other as the music swells."],
+["Laisse {p} poser une question à laquelle tu dois répondre en le regardant dans les yeux.","Let {p} ask you a question you must answer while looking into their eyes."],
+["Choisis quelqu'un ici qui sera ton « chéri(e) d'anime » jusqu'à la fin de la partie, avec surnom.","Pick someone here to be your \"anime darling\" until the end of the game, nickname included."],
+["Imite une scène de sauvetage : tu rattrapes {p} qui fait semblant de tomber.","Act out a rescue: catch {p} as they pretend to fall.",1],
+["Montre au groupe la dernière photo de toi que tu as supprimée parce que tu la trouvais ratée.","Show the group the last photo of you that you deleted because you didn't like it."],
+["Envoie un vocal de 10 secondes à ton crush avec la voix de ton personnage préféré.","Send a 10-second voice note to your crush in your favourite character's voice."],
+["Laisse {p} faire avec toi la pose la plus célèbre d'un couple d'anime de son choix.","Let {p} recreate with you the most famous pose of an anime couple of their choice.",1]
 ]}
 };
 
 "use strict";
 /* ============ New World — Thousand Labs Games ============ */
-const APP = { name:"New World", version:"1.2.0", site:"https://thousandlabs-games.github.io/New_World/", price:"1 000 F", wa:"221711216581", trialDays:7 };
+const APP = { name:"New World", version:"1.2.1", site:"https://thousandlabs-games.github.io/New_World/", price:"1 000 F", wa:"221711216581", trialDays:7 };
 // Clé publique de vérification des codes (paire propre à New World — la clé privée n'est JAMAIS dans ce fichier)
 const PUBKEY = { kty:"EC", crv:"P-256", x:"gwc78zldjurWjIIEKM5X7RrI_YlO1wu8Ic3v4-JFHHw", y:"xnSzDe_6d_eGuJRO8z5d867LmmE07nNn131pkRen0hA", ext:true };
 const LEVELS = ["soft","hard","spicy","extreme"];
@@ -1127,7 +1237,7 @@ choose:["Choisis un groupe","Choose a group"], quick:["Joueurs rapides (sans enr
 soft:["Soft","Soft"], hard:["Hard","Hard"], spicy:["Spicy","Spicy"], extreme:["Extreme","Extreme"],
 mode:["Mode","Mode"], mClassic:["Classique","Classic"], mRise:["Montée en pression","Rising heat"], mOwn:["Chacun son niveau","Own level"], mDuo:["Duo","Duo"],
 mClassicD:["Tu choisis un ou plusieurs niveaux.","Pick one or more levels."], mRiseD:["Commence en Soft, monte d'un niveau toutes les 10 minutes.","Starts Soft, goes up a level every 10 minutes."], mOwnD:["Chaque joueur a son niveau max (réglé dans son profil).","Each player has their own max level (set in their profile)."], mDuoD:["Pour deux : les cartes visent toujours l'autre.","For two: cards always target the other one."],
-levels:["Niveaux","Levels"], options:["Options","Options"], specials:["Cartes spéciales (Duel, Vote, Règle…)","Special cards (Duel, Vote, Rule…)"], wheel:["Roue pour désigner le joueur","Wheel to pick the player"], contactCards:["Cartes avec contact physique [[i:hand]]","Physical contact cards [[i:hand]]"], customInc:["Inclure mes cartes perso","Include my custom cards"], mangaS:["Série Manga (One Piece, Naruto, Bleach, Dragon Ball)","Manga series (One Piece, Naruto, Bleach, Dragon Ball)"], mangaD:["100 cartes, niveaux Soft et Hard.","100 cards, Soft and Hard levels."], mOff:["Désactivée","Off"], mMix:["Mélangée","Mixed in"], mOnly:["Uniquement","Only"], jokers:["Jokers par joueur","Jokers per player"],
+levels:["Niveaux","Levels"], options:["Options","Options"], specials:["Cartes spéciales (Duel, Vote, Règle…)","Special cards (Duel, Vote, Rule…)"], wheel:["Roue pour désigner le joueur","Wheel to pick the player"], contactCards:["Cartes avec contact physique [[i:hand]]","Physical contact cards [[i:hand]]"], customInc:["Inclure mes cartes perso","Include my custom cards"], mangaS:["Série Manga (One Piece, Naruto, Bleach, Dragon Ball)","Manga series (One Piece, Naruto, Bleach, Dragon Ball)"], mangaD:["200 cartes, sur les quatre niveaux.","200 cards, across all four levels."], mOff:["Désactivée","Off"], mMix:["Mélangée","Mixed in"], mOnly:["Uniquement","Only"], jokers:["Jokers par joueur","Jokers per player"],
 start:["Lancer la partie","Start the game"], myCards:["Mes cartes perso","My custom cards"],
 spin:["Tourner la roue","Spin the wheel"], turnOf:["Au tour de","It's the turn of"], truth:["Vérité","Truth"], dare:["Action","Dare"],
 done:["Fait [[i:check]]","Done [[i:check]]"], joker:["Joker ({n})","Joker ({n})"], refuse:["{p} refuse (sans pénalité)","{p} refuses (no penalty)"], next:["Suivant","Next"], endGame:["Terminer","Finish"],
